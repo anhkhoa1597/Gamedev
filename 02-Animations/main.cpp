@@ -26,10 +26,11 @@
 
 
 #include "Mario.h"
+#include "Goomba.h"
 
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"02 - Sprite animation"
+#define MAIN_WINDOW_TITLE L"02 - Animation"
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255,0.0f)
@@ -46,11 +47,8 @@
 #define TEXTURE_PATH_ENEMIES TEXTURES_DIR "\\enemies.png"
 
 CMario *mario;
-#define MARIO_START_X 10.0f
-#define MARIO_START_Y 130.0f
-#define MARIO_START_VX 0.1f
-
 CBrick *brick;
+CGoomba* goomba;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -76,6 +74,7 @@ void LoadResources()
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	//textures->Add(ID_ENEMY_TEXTURE, TEXTURE_PATH_ENEMIES, D3DCOLOR_XRGB(156, 219, 239));
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
+	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMIES);
 
 
 	CSprites * sprites = CSprites::GetInstance();
@@ -97,33 +96,42 @@ void LoadResources()
 	sprites->Add(20002, 318, 117, 334, 133, texMisc);
 	sprites->Add(20003, 336, 117, 352, 133, texMisc);
 	sprites->Add(20004, 354, 117, 370, 133, texMisc);
+
+	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+	sprites->Add(30001, 21, 20, 37, 36, texEnemy);
+	sprites->Add(30002, 21, 20, 37, 36, texEnemy);
 	
 
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
 
-	ani = new CAnimation(100);
+	ani = new CAnimation(80);
 	ani->Add(10001);
 	ani->Add(10002);
 	ani->Add(10003);
-	animations->Add(500, ani);
+	animations->Add(ID_MARIO_ANI_WALK_RIGHT, ani);
 
-	ani = new CAnimation(100);
+	ani = new CAnimation(80);
 	ani->Add(10011);
 	ani->Add(10012);
 	ani->Add(10013);
-	animations->Add(501, ani);
-
+	animations->Add(ID_MARIO_ANI_WALK_LEFT, ani);
 	
 	ani = new CAnimation(100);
 	ani->Add(20001,1000);
 	ani->Add(20002);
 	ani->Add(20003);
 	ani->Add(20004);
-	animations->Add(510, ani);
-	
+	animations->Add(ID_BRICK_ANI, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(30001);
+	ani->Add(30002);
+	animations->Add(ID_GOOMBA_WALK_LEFT, ani);
+	animations->Add(ID_GOOMBA_WALK_RIGHT, ani);
 	
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
+	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX);
 	brick = new CBrick(100.0f, 100.0f);
 }
 

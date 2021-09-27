@@ -9,19 +9,19 @@ CMario::CMario(float x, float y, float vx):CGameObject(x, y)
 void CMario::Update(DWORD dt)
 {
 	x += vx*dt;
-
+	float middleOfMario = MARIO_WIDTH / 2;
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	if (x <= 0 || x >= BackBufferWidth - MARIO_WIDTH) {
+	if (x <= middleOfMario || x >= BackBufferWidth - middleOfMario) {
 
 		vx = -vx;
 
-		if (x <= 0)
+		if (x <= middleOfMario)
 		{
-			x = 0;
+			x = middleOfMario;
 		}
-		else if (x >= BackBufferWidth - MARIO_WIDTH)
+		else if (x >= BackBufferWidth - middleOfMario)
 		{
-			x = (float)(BackBufferWidth - MARIO_WIDTH);
+			x = (float)(BackBufferWidth - middleOfMario);
 		}
 	}
 }
