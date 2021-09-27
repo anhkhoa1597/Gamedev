@@ -72,6 +72,7 @@
     <ProjectGuid>{15c728f5-6f4a-40da-8e39-16657ba51b55}</ProjectGuid>
     <RootNamespace>SpritesandAnimations</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Sprites-and-Animations</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

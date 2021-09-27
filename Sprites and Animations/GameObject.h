@@ -14,15 +14,23 @@ protected:
 	// This should be a pointer to an object containing all graphic/sound/audio assets for rendering this object. 
 	// For now, just a pointer to a single texture
 	LPTEXTURE texture;
+
+	//int top;
+	//int left;
+	//int right;
+	//int bottom;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	float GetX() { return x; }
 	float GetY() { return y; }
 
 	CGameObject(float x = 0.0f, float y = 0.0f, LPTEXTURE texture = NULL);
+	//CGameObject(float x = 0.0f, float y = 0.0f, LPTEXTURE texture = NULL, int t = 0, int l = 0, int r = 0, int b = 0);
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render();
+
+	virtual void Render(int l, int t, int r, int b);
 
 	~CGameObject();
 };
@@ -41,6 +49,19 @@ class CMario : public CGameObject
 	float vy;
 public:
 	CMario(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
+	{
+		this->vx = vx;
+		this->vy = vy;
+	};
+	void Update(DWORD dt);
+};
+
+class CGoomba : public CGameObject
+{
+	float vx;
+	float vy;
+public:
+	CGoomba(float x, float y, float vx, float vy, LPTEXTURE texture, int t, int l, int r, int b) :CGameObject(x, y, texture)
 	{
 		this->vx = vx;
 		this->vy = vy;

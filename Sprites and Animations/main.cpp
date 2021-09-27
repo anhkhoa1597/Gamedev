@@ -28,8 +28,9 @@
 
 #define TEXTURE_PATH_BRICK L"brick.png"
 #define TEXTURE_PATH_MARIO L"mario.png"
+#define TEXTURE_PATH_ENEMIES L"./textures/enemies.png"
 
-#define TEXTURE_PATH_MISC L"misc.png"
+//#define TEXTURE_PATH_MISC L"misc.png"
 
 #define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
 #define SCREEN_WIDTH 320
@@ -39,20 +40,26 @@
 using namespace std;
 
 CMario* mario;
-#define MARIO_START_X 10.0f
+#define MARIO_START_X 7.0f
 #define MARIO_START_Y 100.0f
-#define MARIO_START_VX 0.1f
+#define MARIO_START_VX 0.05f
 #define MARIO_START_VY 0.1f
 
+CGoomba* goomba;
+#define GOOMBA_START_X 80.0f
+#define GOOMBA_START_Y 80.0f
+#define GOOMBA_START_VX 0.1f
+#define GOOMBA_START_VY 0.1f
 
 #define BRICK_X 8.0f
 #define BRICK_Y 120.0f
 #define BRICK_WIDTH 16.0f
 #define BRICK_HEIGHT 16.0f
+
 int numberOfBrick = 1 + SCREEN_WIDTH / BRICK_WIDTH;
 CBrick** arrBrick = new CBrick* [numberOfBrick];
 
-
+LPTEXTURE texGoomba = NULL;
 LPTEXTURE texMario = NULL;
 LPTEXTURE texBrick = NULL;
 LPTEXTURE texMisc = NULL;
@@ -80,12 +87,13 @@ void LoadResources()
 	CGame* game = CGame::GetInstance();
 	texBrick = game->LoadTexture(TEXTURE_PATH_BRICK);
 	texMario = game->LoadTexture(TEXTURE_PATH_MARIO);
-	texMisc = game->LoadTexture(TEXTURE_PATH_MISC);
+	texGoomba = game->LoadTexture(TEXTURE_PATH_ENEMIES);
 
 	// Load a sprite sheet as a texture to try drawing a portion of a texture. See function Render 
 	//texMisc = game->LoadTexture(MISC_TEXTURE_PATH);
 
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX, MARIO_START_VY, texMario);
+	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX, GOOMBA_START_VY, texGoomba, 5, 14, 21, 30);
 	for (int i = 0; i < numberOfBrick; i++)
 	{
 		arrBrick[i] = new CBrick(BRICK_X + BRICK_WIDTH * i, BRICK_Y, texBrick);
@@ -152,9 +160,10 @@ void Render()
 			arrBrick[i]->Render();
 		}
 		mario->Render();
+		goomba->Render(5,14,21,30);
 
 		// Uncomment this line to see how to draw a porttion of a texture  
-		g->Draw(10, 10, texMisc, 300, 117, 316, 133);
+		//g->Draw(10, 10, texMisc, 300, 117, 316, 133);
 
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);

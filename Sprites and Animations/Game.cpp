@@ -152,9 +152,11 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 
 		spriteWidth = tex->getWidth();
 		spriteHeight = tex->getHeight();
+		//DebugOut((wchar_t*)L"not rect\n");
 	}
 	else
 	{
+		//DebugOut((wchar_t*)L"rect left: %0.1f, rect top: %0.1f, rect right: %0.1f, rect bottom: %0.1f\n", rect->left, rect->top, rect->right, rect->bottom);
 		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
 		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
 
