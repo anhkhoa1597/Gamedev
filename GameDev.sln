@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FirstSample", "FirstSample\FirstSample.vcxproj", "{B65BF0FC-6EC2-4DD8-B89C-F93B7159A5D6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sprites and Animations", "Sprites and Animations\Sprites and Animations.vcxproj", "{15C728F5-6F4A-40DA-8E39-16657BA51B55}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sprites", "Sprites\Sprites and Animations.vcxproj", "{15C728F5-6F4A-40DA-8E39-16657BA51B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

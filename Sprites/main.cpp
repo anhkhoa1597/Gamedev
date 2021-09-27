@@ -130,7 +130,7 @@ void Update(DWORD dt)
 		arrBrick[i]->Update(dt);
 	}
 
-	DebugOutTitle(L"01 - Skeleton %0.1f, %0.1f", mario->GetX(), mario->GetY());
+	DebugOutTitle(L"01 - Sprites %0.1f, %0.1f", mario->GetX(), mario->GetY());
 }
 
 /*
