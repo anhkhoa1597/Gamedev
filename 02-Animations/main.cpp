@@ -100,6 +100,7 @@ void LoadResources()
 	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
 	sprites->Add(30001, 21, 20, 37, 36, texEnemy);
 	sprites->Add(30002, 21, 20, 37, 36, texEnemy);
+	sprites->FlipX(30002);
 	
 
 	CAnimations * animations = CAnimations::GetInstance();
@@ -142,6 +143,7 @@ void LoadResources()
 void Update(DWORD dt)
 {
 	mario->Update(dt);
+	goomba->Update(dt);
 }
 
 void Render()
@@ -166,6 +168,7 @@ void Render()
 
 		brick->Render();
 		mario->Render();
+		goomba->Render();
 
 		// Uncomment this line to see how to draw a porttion of a texture  
 		//g->Draw(10, 10, texMisc, 300, 117, 316, 133);

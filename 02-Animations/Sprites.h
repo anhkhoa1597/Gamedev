@@ -20,8 +20,8 @@ class CSprites
 
 public:
 	void Add(int id, int left, int top, int right, int bottom, LPTEXTURE tex);
-	LPSPRITE FlipX(int id);
-	LPSPRITE FlipY(int id);
+	void FlipX(int id);
+	void FlipY(int id);
 	LPSPRITE Get(int id);
 
 	static CSprites * GetInstance();

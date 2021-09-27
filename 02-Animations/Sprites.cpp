@@ -16,9 +16,11 @@ void CSprites::Add(int id, int left, int top, int right, int bottom, LPTEXTURE t
 	sprites[id] = s;
 }
 
-LPSPRITE CSprites::FlipX(int id)
+void CSprites::FlipX(int id)
 {
 	LPSPRITE s = this->Get(id);
+	s->FlipX();
+	sprites[id] = s;
 }
 
 LPSPRITE CSprites::Get(int id)

@@ -35,6 +35,9 @@ void CGoomba::Render()
 	//[RED FLAG][TODO]: Student needs to think about how to associate this animation/asset to Goomba!!
 	switch (status)
 	{
+	default:
+		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_LEFT);
+		break;
 	case 0:
 		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_LEFT);
 		break;
