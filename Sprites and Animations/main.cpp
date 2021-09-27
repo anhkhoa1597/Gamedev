@@ -124,6 +124,7 @@ void Update(DWORD dt)
 	*/
 
 	mario->Update(dt);
+	goomba->Update(dt);
 	for (int i = 0; i < numberOfBrick; i++)
 	{
 		arrBrick[i]->Update(dt);
