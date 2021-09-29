@@ -8,9 +8,8 @@
 #define GOOMBA_WIDTH 16
 #define GOOMBA_START_X 8.0f
 #define GOOMBA_START_Y 150.0f
-#define GOOMBA_START_VX 0.01f
-#define ID_GOOMBA_WALK_LEFT 520
-#define ID_GOOMBA_WALK_RIGHT 521
+#define GOOMBA_START_VX 0.05f
+#define ID_GOOMBA_WALK 520
 
 class CGoomba : public CGameObject
 {

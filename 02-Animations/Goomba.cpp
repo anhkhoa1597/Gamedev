@@ -36,14 +36,14 @@ void CGoomba::Render()
 	switch (status)
 	{
 	default:
-		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_LEFT);
+		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK);
 		break;
-	case 0:
-		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_LEFT);
-		break;
-	case 1:
-		ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_RIGHT);
-		break;
+	//case 0:
+	//	ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_LEFT);
+	//	break;
+	//case 1:
+	//	ani = CAnimations::GetInstance()->Get(ID_GOOMBA_WALK_RIGHT);
+	//	break;
 	}
 	ani->Render(x, y);
 }

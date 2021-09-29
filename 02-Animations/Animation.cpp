@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "debug.h"
 
 void CAnimation::Add(int spriteId, DWORD time)
 {
@@ -8,6 +9,18 @@ void CAnimation::Add(int spriteId, DWORD time)
 	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
 	frames.push_back(frame);
+}
+
+void CAnimation::SetSpeedAnimation(float multiToTime)
+{
+	int countFrame = 0;
+	DebugOut(L"countFrame = %.2f\n", frames.size());
+	//while (countFrame <= frames.size())
+	//{
+	//	DebugOut(L"countFrame = %.2f", countFrame);
+	//	frames[countFrame]->SetTime(multiToTime);
+	//	countFrame++;
+	//}
 }
 
 void CAnimation::Render(float x, float y)

@@ -105,19 +105,19 @@ void LoadResources()
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
 
-	ani = new CAnimation(80);
+	ani = new CAnimation(SPEED_MARIO_ANI);
 	ani->Add(10001);
 	ani->Add(10002);
 	ani->Add(10003);
 	animations->Add(ID_MARIO_ANI_WALK_RIGHT, ani);
 
-	ani = new CAnimation(80);
+	ani = new CAnimation(SPEED_MARIO_ANI);
 	ani->Add(10011);
 	ani->Add(10012);
 	ani->Add(10013);
 	animations->Add(ID_MARIO_ANI_WALK_LEFT, ani);
 	
-	ani = new CAnimation(100);
+	ani = new CAnimation(SPEED_BRICK_ANI);
 	ani->Add(20001,1000);
 	ani->Add(20002);
 	ani->Add(20003);
@@ -127,8 +127,7 @@ void LoadResources()
 	ani = new CAnimation(200);
 	ani->Add(30001);
 	ani->Add(30002);
-	animations->Add(ID_GOOMBA_WALK_LEFT, ani);
-	animations->Add(ID_GOOMBA_WALK_RIGHT, ani);
+	animations->Add(ID_GOOMBA_WALK, ani);
 	
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX);

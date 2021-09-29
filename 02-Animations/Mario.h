@@ -9,8 +9,11 @@
 #define MARIO_START_X 7.0f
 #define MARIO_START_Y 130.0f
 #define MARIO_START_VX 0.1f
+#define SPEED_MARIO_ANI 100
 #define ID_MARIO_ANI_WALK_RIGHT 500
 #define ID_MARIO_ANI_WALK_LEFT 501
+
+#define SPEED_BRICK_ANI 100
 #define ID_BRICK_ANI 510
 
 class CBrick : public CGameObject {

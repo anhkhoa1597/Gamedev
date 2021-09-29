@@ -13,6 +13,7 @@ class CAnimationFrame
 public:
 	CAnimationFrame(LPSPRITE sprite, int time) { this->sprite = sprite; this->time = time; }
 	DWORD GetTime() { return time; }
+	void SetTime(float multiToTime) { this->time *= multiToTime; }
 	LPSPRITE GetSprite() { return sprite; }
 };
 
