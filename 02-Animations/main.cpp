@@ -28,6 +28,11 @@
 #include "Mario.h"
 #include "Goomba.h"
 
+#include "tinyxml2.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"02 - Animation"
@@ -42,10 +47,12 @@
 #define ID_TEX_MISC 20
 
 #define TEXTURES_DIR L"textures"
+#define MAP_DIR L"map"
 #define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
 #define TEXTURE_PATH_ENEMIES TEXTURES_DIR "\\enemies.png"
-
+#define MAP_TILESET_PATH TEXTURES_DIR "\\TileSetMarioBrosTransparent.png"
+#define TILEDMAP1_1 MAP_DIR "map/1-1.tmx"
 CMario *mario;
 CBrick *brick;
 CGoomba* goomba;
@@ -70,15 +77,33 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
-
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	//textures->Add(ID_ENEMY_TEXTURE, TEXTURE_PATH_ENEMIES, D3DCOLOR_XRGB(156, 219, 239));
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMIES);
+	textures->Add(11111, MAP_TILESET_PATH);
+
 
 
 	CSprites * sprites = CSprites::GetInstance();
-	
+	//load tiled-background
+	LPTEXTURE tileSet = textures->Get(11111);
+	for (int i = 1; i <= 768; i++)
+	{
+		int l = 1 + ((i - 1) % 48) * 17;
+		int r = 16 + ((i - 1) % 48) * 17;
+		int t = 1 + ((i - 1) / 48) * 17;
+		int b = 16 + ((i - 1) / 48) * 17;
+		sprites->Add(i, l, t, r, b, tileSet);
+	}
+	string s;
+	ifstream ReadFile("map/1-1.txt");
+	while (getline(ReadFile, s)) {
+
+	}
+
+
+
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
 	// readline => id, left, top, right 
