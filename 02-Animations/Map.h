@@ -1,8 +1,9 @@
 #pragma once
-#include <unordered_map>
 #include <d3dx10.h>
-
+#include <vector>
 #include "Texture.h"
+#include "tinyxml2.h"
+#include <string>
 
 using namespace std;
 
@@ -11,7 +12,10 @@ using namespace std;
 */
 class Map
 {
+	int Next;
 public:
 	Map();
-	void Load(int id);
+	virtual ~Map();
+	virtual void Draw();
+	void Load(string filePath);
 };

@@ -24,14 +24,11 @@
 #include "Animation.h"
 #include "Animations.h"
 
+#include "Map.h"
+#include "Map1_1.h"
 
 #include "Mario.h"
 #include "Goomba.h"
-
-#include "tinyxml2.h"
-#include <iostream>
-#include <fstream>
-#include <string>
 
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -52,7 +49,7 @@
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
 #define TEXTURE_PATH_ENEMIES TEXTURES_DIR "\\enemies.png"
 #define MAP_TILESET_PATH TEXTURES_DIR "\\TileSetMarioBrosTransparent.png"
-#define TILEDMAP1_1 MAP_DIR "map/1-1.tmx"
+
 CMario *mario;
 CBrick *brick;
 CGoomba* goomba;
@@ -96,13 +93,8 @@ void LoadResources()
 		int b = 16 + ((i - 1) / 48) * 17;
 		sprites->Add(i, l, t, r, b, tileSet);
 	}
-	string s;
-	ifstream ReadFile("map/1-1.txt");
-	while (getline(ReadFile, s)) {
-
-	}
-
-
+	Map* currentMap;
+	currentMap = new Map1_1();
 
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
@@ -157,6 +149,7 @@ void LoadResources()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX);
 	brick = new CBrick(100.0f, 100.0f);
+	currentMap->Draw();
 }
 
 /*

@@ -138,6 +138,7 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Map1-1.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Map1_1.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
