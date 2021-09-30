@@ -36,8 +36,8 @@
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255,0.0f)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 1152
+#define SCREEN_HEIGHT 720
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
@@ -53,6 +53,7 @@
 CMario *mario;
 CBrick *brick;
 CGoomba* goomba;
+Map* currentMap;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -78,13 +79,13 @@ void LoadResources()
 	//textures->Add(ID_ENEMY_TEXTURE, TEXTURE_PATH_ENEMIES, D3DCOLOR_XRGB(156, 219, 239));
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMIES);
-	textures->Add(11111, MAP_TILESET_PATH);
+	textures->Add(ID_TILESET_MAP, MAP_TILESET_PATH);
 
 
 
 	CSprites * sprites = CSprites::GetInstance();
 	//load tiled-background
-	LPTEXTURE tileSet = textures->Get(11111);
+	LPTEXTURE tileSet = textures->Get(ID_TILESET_MAP);
 	for (int i = 1; i <= 768; i++)
 	{
 		int l = 1 + ((i - 1) % 48) * 17;
@@ -93,8 +94,6 @@ void LoadResources()
 		int b = 16 + ((i - 1) / 48) * 17;
 		sprites->Add(i, l, t, r, b, tileSet);
 	}
-	Map* currentMap;
-	currentMap = new Map1_1();
 
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
@@ -149,7 +148,7 @@ void LoadResources()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX);
 	brick = new CBrick(100.0f, 100.0f);
-	currentMap->Draw();
+	currentMap = new Map1_1();
 }
 
 /*
@@ -185,6 +184,7 @@ void Render()
 		brick->Render();
 		mario->Render();
 		goomba->Render();
+		currentMap->Render();
 
 		// Uncomment this line to see how to draw a porttion of a texture  
 		//g->Draw(10, 10, texMisc, 300, 117, 316, 133);

@@ -3,6 +3,8 @@
 #include "Texture.h"
 #include "Game.h"
 
+#define SCALE 3.0f
+
 class CSprite
 {
 	int id;				// Sprite ID in the sprite database

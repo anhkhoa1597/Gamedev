@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "Map.h"
 
-std::vector<std::vector<unsigned int> > parse_tiles(const std::string& gid_list, int width, int height) {
+void parse_tiles(const std::string& gid_list, int height, std::vector<std::vector<unsigned int>>& tiled_background) {
     std::vector<std::vector<unsigned int> > tiles(height);
     std::string value;
     unsigned int row = 0;
@@ -19,8 +19,7 @@ std::vector<std::vector<unsigned int> > parse_tiles(const std::string& gid_list,
         else if (gid_list[index] >= '0' && gid_list[index] <= '9')
             value += gid_list[index];
     }
-
-    return tiles;
+    tiled_background = tiles;
 }
 
 Map::Map()
@@ -33,25 +32,26 @@ Map::~Map()
 
 }
 
-void Map::Draw()
-{
-
-}
 
 void Map::Load(string filepath)
 {
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(filepath.c_str());
 	tinyxml2::XMLElement* map = doc.FirstChildElement("map");
-	int width, height, tilewidth, tileheight;
 	map->QueryIntAttribute("width", &width);
 	map->QueryIntAttribute("height", &height);
-	map->QueryIntAttribute("tilewidth", &tilewidth);
-	map->QueryIntAttribute("tileheight", &tileheight);
+	map->QueryIntAttribute("tilewidth", &tile_width);
+	map->QueryIntAttribute("tileheight", &tile_height);
 	tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
 	tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
+    
 	if (pData != NULL)
 	{
-        const auto tiles = parse_tiles(pData->GetText(), width, height);
+        parse_tiles(pData->GetText(), height, tiled_background);
 	}
+}
+
+void Map::Render()
+{
+    
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <d3dx10.h>
 #include <vector>
-#include "Texture.h"
+#include "Sprites.h"
 #include "tinyxml2.h"
 #include <string>
 
@@ -13,9 +13,15 @@ using namespace std;
 class Map
 {
 	int Next;
+protected:
+	int width;
+	int height;
+	int tile_width;
+	int tile_height;
+	vector<vector<unsigned int>> tiled_background;
 public:
 	Map();
 	virtual ~Map();
-	virtual void Draw();
+	virtual void Render();
 	void Load(string filePath);
 };
