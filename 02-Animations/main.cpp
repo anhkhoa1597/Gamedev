@@ -36,12 +36,13 @@
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255,0.0f)
-#define SCREEN_WIDTH 1152
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 448
+#define SCREEN_HEIGHT 278
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define ID_TILESET_MAP 11111
 
 #define TEXTURES_DIR L"textures"
 #define MAP_DIR L"map"
@@ -147,7 +148,7 @@ void LoadResources()
 	
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	goomba = new CGoomba(GOOMBA_START_X, GOOMBA_START_Y, GOOMBA_START_VX);
-	brick = new CBrick(100.0f, 100.0f);
+	brick = new CBrick(264.0f, 152.0f);
 	currentMap = new Map1_1();
 }
 
@@ -181,10 +182,10 @@ void Render()
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
+		currentMap->Render();
 		brick->Render();
 		mario->Render();
 		goomba->Render();
-		currentMap->Render();
 
 		// Uncomment this line to see how to draw a porttion of a texture  
 		//g->Draw(10, 10, texMisc, 300, 117, 316, 133);

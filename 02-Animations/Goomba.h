@@ -7,7 +7,7 @@
 
 #define GOOMBA_WIDTH 16
 #define GOOMBA_START_X 8.0f
-#define GOOMBA_START_Y 150.0f
+#define GOOMBA_START_Y 200.0f
 #define GOOMBA_START_VX 0.05f
 #define ID_GOOMBA_WALK 520
 

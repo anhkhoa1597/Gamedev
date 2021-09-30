@@ -1,7 +1,7 @@
 #pragma once
 #include "Map.h"
 
-#define ID_TILESET_MAP 11111
+
 #define TILEDMAP1_1 "map/1-1.tmx"
 
 

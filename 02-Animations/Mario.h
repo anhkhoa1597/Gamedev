@@ -6,8 +6,10 @@
 #include "Animations.h"
 
 #define MARIO_WIDTH 14
+#define MARIO_HEIGHT 28
+
 #define MARIO_START_X 7.0f
-#define MARIO_START_Y 130.0f
+#define MARIO_START_Y 194.0f
 #define MARIO_START_VX 0.1f
 #define SPEED_MARIO_ANI 100
 #define ID_MARIO_ANI_WALK_RIGHT 500
