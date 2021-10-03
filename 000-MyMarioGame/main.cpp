@@ -76,47 +76,7 @@ void LoadAssetsMario()
 
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
-	// IDLE
-	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1, 246, 154, 246 + 13, 154 + 26, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_LEFT + 1, 186, 154, 186 + 13, 154 + 26, texMario);
-
-	// WALKING LEFT
-	sprites->Add(ID_SPRITE_MARIO_BIG_WALKING_RIGHT + 2, 275, 154, 290, 181, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_WALKING_RIGHT + 3, 304, 154, 321, 181, texMario);
-
-	// WALKING RIGHT
-	sprites->Add(ID_SPRITE_MARIO_BIG_WALKING_LEFT + 2, 155, 154, 170, 181, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_WALKING_LEFT + 3, 125, 154, 140, 181, texMario);
-
-	// RUNNING RIGHT 
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 1, 335, 154, 335 + 18, 154 + 26, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 2, 363, 154, 363 + 18, 154 + 26, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 3, 393, 154, 393 + 18, 154 + 26, texMario);
-
-	// RUNNING LEFT
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 1, 92, 154, 92 + 18, 154 + 26, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 2, 66, 154, 66 + 18, 154 + 26, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 3, 35, 154, 35 + 18, 154 + 26, texMario);
-
-	// JUMP WALK RIGHT & LEFT 
-	sprites->Add(ID_SPRITE_MARIO_BIG_JUMP_WALK_RIGHT + 1, 395, 275, 395 + 16, 275 + 25, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_JUMP_WALK_LEFT + 1, 35, 275, 35 + 16, 275 + 25, texMario);
-
-	// JUMP RUN RIGHT & LEFT 
-	sprites->Add(ID_SPRITE_MARIO_BIG_JUMP_RUN_RIGHT + 1, 395, 195, 395 + 18, 195 + 25, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_JUMP_RUN_LEFT + 1, 33, 195, 33 + 18, 195 + 25, texMario);
-
-	// SIT RIGHT/LEFT
-	sprites->Add(ID_SPRITE_MARIO_BIG_SIT_RIGHT + 1, 426, 239, 426 + 14, 239 + 17, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_SIT_LEFT + 1, 5, 239, 5 + 14, 239 + 17, texMario);
-
-	// BRACING RIGHT/LEFT
-	sprites->Add(ID_SPRITE_MARIO_BIG_BRACE_RIGHT + 1, 425, 154, 425 + 15, 154 + 27, texMario);
-	sprites->Add(ID_SPRITE_MARIO_BIG_BRACE_LEFT + 1, 5, 154, 5 + 15, 154 + 27, texMario);
-
-	// MARIO DIE
-	sprites->Add(ID_SPRITE_MARIO_DIE + 1, 215, 120, 231, 135, texMario);
-
+	
 	// SMALL MARIO 
 	sprites->Add(ID_SPRITE_MARIO_SMALL_IDLE_RIGHT + 1, 247, 0, 259, 15, texMario);			
 	sprites->Add(ID_SPRITE_MARIO_SMALL_IDLE_LEFT + 1, 187, 0, 198, 15, texMario);			
@@ -145,77 +105,21 @@ void LoadAssetsMario()
 	sprites->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_RIGHT + 1, 365, 40, 365 + 15, 40 + 15, texMario);
 
 	LPANIMATION ani;
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1);
-	animations->Add(ID_ANI_MARIO_IDLE_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_IDLE_LEFT + 1);
-	animations->Add(ID_ANI_MARIO_IDLE_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1);
-	ani->Add(ID_SPRITE_MARIO_BIG_WALKING_RIGHT + 2);
-	ani->Add(ID_SPRITE_MARIO_BIG_WALKING_RIGHT + 3);
-	animations->Add(ID_ANI_MARIO_WALKING_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_IDLE_LEFT + 1);
-	ani->Add(ID_SPRITE_MARIO_BIG_WALKING_LEFT + 2);
-	ani->Add(ID_SPRITE_MARIO_BIG_WALKING_LEFT + 3);
-	animations->Add(ID_ANI_MARIO_WALKING_LEFT, ani);
-
-	//ani = new CAnimation(50);
-	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 1);
-	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 2);
-	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 3);
-	//animations->Add(ID_ANI_MARIO_RUNNING_RIGHT, ani);
-
-	animations->Add(TEXTURE_ANIMATION_MARIO_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 75);
-
-	// Mario runs faster hence animation speed should be faster
-	ani = new CAnimation(50);	
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 1);
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 2);
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_LEFT + 3);
-	animations->Add(ID_ANI_MARIO_RUNNING_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_JUMP_WALK_RIGHT + 1);
-	animations->Add(ID_ANI_MARIO_JUMP_WALK_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_JUMP_WALK_LEFT + 1);
-	animations->Add(ID_ANI_MARIO_JUMP_WALK_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_JUMP_RUN_RIGHT + 1);
-	animations->Add(ID_ANI_MARIO_JUMP_RUN_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_JUMP_RUN_LEFT + 1);
-	animations->Add(ID_ANI_MARIO_JUMP_RUN_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_SIT_RIGHT + 1);
-	animations->Add(ID_ANI_MARIO_SIT_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_SIT_LEFT + 1);
-	animations->Add(ID_ANI_MARIO_SIT_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_BRACE_RIGHT + 1);
-	animations->Add(ID_ANI_MARIO_BRACE_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_BIG_BRACE_LEFT + 1);
-	animations->Add(ID_ANI_MARIO_BRACE_LEFT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_MARIO_DIE + 1);
-	animations->Add(ID_ANI_MARIO_DIE, ani);
+	animations->Add(TEXTURES_DIR L"\\mario-big-idle-right.png", ID_ANI_MARIO_IDLE_RIGHT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-idle-left.png", ID_ANI_MARIO_IDLE_LEFT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-walking-right.png", ID_ANI_MARIO_WALKING_RIGHT, 2, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-walking-left.png", ID_ANI_MARIO_WALKING_LEFT, 2, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 50);
+	animations->Add(TEXTURES_DIR L"\\mario-big-running-left.png", ID_ANI_MARIO_RUNNING_LEFT, 3, 50);
+	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-right.png", ID_ANI_MARIO_JUMP_WALK_RIGHT, 1, 50);
+	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-left.png", ID_ANI_MARIO_JUMP_WALK_LEFT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-jump-run-right.png", ID_ANI_MARIO_JUMP_RUN_RIGHT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-jump-run-left.png", ID_ANI_MARIO_JUMP_RUN_LEFT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-sit-right.png", ID_ANI_MARIO_SIT_RIGHT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-sit-left.png", ID_ANI_MARIO_SIT_LEFT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-brace-right.png", ID_ANI_MARIO_BRACE_RIGHT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-big-brace-left.png", ID_ANI_MARIO_BRACE_LEFT, 1, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-die.png", ID_ANI_MARIO_DIE, 1, 100);
 
 	//
 	// SMALL MARIO 

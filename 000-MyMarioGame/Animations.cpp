@@ -37,7 +37,7 @@ void CAnimations::Add(LPCWSTR filePath, int animationId, int length, int default
 	int width = texture->getWidth() / length;
 
 	LPANIMATION ani = new CAnimation(defaultTime);
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++) { 
 		//scan every sprite in texture
 		spriteId += i;
 		sprites->Add(spriteId, i * width + i, 0, ((i + 1) * width) - 1 + i, height, texture);
