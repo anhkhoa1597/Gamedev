@@ -1,10 +1,21 @@
 /* =============================================================
-	INTRODUCTION TO MY MARIO GAME PROGRAMMING
-	Version:
-		0.1: Create new project, re-initiate by code from 04-Collision sample
-		0.2: + Add tinyxml2 lib, create class Map, Map1-1 to manager all map and test to make tiled-background
+	INTRODUCTION TO GAME PROGRAMMING SE102
 
+	SAMPLE 04 - COLLISION
 
+	This sample illustrates how to:
+
+		1/ Implement SweptAABB algorithm between moving objects
+		2/ Implement a simple (yet effective) collision frame work, applying on Mario, Brick, Goomba & Coin
+
+	Key functions:
+		CCollision::SweptAABB
+		CCollision::SweptAABBEx
+		CCollision::Scan
+		CCollision::Filter
+		CCollision::Process
+
+		CGameObject::GetBoundingBox
 ================================================================ */
 
 #include <windows.h>

@@ -53,6 +53,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 }
 
+void CMario::OnCollisionWithScreen()
+{
+	float cam_x, cam_y;
+	CGame::GetInstance()->GetCamPos(cam_x, cam_y);
+
+}
+
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);

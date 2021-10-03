@@ -1,22 +1,12 @@
 /* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 04 - COLLISION
-
-	This sample illustrates how to:
-
-		1/ Implement SweptAABB algorithm between moving objects
-		2/ Implement a simple (yet effective) collision frame work, applying on Mario, Brick, Goomba & Coin
-
-	Key functions: 
-		CCollision::SweptAABB
-		CCollision::SweptAABBEx
-		CCollision::Scan
-		CCollision::Filter
-		CCollision::Process
-
-		CGameObject::GetBoundingBox
-		
+	INTRODUCTION TO MY MARIO GAME PROGRAMMING
+	Version:
+		0.1: Create new project, re-initiate by code from 04-Collision sample
+		0.2: Add tinyxml2 lib, create class Map, Map1-1 to manager all map and test to make tiled-background
+		0.3: + Change the logic of camera: 
+					- camera follow to mario if move right 
+					- camera dont follow when mario move left
+			 + Create function "CAnimations::Add" to add an animation from a texture animate
 ================================================================ */
 
 #include <windows.h>
@@ -50,12 +40,13 @@
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
-
 #define TEXTURES_DIR L"textures"
 #define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
 #define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
+#define TEXTURE_ANIMATION_MARIO_DIR TEXTURES_DIR "\\mario-animations"
+#define TEXTURE_PATH_ANIMATION_MARIO_RUNNING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-running-right.png"
 
 CGame *game;
 CMario *mario;
@@ -175,11 +166,13 @@ void LoadAssetsMario()
 	ani->Add(ID_SPRITE_MARIO_BIG_WALKING_LEFT + 3);
 	animations->Add(ID_ANI_MARIO_WALKING_LEFT, ani);
 
-	ani = new CAnimation(50);
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 1);
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 2);
-	ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 3);
-	animations->Add(ID_ANI_MARIO_RUNNING_RIGHT, ani);
+	//ani = new CAnimation(50);
+	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 1);
+	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 2);
+	//ani->Add(ID_SPRITE_MARIO_BIG_RUNNING_RIGHT + 3);
+	//animations->Add(ID_ANI_MARIO_RUNNING_RIGHT, ani);
+
+	animations->Add(TEXTURE_ANIMATION_MARIO_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 75);
 
 	// Mario runs faster hence animation speed should be faster
 	ani = new CAnimation(50);	
@@ -360,7 +353,6 @@ void LoadAssetsOther()
 void LoadResources()
 {
 	CTextures* textures = CTextures::GetInstance();
-
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
@@ -508,9 +500,19 @@ void Update(DWORD dt)
 
 	// Update camera to follow mario
 	float cx, cy;
+	float current_cx, current_cy;
 	mario->GetPosition(cx, cy);
 
-	cx -= SCREEN_WIDTH / 2;
+	////camera follow to mario at the center of screen.
+	//cx -= SCREEN_WIDTH / 2; 
+
+	//camera follow to mario at the middle of 6th tile and camera not follow when mario walk to left
+	cx -= 88;
+	CGame::GetInstance()->GetCamPos(current_cx, current_cy);
+	if (current_cx <= cx) current_cx = cx;
+	else cx = current_cx;
+
+	//DebugOut(L"cx: %0.1f, current: %0.1f\n", cx, current_cx);
 	cy = 0;
 	//cy -= SCREEN_HEIGHT / 2;
 
