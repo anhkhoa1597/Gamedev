@@ -36,8 +36,9 @@
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255,0.0f)
-#define SCREEN_WIDTH 448
+#define SCREEN_WIDTH 450
 #define SCREEN_HEIGHT 278
+//#define SCREEN_HEIGHT 600
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
@@ -82,8 +83,6 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMIES);
 	textures->Add(ID_TILESET_MAP, MAP_TILESET_PATH);
 
-
-
 	CSprites * sprites = CSprites::GetInstance();
 	//load tiled-background
 	LPTEXTURE tileSet = textures->Get(ID_TILESET_MAP);
@@ -117,7 +116,6 @@ void LoadResources()
 	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
 	sprites->Add(30001, 5, 14, 21, 30, texEnemy);
 	sprites->Add(30002, 25, 14, 41, 30, texEnemy);
-	
 
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
@@ -294,7 +292,7 @@ int WINAPI WinMain(
 
 	LoadResources();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, 2 * SCREEN_WIDTH, 2 * SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

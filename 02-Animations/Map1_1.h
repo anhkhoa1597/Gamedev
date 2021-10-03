@@ -10,5 +10,4 @@ class Map1_1 : public Map
 public:
 	Map1_1();
 	~Map1_1();
-	void Render();
 };

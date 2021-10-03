@@ -13,7 +13,6 @@ using namespace std;
 class Map
 {
 	int Next;
-protected:
 	int width;
 	int height;
 	int tile_width;

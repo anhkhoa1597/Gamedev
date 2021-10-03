@@ -53,5 +53,15 @@ void Map::Load(string filepath)
 
 void Map::Render()
 {
-    
+	for (int i = 0; i < this->height; i++)
+	{
+		for (int j = 0; j < this->width; j++)
+		{
+			if (tiled_background[i][j] != 0)
+			{
+				LPSPRITE sprite = CSprites::GetInstance()->Get(tiled_background[i][j]);
+				sprite->Draw(tile_width / 2 + j * tile_width, tile_height / 2 + i * tile_height);
+			}
+		}
+	}
 }

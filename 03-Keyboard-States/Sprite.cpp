@@ -27,26 +27,14 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
-void CSprite::FlipX() 
-{
-	//D3DXMATRIX matScale;
-	//D3DXMatrixScaling(&matScale, 2.0f, 2.0f, 1.0f);
-	//this->sprite.matWorld = (this->matScaling * matScale);
-	int spriteWidth = (this->right - this->left + 1);
-	int spriteHeight = (this->bottom - this->top + 1);
-	D3DXMatrixScaling(&this->matScaling, (FLOAT)-spriteWidth, (FLOAT)-spriteHeight, 1.0f);
-	this->sprite.matWorld = this->matScaling;
-
-	//g->GetSpriteHandler()->SetViewTransform(&matScale);
-}
-
 void CSprite::Draw(float x, float y)
 {
 	CGame* g = CGame::GetInstance();
+
 	D3DXMATRIX matTranslation;
 	D3DXMatrixTranslation(&matTranslation, x, (g->GetBackBufferHeight() - y), 0.1f);
 	this->sprite.matWorld = (this->matScaling * matTranslation);
-	
+
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
 
