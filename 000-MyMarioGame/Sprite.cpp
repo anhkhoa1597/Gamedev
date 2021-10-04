@@ -15,8 +15,8 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	// Set the sprite’s shader resource view
 	sprite.pTexture = tex->getShaderResourceView();
 
-	sprite.TexCoord.x = this->left / texWidth;
-	sprite.TexCoord.y = this->top / texHeight;
+	sprite.TexCoord.x = this->left / (texWidth - 1);
+	sprite.TexCoord.y = this->top / (texHeight - 1);
 
 	int spriteWidth = (this->right - this->left + 1);
 	int spriteHeight = (this->bottom - this->top + 1);

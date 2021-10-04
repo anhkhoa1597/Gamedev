@@ -125,9 +125,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\02-Sprite\Animation.cpp" />
-    <ClCompile Include="..\02-Sprite\Animations.cpp" />
-    <ClCompile Include="..\02-Sprite\Sprite.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -135,6 +134,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>

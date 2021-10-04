@@ -196,7 +196,9 @@ int CMario::GetAniIdBig()
 		else
 			if (vx == 0)
 			{
-				if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+				if (nx > 0)
+					//aniId = ID_ANI_MARIO_IDLE_RIGHT;
+					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
 				else aniId = ID_ANI_MARIO_IDLE_LEFT;
 			}
 			else if (vx > 0)

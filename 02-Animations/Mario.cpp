@@ -8,22 +8,22 @@ CMario::CMario(float x, float y, float vx):CGameObject(x, y)
 
 void CMario::Update(DWORD dt)
 {
-	x += vx*dt;
+	//x += vx*dt;
 	float middleOfMario = MARIO_WIDTH / 2;
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	if (x <= middleOfMario || x >= BackBufferWidth - middleOfMario) {
+	//if (x <= middleOfMario || x >= BackBufferWidth - middleOfMario) {
 
-		vx = -vx;
+	//	vx = -vx;
 
-		if (x <= middleOfMario)
-		{
-			x = middleOfMario;
-		}
-		else if (x >= BackBufferWidth - middleOfMario)
-		{
-			x = (float)(BackBufferWidth - middleOfMario);
-		}
-	}
+	//	if (x <= middleOfMario)
+	//	{
+	//		x = middleOfMario;
+	//	}
+	//	else if (x >= BackBufferWidth - middleOfMario)
+	//	{
+	//		x = (float)(BackBufferWidth - middleOfMario);
+	//	}
+	//}
 }
 
 void CMario::Render()
@@ -43,7 +43,7 @@ void CMario::Render()
 
 void CBrick::Render() {
 
-	LPANIMATION ani = CAnimations::GetInstance()->Get(510);
+	LPANIMATION ani = CAnimations::GetInstance()->Get(501);
 
 	ani->Render(x, y);
 

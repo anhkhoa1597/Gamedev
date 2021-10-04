@@ -119,6 +119,7 @@ void LoadResources()
 
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
+	//animations->Add(TEXTURES_DIR L"\\mario-big-running-right.png", 10000, 3, 2000);
 
 	ani = new CAnimation(SPEED_MARIO_ANI);
 	ani->Add(10001);
