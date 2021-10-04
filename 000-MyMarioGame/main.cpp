@@ -79,7 +79,7 @@ void LoadAssetsMario()
 	animations->Add(TEXTURES_DIR L"\\mario-big-idle-left.png", ID_ANI_MARIO_IDLE_LEFT, 1, 100);
 	animations->Add(TEXTURES_DIR L"\\mario-big-walking-right.png", ID_ANI_MARIO_WALKING_RIGHT, 2, 100);
 	animations->Add(TEXTURES_DIR L"\\mario-big-walking-left.png", ID_ANI_MARIO_WALKING_LEFT, 2, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 19, 27, 200);
+	animations->Add(TEXTURES_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 200);
 	animations->Add(TEXTURES_DIR L"\\mario-big-running-left.png", ID_ANI_MARIO_RUNNING_LEFT, 3, 50);
 	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-right.png", ID_ANI_MARIO_JUMP_WALK_RIGHT, 1, 50);
 	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-left.png", ID_ANI_MARIO_JUMP_WALK_LEFT, 1, 100);
@@ -95,8 +95,8 @@ void LoadAssetsMario()
 	//
 	animations->Add(TEXTURES_DIR L"\\mario-small-idle-right.png", ID_ANI_MARIO_SMALL_IDLE_RIGHT, 1, 100);
 	animations->Add(TEXTURES_DIR L"\\mario-small-idle-left.png", ID_ANI_MARIO_SMALL_IDLE_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-walking-right.png", ID_ANI_MARIO_SMALL_WALKING_RIGHT, 3, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-walking-left.png", ID_ANI_MARIO_SMALL_WALKING_LEFT, 3, 100);
+	animations->Add(TEXTURES_DIR L"\\mario-small-walking-right.png", ID_ANI_MARIO_SMALL_WALKING_RIGHT, 3, 150);
+	animations->Add(TEXTURES_DIR L"\\mario-small-walking-left.png", ID_ANI_MARIO_SMALL_WALKING_LEFT, 3, 150);
 	animations->Add(TEXTURES_DIR L"\\mario-small-running-right.png", ID_ANI_MARIO_SMALL_RUNNING_RIGHT, 3, 50);
 	animations->Add(TEXTURES_DIR L"\\mario-small-running-left.png", ID_ANI_MARIO_SMALL_RUNNING_LEFT, 3, 50);
 	animations->Add(TEXTURES_DIR L"\\mario-small-brace-right.png", ID_ANI_MARIO_SMALL_BRACE_RIGHT, 1, 100);
@@ -338,9 +338,9 @@ void Update(DWORD dt)
 
 	//camera follow to mario at the middle of 6th tile and camera not follow when mario walk to left
 	cx -= 88;
-	CGame::GetInstance()->GetCamPos(current_cx, current_cy);
-	if (current_cx <= cx) current_cx = cx;
-	else cx = current_cx;
+	//CGame::GetInstance()->GetCamPos(current_cx, current_cy);
+	//if (current_cx <= cx) current_cx = cx;
+	//else cx = current_cx;
 
 	//DebugOut(L"cx: %0.1f, current: %0.1f\n", cx, current_cx);
 	cy = 0;

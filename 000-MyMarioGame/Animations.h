@@ -13,7 +13,6 @@ class CAnimations
 
 public:
 	void Add(int id, LPANIMATION ani);
-	void Add(LPCWSTR filePath, int id, int length, int spriteWidth, int spriteHeight, int defaultTime);
 	void Add(LPCWSTR filePath, int id, int length, int defaultTime);
 	LPANIMATION Get(int id);
 
