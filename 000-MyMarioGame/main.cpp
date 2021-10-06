@@ -64,6 +64,8 @@ void LoadTileSet()
 {
 	CTextures* textures = CTextures::GetInstance();
 	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
 	//load tiled-background
 	LPTEXTURE tileSet = textures->Get(ID_TILESET_MAP);
 	for (int i = 0; i < 768; i++)
@@ -73,6 +75,9 @@ void LoadTileSet()
 		int t = (i / 48) * 16;
 		int b = 15 + (i / 48) * 16;
 		sprites->Add(i + 1, l, t, r, b, tileSet);
+		LPANIMATION ani = new CAnimation(100);
+		ani->Add(i + 1);
+		animations->Add(i + 1, ani);
 	}
 }
 
@@ -212,8 +217,8 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 20.0f
-#define MARIO_START_Y 10.0f
+#define MARIO_START_X 88.0f
+#define MARIO_START_Y 150.0f
 
 #define BRICK_X 0.0f
 #define GOOMBA_X 200.0f
@@ -231,6 +236,7 @@ void Reload()
 	ClearScene();
 
 	currentMap = new Map1_1();
+	currentMap->Load(TILEDMAP1_1, objects);
 
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
@@ -340,7 +346,7 @@ void Update(DWORD dt)
 
 	// Update camera to follow mario
 	float cx, cy;
-	float current_cx, current_cy;
+	//float current_cx, current_cy;
 	mario->GetPosition(cx, cy);
 
 	////camera follow to mario at the center of screen.
@@ -393,7 +399,7 @@ void Render()
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
-	WNDCLASSEX wc;
+	WNDCLASSEX wc{};
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	wc.style = CS_HREDRAW | CS_VREDRAW;
@@ -495,7 +501,7 @@ int WINAPI WinMain(
 	LoadResources();
 	Reload();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

@@ -1,7 +1,5 @@
 #include "Map.h"
 
-//list<LPGAMEOBJECT> objects;
-
 void parse_tiles(const std::string& gid_list, int height, std::vector<std::vector<unsigned int>>& tiled_background) {
     std::vector<std::vector<unsigned int> > tiles(height);
     std::string value;
@@ -22,14 +20,18 @@ void parse_tiles(const std::string& gid_list, int height, std::vector<std::vecto
 			value += gid_list[index];
 		}
     }
-	tiles[row - 1].push_back(std::stoi(value));
-
+	row = row - 1;
+	tiles[row].push_back(std::stoi(value));
     tiled_background = tiles;
 }
 
 Map::Map()
 {
 	Next = -1;
+	width = 0;
+	height = 0;
+	tile_width = 0;
+	tile_height = 0;
 }
 
 Map::~Map()
@@ -38,15 +40,17 @@ Map::~Map()
 }
 
 
-void Map::Load(string filepath)
+void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 {
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(filepath.c_str());
 	tinyxml2::XMLElement* map = doc.FirstChildElement("map");
-	map->QueryIntAttribute("width", &width);
-	map->QueryIntAttribute("height", &height);
-	map->QueryIntAttribute("tilewidth", &tile_width);
-	map->QueryIntAttribute("tileheight", &tile_height);
+	{
+		map->QueryIntAttribute("width", &width);
+		map->QueryIntAttribute("height", &height);
+		map->QueryIntAttribute("tilewidth", &tile_width);
+		map->QueryIntAttribute("tileheight", &tile_height);
+	}
 	tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
 	while (pLayer != nullptr)
 	{
@@ -59,7 +63,29 @@ void Map::Load(string filepath)
 		}
 		pLayer = pLayer->NextSiblingElement("layer");
 	}
-
+	tinyxml2::XMLElement* pObjectGroup = map->FirstChildElement("objectgroup");
+	while (pObjectGroup != nullptr)
+	{
+		string name = pObjectGroup->Attribute("name");
+		tinyxml2::XMLElement* pObject = pObjectGroup->FirstChildElement("object");
+		while (pObject != nullptr)
+		{
+			float x, y, width, height;
+			pObject->QueryFloatAttribute("x", &x);
+			pObject->QueryFloatAttribute("y", &y);
+			pObject->QueryFloatAttribute("width", &width);
+			pObject->QueryFloatAttribute("height", &height);
+			if (name == "ground") {
+				CGround* ground = new CGround(x, y, width, height);
+				objects.push_back(ground);
+			}
+			else if (name == "pipes") {}
+			else if (name == "bricks") {}
+			else if (name == "q_bricks") {}
+			pObject = pObject->NextSiblingElement("object");
+		}
+		pObjectGroup = pObjectGroup->NextSiblingElement("objectgroup");
+	}
 }
 
 void Map::Render()
@@ -70,8 +96,8 @@ void Map::Render()
 		{
 			if (tiled_background[i][j] != 0)
 			{
-				LPSPRITE sprite = CSprites::GetInstance()->Get(tiled_background[i][j]);
-				sprite->Draw(tile_width/2 + j * tile_width, tile_height/2 + i * tile_height);
+				CAnimations* animations = CAnimations::GetInstance();
+				animations->Get(tiled_background[i][j])->Render(j * 16, i * 16);
 			}
 		}
 	}

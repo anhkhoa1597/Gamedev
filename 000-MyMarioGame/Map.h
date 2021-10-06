@@ -1,15 +1,21 @@
 #pragma once
+
+#include <Windows.h>
 #include <d3dx10.h>
 #include <vector>
 #include <string>
+#include <list>
 
+#include "Collision.h"
+#include "Game.h"
 #include "Sprites.h"
-
+#include "GameObject.h"
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "Ground.h"
 
 #include "debug.h"
 #include "tinyxml2.h"
@@ -30,5 +36,5 @@ public:
 	Map();
 	virtual ~Map();
 	virtual void Render();
-	void Load(string filePath);
+	void Load(string filePath, list<LPGAMEOBJECT> &objects);
 };
