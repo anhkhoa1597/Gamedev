@@ -1,0 +1,58 @@
+#pragma once
+//
+// This file contains all path resource of game
+//
+
+
+#define TEXTURES_DIR L"textures"
+#define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
+#define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
+#define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies.png"
+#define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
+#define TEXTURE_ANIMATION_MARIO_DIR TEXTURES_DIR "\\mario-animations"
+#define MAP_TILESET_PATH TEXTURES_DIR "\\TileSetMarioBrosTransparent.png"
+
+#pragma region MARIO
+//BIG MARIO
+#define TEXTURE_PATH_ANI_MARIO_BIG_IDLE_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-idle-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_IDLE_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-idle-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_WALKING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-walking-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_WALKING_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-walking-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_RUNNING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-running-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_RUNNING_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-running-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_JUMP_WALK_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-jump-walk-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_JUMP_WALK_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-jump-walk-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_JUMP_RUN_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-jump-run-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_JUMP_RUN_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-jump-run-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_SIT_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-sit-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_SIT_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-sit-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_BIG_BRACE_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-brace-right.png"
+#define TEXTURE_PATH_ANI_MARIO_BIG_BRACE_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-big-brace-left.png"
+
+//SMALL MARIO
+#define TEXTURE_PATH_ANI_MARIO_SMALL_IDLE_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-idle-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_IDLE_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-idle-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_SMALL_WALKING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-walking-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_WALKING_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-walking-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_SMALL_RUNNING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-running-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_RUNNING_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-running-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_WALK_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-jump-walk-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_WALK_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-jump-walk-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_RUN_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-jump-run-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_RUN_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-jump-run-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_SMALL_BRACE_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-brace-right.png"
+#define TEXTURE_PATH_ANI_MARIO_SMALL_BRACE_LEFT TEXTURE_ANIMATION_MARIO_DIR "\\mario-small-brace-left.png"
+
+#define TEXTURE_PATH_ANI_MARIO_DIE TEXTURE_ANIMATION_MARIO_DIR "\\mario-die.png"
+#pragma endregion 

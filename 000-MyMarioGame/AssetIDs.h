@@ -67,6 +67,8 @@
 
 #pragma endregion 
 
+#define ID_TILESET_MAP 100000
+
 #define ID_SPRITE_BRICK 20000
 
 #define ID_SPRITE_GOOMBA 30000

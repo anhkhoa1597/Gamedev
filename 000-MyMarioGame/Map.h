@@ -1,10 +1,18 @@
 #pragma once
 #include <d3dx10.h>
 #include <vector>
-#include "Sprites.h"
-#include "tinyxml2.h"
 #include <string>
 
+#include "Sprites.h"
+
+#include "Mario.h"
+#include "Brick.h"
+#include "Goomba.h"
+#include "Coin.h"
+#include "Platform.h"
+
+#include "debug.h"
+#include "tinyxml2.h"
 using namespace std;
 
 /*

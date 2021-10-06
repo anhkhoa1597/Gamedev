@@ -12,6 +12,9 @@ CSprites* CSprites::GetInstance()
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPTEXTURE tex)
 {
+	if (sprites[id] != NULL)
+		DebugOut(L"[WARNING] Sprite %d already exists\n", id);
+
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
 	sprites[id] = s;
 }

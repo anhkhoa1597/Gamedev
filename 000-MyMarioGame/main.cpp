@@ -6,7 +6,8 @@
 		0.3: + Change the logic of camera: 
 					- camera follow to mario if move right 
 					- camera dont follow when mario move left
-			 + Create function "CAnimations::Add" to add an animation from a texture animate
+			 + Create function CAnimations::Add to add an animation from a texture animate
+		0.4: fix the Draw function, fix anamtion are blurred, update function Canimation::Add
 ================================================================ */
 
 #include <windows.h>
@@ -14,22 +15,18 @@
 #include <d3dx10.h>
 #include <list>
 
-#include "debug.h"
-#include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
 #include "Animation.h"
 #include "Animations.h"
 
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
-#include "Coin.h"
-#include "Platform.h"
+#include "Game.h"
+#include "Map1_1.h"
 
 #include "SampleKeyEventHandler.h"
 
 #include "AssetIDs.h"
+#include "AssetPaths.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -37,19 +34,13 @@
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 500
+#define SCREEN_HEIGHT 270
 
-#define TEXTURES_DIR L"textures"
-#define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
-#define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
-#define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies.png"
-#define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
-#define TEXTURE_ANIMATION_MARIO_DIR TEXTURES_DIR "\\mario-animations"
-#define TEXTURE_PATH_ANIMATION_MARIO_RUNNING_RIGHT TEXTURE_ANIMATION_MARIO_DIR "\\mario-running-right.png"
 
 CGame *game;
 CMario *mario;
+Map* currentMap;
 
 list<LPGAMEOBJECT> objects;
 
@@ -68,43 +59,58 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+void LoadTileSet()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	//load tiled-background
+	LPTEXTURE tileSet = textures->Get(ID_TILESET_MAP);
+	for (int i = 0; i < 768; i++)
+	{
+		int l = (i % 48) * 16;
+		int r = 15 + (i % 48) * 16;
+		int t = (i / 48) * 16;
+		int b = 15 + (i / 48) * 16;
+		sprites->Add(i + 1, l, t, r, b, tileSet);
+	}
+}
+
 void LoadAssetsMario()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	LPANIMATION ani;
 	//
 	// BIG MARIO 
 	//
-	animations->Add(TEXTURES_DIR L"\\mario-big-idle-right.png", ID_ANI_MARIO_IDLE_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-idle-left.png", ID_ANI_MARIO_IDLE_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-walking-right.png", ID_ANI_MARIO_WALKING_RIGHT, 2, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-walking-left.png", ID_ANI_MARIO_WALKING_LEFT, 2, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-running-right.png", ID_ANI_MARIO_RUNNING_RIGHT, 3, 200);
-	animations->Add(TEXTURES_DIR L"\\mario-big-running-left.png", ID_ANI_MARIO_RUNNING_LEFT, 3, 50);
-	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-right.png", ID_ANI_MARIO_JUMP_WALK_RIGHT, 1, 50);
-	animations->Add(TEXTURES_DIR L"\\mario-big-jump-walk-left.png", ID_ANI_MARIO_JUMP_WALK_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-jump-run-right.png", ID_ANI_MARIO_JUMP_RUN_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-jump-run-left.png", ID_ANI_MARIO_JUMP_RUN_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-sit-right.png", ID_ANI_MARIO_SIT_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-sit-left.png", ID_ANI_MARIO_SIT_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-brace-right.png", ID_ANI_MARIO_BRACE_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-big-brace-left.png", ID_ANI_MARIO_BRACE_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-die.png", ID_ANI_MARIO_DIE, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_IDLE_RIGHT, ID_ANI_MARIO_IDLE_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_IDLE_LEFT, ID_ANI_MARIO_IDLE_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_WALKING_RIGHT, ID_ANI_MARIO_WALKING_RIGHT, 2, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_WALKING_LEFT, ID_ANI_MARIO_WALKING_LEFT, 2, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_RUNNING_RIGHT, ID_ANI_MARIO_RUNNING_RIGHT, 3, 50);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_RUNNING_LEFT, ID_ANI_MARIO_RUNNING_LEFT, 3, 50);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_JUMP_WALK_RIGHT, ID_ANI_MARIO_JUMP_WALK_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_JUMP_WALK_LEFT, ID_ANI_MARIO_JUMP_WALK_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_JUMP_RUN_RIGHT, ID_ANI_MARIO_JUMP_RUN_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_JUMP_RUN_LEFT, ID_ANI_MARIO_JUMP_RUN_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_SIT_RIGHT, ID_ANI_MARIO_SIT_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_SIT_LEFT, ID_ANI_MARIO_SIT_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_BRACE_RIGHT, ID_ANI_MARIO_BRACE_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_BIG_BRACE_LEFT, ID_ANI_MARIO_BRACE_LEFT, 1, 100);
 	//
 	// SMALL MARIO 
 	//
-	animations->Add(TEXTURES_DIR L"\\mario-small-idle-right.png", ID_ANI_MARIO_SMALL_IDLE_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-idle-left.png", ID_ANI_MARIO_SMALL_IDLE_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-walking-right.png", ID_ANI_MARIO_SMALL_WALKING_RIGHT, 3, 150);
-	animations->Add(TEXTURES_DIR L"\\mario-small-walking-left.png", ID_ANI_MARIO_SMALL_WALKING_LEFT, 3, 150);
-	animations->Add(TEXTURES_DIR L"\\mario-small-running-right.png", ID_ANI_MARIO_SMALL_RUNNING_RIGHT, 3, 50);
-	animations->Add(TEXTURES_DIR L"\\mario-small-running-left.png", ID_ANI_MARIO_SMALL_RUNNING_LEFT, 3, 50);
-	animations->Add(TEXTURES_DIR L"\\mario-small-brace-right.png", ID_ANI_MARIO_SMALL_BRACE_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-brace-left.png", ID_ANI_MARIO_SMALL_BRACE_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-jump-walk-right.png", ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-jump-walk-left.png", ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-jump-run-right.png", ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, 1, 100);
-	animations->Add(TEXTURES_DIR L"\\mario-small-jump-run-left.png", ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_IDLE_RIGHT, ID_ANI_MARIO_SMALL_IDLE_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_IDLE_LEFT, ID_ANI_MARIO_SMALL_IDLE_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_WALKING_RIGHT, ID_ANI_MARIO_SMALL_WALKING_RIGHT, 3, 150);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_WALKING_LEFT, ID_ANI_MARIO_SMALL_WALKING_LEFT, 3, 150);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_RUNNING_RIGHT, ID_ANI_MARIO_SMALL_RUNNING_RIGHT, 3, 50);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_RUNNING_LEFT, ID_ANI_MARIO_SMALL_RUNNING_LEFT, 3, 50);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_WALK_RIGHT, ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_WALK_LEFT, ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_JUMP_RUN_LEFT, ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_BRACE_RIGHT, ID_ANI_MARIO_SMALL_BRACE_RIGHT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_SMALL_BRACE_LEFT, ID_ANI_MARIO_SMALL_BRACE_LEFT, 1, 100);
+	animations->Add(TEXTURE_PATH_ANI_MARIO_DIE, ID_ANI_MARIO_DIE, 1, 100);
 }
 
 void LoadAssetsGoomba()
@@ -183,11 +189,11 @@ void LoadAssetsOther()
 void LoadResources()
 {
 	CTextures* textures = CTextures::GetInstance();
-	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
-
+	textures->Add(ID_TILESET_MAP, MAP_TILESET_PATH);
+	LoadTileSet();
 	LoadAssetsMario();
 	LoadAssetsGoomba();
 	LoadAssetsBrick();
@@ -222,6 +228,8 @@ void ClearScene()
 void Reload()
 {
 	ClearScene();
+
+	currentMap = new Map1_1();
 
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
@@ -272,7 +280,8 @@ void Reload()
 
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
-
+	
+	//GOOMBA
 	for (int j = 0; j < 1; j++)
 	{
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
@@ -375,6 +384,7 @@ void Render()
 	{
 		(*i)->Render();
 	}
+	currentMap->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
