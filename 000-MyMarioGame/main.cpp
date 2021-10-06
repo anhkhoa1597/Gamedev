@@ -8,6 +8,7 @@
 					- camera dont follow when mario move left
 			 + Create function CAnimations::Add to add an animation from a texture animate
 		0.4: fix the Draw function, fix anamtion are blurred, update function Canimation::Add
+		0.5: load tiled-map, fix animation blurred, update animation texture mario
 ================================================================ */
 
 #include <windows.h>
