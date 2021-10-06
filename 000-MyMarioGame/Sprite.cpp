@@ -41,8 +41,11 @@ void CSprite::Draw(float x, float y)
 
 	D3DXMATRIX matTranslation;
 	
-	x = (FLOAT)floor(x);
-	y = (FLOAT)floor(y);
+	float translationX = (this->right - this->left + 1) / 2;
+	float translationY = (this->bottom - this->left + 1) / 2;
+
+	x = (FLOAT)floor(x + translationX);
+	y = (FLOAT)floor(y + translationX);
 
 	D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
 

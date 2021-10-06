@@ -76,11 +76,17 @@ void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 			pObject->QueryFloatAttribute("width", &width);
 			pObject->QueryFloatAttribute("height", &height);
 			if (name == "ground") {
+				DebugOut(L"x=%.2f, y=%.2f\n", x, y);
 				CGround* ground = new CGround(x, y, width, height);
 				objects.push_back(ground);
 			}
-			else if (name == "pipes") {}
-			else if (name == "bricks") {}
+			else if (name == "pipes") {
+			
+			}
+			else if (name == "bricks") {
+				CBrick* brick = new CBrick(x, y);
+				objects.push_back(brick);
+			}
 			else if (name == "q_bricks") {}
 			pObject = pObject->NextSiblingElement("object");
 		}
@@ -90,14 +96,16 @@ void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 
 void Map::Render()
 {
-	for (int i = 0; i < this->height; i++)
+	for (int row = 0; row < this->height; row++)
 	{
-		for (int j = 0; j < this->width; j++)
+		for (int column = 0; column < this->width; column++)
 		{
-			if (tiled_background[i][j] != 0)
+			if (tiled_background[row][column] != 0)
 			{
 				CAnimations* animations = CAnimations::GetInstance();
-				animations->Get(tiled_background[i][j])->Render(j * 16, i * 16);
+				float x = column * tile_width;
+				float y = row * tile_height;
+				animations->Get(tiled_background[row][column])->Render(x, y);
 			}
 		}
 	}

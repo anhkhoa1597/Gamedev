@@ -9,6 +9,8 @@
 			 + Create function CAnimations::Add to add an animation from a texture animate
 		0.4: fix the Draw function, fix anamtion are blurred, update function Canimation::Add
 		0.5: load tiled-map, fix animation blurred, update animation texture mario
+		0.6: load object, load boundingbox of object
+		0.7: add attributes: translationX, translationY in to function CSprite::Draw to draw sprite correctly
 ================================================================ */
 
 #include <windows.h>
@@ -201,10 +203,10 @@ void LoadResources()
 	textures->Add(ID_TILESET_MAP, MAP_TILESET_PATH);
 	LoadTileSet();
 	LoadAssetsMario();
-	LoadAssetsGoomba();
-	LoadAssetsBrick();
-	LoadAssetsCoin();
-	LoadAssetsOther();
+	//LoadAssetsGoomba();
+	//LoadAssetsBrick();
+	//LoadAssetsCoin();
+	//LoadAssetsOther();
 }
 
 void ClearScene()
@@ -217,7 +219,8 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 88.0f
+//#define MARIO_START_X 88.0f
+#define MARIO_START_X 24.0f
 #define MARIO_START_Y 150.0f
 
 #define BRICK_X 0.0f
@@ -238,69 +241,70 @@ void Reload()
 	currentMap = new Map1_1();
 	currentMap->Load(TILEDMAP1_1, objects);
 
-	// Main ground
-	for (int i = 0; i < NUM_BRICKS; i++)
-	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
-		objects.push_back(b);
-	}
+	//// Main ground
+	//for (int i = 0; i < NUM_BRICKS; i++)
+	//{
+	//	CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
+	//	objects.push_back(b);
+	//}
 
-	// Short, low platform
-	for (int i = 1; i < 3; i++)
-	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y - 44.0f);
-		objects.push_back(b);
-	}
+	//// Short, low platform
+	//for (int i = 1; i < 3; i++)
+	//{
+	//	CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y - 44.0f);
+	//	objects.push_back(b);
+	//}
 
-	// Vertical column 1
-	for (int i = 0; i < 10; i++)
-	{
-		CBrick* b = new CBrick(0, BRICK_Y - i * BRICK_WIDTH);
-		objects.push_back(b);
-	}
+	//// Vertical column 1
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	CBrick* b = new CBrick(0, BRICK_Y - i * BRICK_WIDTH);
+	//	objects.push_back(b);
+	//}
 
-	// Vertical column 2
-	for (int i = 1; i < 3; i++)
-	{
-		CBrick* b = new CBrick(BRICK_X + 300.0f, BRICK_Y - i * BRICK_WIDTH);
-		objects.push_back(b);
-	}
+	//// Vertical column 2
+	//for (int i = 1; i < 3; i++)
+	//{
+	//	CBrick* b = new CBrick(BRICK_X + 300.0f, BRICK_Y - i * BRICK_WIDTH);
+	//	objects.push_back(b);
+	//}
 
-	// Vertical column 3
-	for (int i = 1; i < 4; i++)
-	{
-		CBrick* b = new CBrick(BRICK_X + 400.0f, BRICK_Y - i * BRICK_WIDTH);
-		objects.push_back(b);
-	}
+	//// Vertical column 3
+	//for (int i = 1; i < 4; i++)
+	//{
+	//	CBrick* b = new CBrick(BRICK_X + 400.0f, BRICK_Y - i * BRICK_WIDTH);
+	//	objects.push_back(b);
+	//}
 
-	// Vertical column 4
-	for (int i = 1; i < 5; i++)
-	{
-		CBrick* b = new CBrick(BRICK_X + 500.0f, BRICK_Y - i * BRICK_WIDTH);
-		objects.push_back(b);
-	}
+	//// Vertical column 4
+	//for (int i = 1; i < 5; i++)
+	//{
+	//	CBrick* b = new CBrick(BRICK_X + 500.0f, BRICK_Y - i * BRICK_WIDTH);
+	//	objects.push_back(b);
+	//}
 
-	// Second cloud platform 
-	CPlatform* p = new CPlatform(90.0f, GROUND_Y - 74.0f,
-		16, 15, 16, ID_SPRITE_CLOUD_BEGIN, ID_SPRITE_CLOUD_MIDDLE, ID_SPRITE_CLOUD_END);
-	objects.push_back(p);
+	//// Second cloud platform 
+	//CPlatform* p = new CPlatform(90.0f, GROUND_Y - 74.0f,
+	//	16, 15, 16, ID_SPRITE_CLOUD_BEGIN, ID_SPRITE_CLOUD_MIDDLE, ID_SPRITE_CLOUD_END);
+	//objects.push_back(p);
 
+	// Mario
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 	
-	//GOOMBA
-	for (int j = 0; j < 1; j++)
-	{
-		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
-		objects.push_back(goomba);
-	}
+	////GOOMBA
+	//for (int j = 0; j < 1; j++)
+	//{
+	//	CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
+	//	objects.push_back(goomba);
+	//}
 
-	// COINS 
-	for (int i = 0; i < 10; i++)
-	{
-		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
-		objects.push_back(c);
-	}
+	//// COINS 
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
+	//	objects.push_back(c);
+	//}
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
@@ -353,7 +357,7 @@ void Update(DWORD dt)
 	//cx -= SCREEN_WIDTH / 2; 
 
 	//camera follow to mario at the middle of 6th tile and camera not follow when mario walk to left
-	cx -= 88;
+	cx -= 80;
 	//CGame::GetInstance()->GetCamPos(current_cx, current_cy);
 	//if (current_cx <= cx) current_cx = cx;
 	//else cx = current_cx;
@@ -385,13 +389,12 @@ void Render()
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
-
+	currentMap->Render();
 	list<LPGAMEOBJECT>::iterator i;
 	for (i = objects.begin(); i != objects.end(); ++i)
 	{
 		(*i)->Render();
 	}
-	currentMap->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);

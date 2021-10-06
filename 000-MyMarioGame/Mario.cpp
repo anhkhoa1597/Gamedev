@@ -234,7 +234,7 @@ void CMario::Render()
 
 	RenderBoundingBox();
 	
-	DebugOutTitle(L"Coins: %d", coin);
+	DebugOutTitle(L"x: %.2f", x);
 }
 
 //logic

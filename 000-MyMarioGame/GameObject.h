@@ -20,6 +20,9 @@ protected:
 	float x; 
 	float y;
 
+	float translationX;
+	float translationY;
+
 	float vx;
 	float vy;
 
