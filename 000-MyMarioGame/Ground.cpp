@@ -2,7 +2,7 @@
 
 void CGround::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -232,7 +232,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	
 	DebugOutTitle(L"x: %.2f", x);
 }
