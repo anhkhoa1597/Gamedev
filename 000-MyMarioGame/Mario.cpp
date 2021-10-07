@@ -231,10 +231,9 @@ void CMario::Render()
 		aniId = GetAniIdSmall();
 
 	animations->Get(aniId)->Render(x, y);
-
-	//RenderBoundingBox();
+	DebugOutTitle(L"x: %.2f, y:%.2fn", x, y);
+	RenderBoundingBox();
 	
-	DebugOutTitle(L"x: %.2f", x);
 }
 
 //logic
@@ -246,6 +245,11 @@ void CMario::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
+		////(TESTING)adjust when mario-big change state idle to running
+		//if (this->state == MARIO_STATE_IDLE)
+		//{
+		//	x -= MARIO_BIG_RUNNING_WIDTH_ADJUST;
+		//}
 		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
@@ -256,6 +260,7 @@ void CMario::SetState(int state)
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
+		//x += MARIO_BIG_RUNNING_WIDTH_ADJUST;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
@@ -290,7 +295,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -314,33 +319,33 @@ void CMario::SetState(int state)
 		ax = 0;
 		break;
 	}
-
 	CGameObject::SetState(state);
 }
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
+	left = x;
+	top = y;
 	if (level==MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
-			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
 		}
+		else if (ax == MARIO_ACCEL_RUN_X || ax == -MARIO_ACCEL_RUN_X)
+		{
+			right = left + MARIO_BIG_RUNNING_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT;
+		}
 		else 
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
 	else
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
@@ -351,7 +356,7 @@ void CMario::SetLevel(int l)
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		y -= MARIO_CHANGE_LEVEL_HEIGHT_ADJUST;
 	}
 	level = l;
 }

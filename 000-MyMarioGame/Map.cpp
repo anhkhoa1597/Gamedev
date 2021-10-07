@@ -76,7 +76,6 @@ void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 			pObject->QueryFloatAttribute("width", &width);
 			pObject->QueryFloatAttribute("height", &height);
 			if (name == "ground") {
-				DebugOut(L"x=%.2f, y=%.2f\n", x, y);
 				CGround* ground = new CGround(x, y, width, height);
 				objects.push_back(ground);
 			}

@@ -12,6 +12,9 @@
 		0.6: load object, load boundingbox of object
 		0.7: add attributes: translationX, translationY in to function CSprite::Draw to draw sprite correctly
 		0.8: update mario animation smoother and transparent correctly.
+			 ***To make animation weren't blurred: + the textures's width and height are even
+												   + the width must divisible to lenght
+		0.9:
 ================================================================ */
 
 #include <windows.h>
@@ -222,7 +225,7 @@ void ClearScene()
 
 //#define MARIO_START_X 88.0f
 #define MARIO_START_X 24.0f
-#define MARIO_START_Y 150.0f
+#define MARIO_START_Y 0.0f
 
 #define BRICK_X 0.0f
 #define GOOMBA_X 200.0f
@@ -351,7 +354,6 @@ void Update(DWORD dt)
 
 	// Update camera to follow mario
 	float cx, cy;
-	//float current_cx, current_cy;
 	mario->GetPosition(cx, cy);
 
 	////camera follow to mario at the center of screen.
@@ -359,9 +361,10 @@ void Update(DWORD dt)
 
 	//camera follow to mario at the middle of 6th tile and camera not follow when mario walk to left
 	cx -= 80;
-	//CGame::GetInstance()->GetCamPos(current_cx, current_cy);
-	//if (current_cx <= cx) current_cx = cx;
-	//else cx = current_cx;
+	float current_cx, current_cy;
+	CGame::GetInstance()->GetCamPos(current_cx, current_cy);
+	if (current_cx <= cx) current_cx = cx;
+	else cx = current_cx;
 
 	//DebugOut(L"cx: %0.1f, current: %0.1f\n", cx, current_cx);
 	cy = 0;

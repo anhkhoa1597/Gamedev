@@ -34,9 +34,9 @@ void CGameObject::RenderBoundingBox()
 
 	float cx, cy; 
 	CGame::GetInstance()->GetCamPos(cx, cy);
-	float transitionX = rect.right;
-	float transitionY = rect.bottom;
-	CGame::GetInstance()->Draw(x - cx, y - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.5f);
+	float transitionX = rect.right / 2;
+	float transitionY = rect.bottom / 2;
+	CGame::GetInstance()->Draw(x - cx + transitionX, y - cy + transitionY, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.5f);
 }
 
 CGameObject::~CGameObject()
