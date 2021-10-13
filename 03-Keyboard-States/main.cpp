@@ -88,33 +88,33 @@ void LoadResources()
 	
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
-	sprites->Add(10001, 246, 154, 260, 181, texMario);
+	sprites->Add(10001, 246, 154, 246 + 15, 154 + 27, texMario);
 
-	sprites->Add(10002, 275, 154, 290, 181, texMario);
-	sprites->Add(10003, 304, 154, 321, 181, texMario);
+	sprites->Add(10002, 275, 154, 275 + 17, 154 + 27, texMario);
+	sprites->Add(10003, 305, 154, 305 + 17, 154 + 27, texMario);
 
-	sprites->Add(10011, 186, 154, 200, 181, texMario);
+	sprites->Add(10011, 186, 154, 186 + 15, 154 + 27, texMario);
 
-	sprites->Add(10012, 155, 154, 170, 181, texMario);
-	sprites->Add(10013, 125, 154, 140, 181, texMario);
+	sprites->Add(10012, 155, 154, 155 + 17, 154 + 27, texMario);
+	sprites->Add(10013, 125, 154, 125 + 17, 154 + 27, texMario);
 
 	// RUNNING RIGHT 
-	sprites->Add(10021, 335, 154, 335 + 18, 154 +26, texMario);
-	sprites->Add(10022, 363, 154, 363 + 18, 154 + 26, texMario);
-	sprites->Add(10023, 393, 154, 393 + 18, 154 + 26, texMario);
+	sprites->Add(10021, 334, 154, 334 + 19, 154 + 27, texMario);
+	sprites->Add(10022, 362, 154, 362 + 19, 154 + 27, texMario);
+	sprites->Add(10023, 392, 154, 392 + 19, 154 + 27, texMario);
 
 	// RUNNING LEFT
-	sprites->Add(10031, 92, 154, 92 + 18, 154 + 26, texMario);
-	sprites->Add(10032, 66, 154, 66 + 18, 154 + 26, texMario);
-	sprites->Add(10033, 35, 154, 35 + 18, 154 + 26, texMario);
+	sprites->Add(10031, 93, 154, 93 + 19, 154 + 27, texMario);
+	sprites->Add(10032, 65, 154, 65 + 19, 154 + 27, texMario);
+	sprites->Add(10033, 35, 154, 35 + 19, 154 + 27, texMario);
 
 	// JUMP WALK RIGHT & LEFT 
-	sprites->Add(10041, 395, 275, 395 + 16, 275 + 25, texMario);
-	sprites->Add(10042, 35, 275, 35 + 16, 275 + 25, texMario);
+	sprites->Add(10041, 395, 275, 395 + 17, 275 + 27, texMario);
+	sprites->Add(10042, 35, 275, 35 + 17, 275 + 27, texMario);
 
 	// JUMP RUN RIGHT & LEFT 
 	sprites->Add(10043, 395, 195, 395 + 18, 195 + 25, texMario);
-	sprites->Add(10044, 33, 195, 33 + 18, 195 + 25, texMario);
+	sprites->Add(10044, 33, 195, 33 + 19, 195 + 27, texMario);
 
 	// SIT RIGHT/LEFT
 	sprites->Add(10051, 426, 239, 426 + 14, 239 + 17, texMario);

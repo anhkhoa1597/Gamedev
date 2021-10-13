@@ -16,6 +16,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Ground.h"
+#include "Pipes.h"
 
 #include "debug.h"
 #include "tinyxml2.h"
@@ -36,5 +37,6 @@ public:
 	Map();
 	virtual ~Map();
 	virtual void Render();
+	virtual void Update();
 	void Load(string filePath, list<LPGAMEOBJECT> &objects);
 };

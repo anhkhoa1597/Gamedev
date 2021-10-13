@@ -14,7 +14,8 @@
 		0.8: update mario animation smoother and transparent correctly.
 			 ***To make animation weren't blurred: + the textures's width and height are even
 												   + the width must divisible to lenght
-		0.9:
+		0.9: fix tileset transparent, fix boudingbox of object
+
 ================================================================ */
 
 #include <windows.h>
@@ -22,12 +23,8 @@
 #include <d3dx10.h>
 #include <list>
 
-#include "GameObject.h"
-#include "Textures.h"
-#include "Animation.h"
 #include "Animations.h"
 
-#include "Game.h"
 #include "Map1_1.h"
 
 #include "SampleKeyEventHandler.h"
@@ -46,7 +43,6 @@
 
 
 CGame *game;
-CMario *mario;
 Map* currentMap;
 
 list<LPGAMEOBJECT> objects;
@@ -291,10 +287,6 @@ void Reload()
 	//CPlatform* p = new CPlatform(90.0f, GROUND_Y - 74.0f,
 	//	16, 15, 16, ID_SPRITE_CLOUD_BEGIN, ID_SPRITE_CLOUD_MIDDLE, ID_SPRITE_CLOUD_END);
 	//objects.push_back(p);
-
-	// Mario
-	mario = new CMario(MARIO_START_X, MARIO_START_Y);
-	objects.push_back(mario);
 	
 	////GOOMBA
 	//for (int j = 0; j < 1; j++)
@@ -351,28 +343,7 @@ void Update(DWORD dt)
 	}
 
 	PurgeDeletedObjects();
-
-	// Update camera to follow mario
-	float cx, cy;
-	mario->GetPosition(cx, cy);
-
-	////camera follow to mario at the center of screen.
-	//cx -= SCREEN_WIDTH / 2; 
-
-	//camera follow to mario at the middle of 6th tile and camera not follow when mario walk to left
-	cx -= 80;
-	float current_cx, current_cy;
-	CGame::GetInstance()->GetCamPos(current_cx, current_cy);
-	if (current_cx <= cx) current_cx = cx;
-	else cx = current_cx;
-
-	//DebugOut(L"cx: %0.1f, current: %0.1f\n", cx, current_cx);
-	cy = 0;
-	//cy -= SCREEN_HEIGHT / 2;
-
-	if (cx < 0) cx = 0;
-
-	CGame::GetInstance()->SetCamPos(cx, cy);
+	currentMap->Update();
 }
 
 /*
