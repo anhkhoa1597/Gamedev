@@ -10,7 +10,7 @@
 #define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 #define TEXTURE_ANIMATION_MARIO_DIR TEXTURES_DIR "\\mario-animations"
-#define MAP_TILESET_PATH TEXTURES_DIR "\\TileSetMarioBrosTransparent.png"
+#define TILESET_PATH TEXTURES_DIR "\\stage-tileset-transparent.png"
 
 #pragma region MARIO
 //BIG MARIO

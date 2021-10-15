@@ -17,7 +17,9 @@
 #include "Platform.h"
 #include "Ground.h"
 #include "Pipes.h"
-
+#include "Tileset.h"
+#include "AssetIDs.h"
+#include "AssetPaths.h"
 #include "debug.h"
 #include "tinyxml2.h"
 using namespace std;
@@ -25,6 +27,7 @@ using namespace std;
 /*
 	Manage Map database
 */
+
 class Map
 {
 	int Next;
@@ -32,11 +35,11 @@ class Map
 	int height;
 	int tile_width;
 	int tile_height;
-	vector<vector<unsigned int>> tiled_background;
+	list<vector<vector<unsigned int>>> tiled_background;
 public:
 	Map();
 	virtual ~Map();
 	virtual void Render();
 	virtual void Update();
-	void Load(string filePath, list<LPGAMEOBJECT> &objects);
+	void Load(string filePath);
 };

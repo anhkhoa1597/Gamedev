@@ -1,5 +1,7 @@
 #include "Map.h"
 CMario* mario;
+Tileset* tileset;
+extern list<LPGAMEOBJECT> objects;
 
 void parse_tiles(const std::string& gid_list, int height, std::vector<std::vector<unsigned int>>& tiled_background) {
     std::vector<std::vector<unsigned int> > tiles(height);
@@ -38,7 +40,7 @@ Map::~Map()
 }
 
 
-void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
+void Map::Load(string filepath)
 {
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(filepath.c_str());
@@ -50,7 +52,24 @@ void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 		map->QueryIntAttribute("tileheight", &tile_height);
 	}
 
+	//load tile-set
+	int tileWidth, tileHeight, spacing, tileCount, column;
+	tinyxml2::XMLElement* pTileset = map->FirstChildElement("tileset");
+	string sourceTileset = pTileset->Attribute("source");
+	sourceTileset = filepath + "/../" + sourceTileset;
+	doc.LoadFile(sourceTileset.c_str());
+	tinyxml2::XMLElement* pTileset_tsx = doc.FirstChildElement("tileset");
+	{
+		pTileset_tsx->QueryIntAttribute("tilewidth", &tileWidth);
+		pTileset_tsx->QueryIntAttribute("tileheight", &tileHeight);
+		pTileset_tsx->QueryIntAttribute("spacing", &spacing);
+		pTileset_tsx->QueryIntAttribute("tilecount", &tileCount);
+		pTileset_tsx->QueryIntAttribute("column", &column);
+	}
+	tileset = new Tileset(tileWidth, tileHeight, spacing, tileCount, column);
+
 	//load graphic of game
+	//tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
 	tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
 	while (pLayer != nullptr)
 	{
@@ -58,8 +77,17 @@ void Map::Load(string filepath, list<LPGAMEOBJECT> &objects)
 		if (name == "background") {}
 		else if (name == "graphics")
 		{
+			vector<vector<unsigned int>> background;
 			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
-			if (pData != NULL) parse_tiles(pData->GetText(), height, tiled_background);
+			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
+			tiled_background.push_back(background);
+		}
+		else if (name == "shading")
+		{
+			vector<vector<unsigned int>> background;
+			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
+			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
+			tiled_background.push_back(background);
 		}
 		pLayer = pLayer->NextSiblingElement("layer");
 	}
@@ -141,16 +169,21 @@ void Map::Update()
 
 void Map::Render()
 {
-	for (int row = 0; row < this->height; row++)
+	list<vector<vector<unsigned int>>>::iterator i;
+	for (i = tiled_background.begin(); i != tiled_background.end(); ++i)
 	{
-		for (int column = 0; column < this->width; column++)
+		vector<vector<unsigned int>> background = (*i);
+		for (int row = 0; row < this->height; row++)
 		{
-			if (tiled_background[row][column] != 0)
+			for (int column = 0; column < this->width; column++)
 			{
-				CAnimations* animations = CAnimations::GetInstance();
-				int x = column * tile_width;
-				int y = row * tile_height;
-				animations->Get(tiled_background[row][column])->Render(x, y);
+				if (background[row][column] != 0)
+				{
+					CAnimations* animations = CAnimations::GetInstance();
+					int x = column * tile_width;
+					int y = row * tile_height;
+					animations->Get(ID_ANI_TILESET + background[row][column])->Render(x, y);
+				}
 			}
 		}
 	}

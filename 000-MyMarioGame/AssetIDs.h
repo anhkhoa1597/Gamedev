@@ -7,6 +7,7 @@
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define ID_TILESET_MAP 30
 
 #pragma region MARIO 
 
@@ -67,8 +68,6 @@
 
 #pragma endregion 
 
-#define ID_TILESET_MAP 100000
-
 #define ID_SPRITE_BRICK 20000
 
 #define ID_SPRITE_GOOMBA 30000
@@ -82,4 +81,5 @@
 #define ID_SPRITE_CLOUD_MIDDLE (ID_SPRITE_CLOUD+2000)
 #define ID_SPRITE_CLOUD_END (ID_SPRITE_CLOUD+3000)
 
+#define ID_SPRITE_TILESET 60000
 
