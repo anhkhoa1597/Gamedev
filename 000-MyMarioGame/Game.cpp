@@ -9,6 +9,8 @@
 #include "PlayScene.h"
 
 CGame* CGame::__instance = NULL;
+int screenWidth;
+int screenHeight;
 
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
@@ -437,29 +439,29 @@ void CGame::ProcessKeyboard()
 #define GAME_FILE_SECTION_SCENES 2
 #define GAME_FILE_SECTION_TEXTURES 3
 
-
-void CGame::_ParseSection_SETTINGS(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-	if (tokens[0] == "start")
-		next_scene = atoi(tokens[1].c_str());
-	else
-		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
-}
-
-void CGame::_ParseSection_SCENES(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-	int id = atoi(tokens[0].c_str());
-	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
-
-	LPSCENE scene = new CPlayScene(id, path);
-	scenes[id] = scene;
-}
+//
+//void CGame::_ParseSection_SETTINGS(string line)
+//{
+//	vector<string> tokens = split(line);
+//
+//	if (tokens.size() < 2) return;
+//	if (tokens[0] == "start")
+//		next_scene = atoi(tokens[1].c_str());
+//	else
+//		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
+//}
+//
+//void CGame::_ParseSection_SCENES(string line)
+//{
+//	vector<string> tokens = split(line);
+//
+//	if (tokens.size() < 2) return;
+//	int id = atoi(tokens[0].c_str());
+//	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
+//
+//	LPSCENE scene = new CPlayScene(id, path);
+//	scenes[id] = scene;
+//}
 
 /*
 	Load game campaign file and load/initiate first scene
@@ -508,6 +510,53 @@ void CGame::Load(LPCWSTR gameFile)
 	SwitchScene();
 }
 
+void CGame::Load(string gameFile)
+{
+	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
+
+	tinyxml2::XMLDocument doc;
+	doc.LoadFile(gameFile.c_str());
+	tinyxml2::XMLElement* pData = doc.FirstChildElement("data");
+
+	//Load Setting
+	tinyxml2::XMLElement* pSetting = pData->FirstChildElement("setting");
+	{
+		pSetting->QueryIntAttribute("start", &next_scene);
+		pSetting->QueryIntAttribute("width", &screenWidth);
+		pSetting->QueryIntAttribute("height", &screenHeight);
+	}
+
+	//Load Scene
+	tinyxml2::XMLElement* pSceneGroup = pData->FirstChildElement("scenegroup");
+	tinyxml2::XMLElement* pScene = pSceneGroup->FirstChildElement("scene");
+	while (pScene != nullptr)
+	{
+		int id;
+		pScene->QueryIntAttribute("id", &id);
+		string path = pScene->Attribute("source");
+		LPSCENE scene = new CPlayScene(id, path);
+		scenes[id] = scene;
+
+		pScene = pScene->NextSiblingElement("scene");
+	}
+
+	//Load Texture
+	tinyxml2::XMLElement* pTextureGroup = pData->FirstChildElement("texturegroup");
+	tinyxml2::XMLElement* pTexture = pTextureGroup->FirstChildElement("texture");
+	while (pTexture != nullptr)
+	{
+		int texID;
+		pTexture->QueryIntAttribute("id", &texID);
+		wstring path = ToWSTR(pTexture->Attribute("source"));
+		CTextures::GetInstance()->Add(texID, path.c_str());
+
+		pTexture = pTexture->NextSiblingElement("texture");
+	}
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+
+	SwitchScene();
+}
+
 void CGame::SwitchScene()
 {
 	if (next_scene < 0 || next_scene == current_scene) return;
@@ -531,17 +580,17 @@ void CGame::InitiateSwitchScene(int scene_id)
 }
 
 
-void CGame::_ParseSection_TEXTURES(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-
-	int texID = atoi(tokens[0].c_str());
-	wstring path = ToWSTR(tokens[1]);
-
-	CTextures::GetInstance()->Add(texID, path.c_str());
-}
+//void CGame::_ParseSection_TEXTURES(string line)
+//{
+//	vector<string> tokens = split(line);
+//
+//	if (tokens.size() < 2) return;
+//
+//	int texID = atoi(tokens[0].c_str());
+//	wstring path = ToWSTR(tokens[1]);
+//
+//	CTextures::GetInstance()->Add(texID, path.c_str());
+//}
 
 
 CGame::~CGame()

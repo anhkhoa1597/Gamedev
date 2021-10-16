@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene>
+  <setting/>
+  <assetgroup>
+    <asset source="data\mario.tmx"/>
+    <!-- <asset source="data\brick.tmx"/>
+    <asset source="data\coin.tmx"/>
+    <asset source="data\goomba.tmx"/>
+    <asset source="data\cloud.tmx"/> -->
+  </assetgroup>
+  <map source="data\map1-1.tmx"/>
+</scene>

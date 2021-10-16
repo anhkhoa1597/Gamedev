@@ -72,9 +72,6 @@
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetPaths.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Map1_1.h">
       <Filter>Map</Filter>
     </ClInclude>

@@ -24,9 +24,10 @@ protected:
 	void _ParseSection_OBJECTS(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
-
+	void LoadAssets(string assetFile);
+	void LoadMap(string mapFile);
 public:
-	CPlayScene(int id, LPCWSTR filePath);
+	CPlayScene(int id, string filePath);
 
 	virtual void Load();
 	virtual void Update(DWORD dt);

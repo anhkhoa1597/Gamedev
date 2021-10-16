@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="big-idle-left" id="11111" left="1" top="93" right="16" bottom="120" texid="0"/>
+    <sprite name="big-idle-right" id="11121" left="1029" top="93" right="1044" bottom="120" texid="0"/>
+    <sprite name="big-walking-left" id="11212" left="19" top="93" right="36" bottom="120" texid="0"/>
+    <sprite name="big-walking-left" id="11213" left="37" top="93" right="54" bottom="120" texid="0"/>
+    <sprite name="big-walking-right" id="11222" left="1009" top="93" right="1026" bottom="120" texid="0"/>
+    <sprite name="big-walking-right" id="11223" left="991" top="93" right="1008" bottom="120" texid="0"/>
+    <sprite name="big-running-left" id="11311" left="91" top="93" right="110" bottom="120" texid="0"/>
+    <sprite name="big-running-left" id="11312" left="117" top="93" right="136" bottom="120" texid="0"/>
+    <sprite name="big-running-left" id="11313" left="143" top="93" right="162" bottom="120" texid="0"/>
+    <sprite name="big-running-right" id="11321" left="934" top="93" right="953" bottom="120" texid="0"/>
+    <sprite name="big-running-right" id="11322" left="908" top="93" right="927" bottom="120" texid="0"/>
+    <sprite name="big-running-right" id="11323" left="882" top="93" right="901" bottom="120" texid="0"/>
+    <sprite name="big-jump-walk-left" id="11413" left="73" top="93" right="92" bottom="120" texid="0"/>
+    <sprite name="big-jump-walk-right" id="11417" left="955" top="93" right="972" bottom="120" texid="0"/>
+    <sprite name="big-jump-run-left" id="11423" left="169" top="93" right="188" bottom="120" texid="0"/>
+    <sprite name="big-jump-run-right" id="11427" left="856" top="93" right="875" bottom="120" texid="0"/>
+    <sprite name="big-sit-left" id="11511" left="55" top="102" right="60" bottom="121" texid="0"/>
+    <sprite name="big-sit-right" id="11521" left="975" top="102" right="990" bottom="121" texid="0"/>
+    <sprite name="big-brace-left" id="11611" left="195" top="92" right="212" bottom="121" texid="0"/>
+    <sprite name="big-brace-right" id="11621" left="833" top="92" right="850" bottom="121" texid="0"/>
+    <sprite name="die" id="13001" left="307" top="16" right="324" bottom="33" texid="0"/>
+    <sprite name="small-idle-left" id="12111" left="3" top="17" right="16" bottom="32" texid="0"/>
+    <sprite name="small-idle-right" id="12121" left="1029" top="17" right="1042" bottom="32" texid="0"/>
+    <sprite name="small-walking-left" id="12212" left="20" top="16" right="35" bottom="33" texid="0"/>
+    <sprite name="small-walking-right" id="12222" left="1009" top="16" right="1024" bottom="33" texid="0"/>
+    <sprite name="small-running-left" id="12311" left="55" top="16" right="72" bottom="33" texid="0"/>
+    <sprite name="small-running-left" id="12312" left="73" top="16" right="90" bottom="33" texid="0"/>
+    <sprite name="small-running-right" id="12321" left="973" top="16" right="990" bottom="33" texid="0"/>
+    <sprite name="small-running-right" id="12322" left="955" top="16" right="972" bottom="33" texid="0"/>
+    <sprite name="small-brace-left" id="12511" left="110" top="16" right="125" bottom="33" texid="0"/>
+    <sprite name="small-brace-right" id="12521" left="920" top="16" right="935" bottom="33" texid="0"/>
+    <sprite name="small-jump-walk-left" id="12413" left="37" top="16" right="54" bottom="33" texid="0"/>
+    <sprite name="small-jump-walk-right" id="12417" left="991" top="16" right="1008" bottom="33" texid="0"/>
+    <sprite name="small-jump-run-left" id="12423" left="91" top="16" right="108" bottom="33" texid="0"/>
+    <sprite name="small-jump-run-right" id="12427" left="937" top="16" right="954" bottom="33" texid="0"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="big-idle-left" id="400">
+      <sprite id="11111" time="100"/>
+    </animation>
+    <animation name="big-idle-right" id="401">
+      <sprite id="11121" time="100"/>
+    </animation>
+    <animation name="big-walking-left" id="500">
+      <sprite id="11111" time="100"/>
+      <sprite id="11212" time="100"/>
+      <sprite id="11213" time="100"/>
+      <sprite id="11212" time="100"/>
+    </animation>
+    <animation name="big-walking-right" id="501">
+      <sprite id="11121" time="100"/>
+      <sprite id="11222" time="100"/>
+      <sprite id="11223" time="100"/>
+      <sprite id="11222" time="100"/>
+    </animation>
+    <animation name="big-running-left" id="600">
+      <sprite id="11311" time="50"/>
+      <sprite id="11312" time="50"/>
+      <sprite id="11313" time="50"/>
+      <sprite id="11312" time="50"/>
+    </animation>
+    <animation name="big-running-right" id="601">
+      <sprite id="11321" time="50"/>
+      <sprite id="11322" time="50"/>
+      <sprite id="11323" time="50"/>
+      <sprite id="11322" time="50"/>
+    </animation>
+    <animation name="big-juml-walk-left" id="700">
+      <sprite id="11413" time="100"/>
+    </animation>
+    <animation name="big-juml-walk-right" id="701">
+      <sprite id="11417" time="100"/>
+    </animation>
+    <animation name="big-juml-run-left" id="800">
+      <sprite id="11423" time="100"/>
+    </animation>
+    <animation name="big-juml-run-right" id="801">
+      <sprite id="11427" time="100"/>
+    </animation>
+    <animation name="big-sit-left" id="900">
+      <sprite id="11511" time="100"/>
+    </animation>
+    <animation name="big-sit-right" id="901">
+      <sprite id="11521" time="100"/>
+    </animation>
+    <animation name="big-brace-left" id="1000">
+      <sprite id="11611" time="100"/>
+    </animation>
+    <animation name="big-brace-right" id="1001">
+      <sprite id="11621" time="100"/>
+    </animation>
+    <animation name="die" id="999">
+      <sprite id="13001" time="100"/>
+    </animation>
+    <animation name="small-idle-left" id="1100">
+      <sprite id="12111" time="100"/>
+    </animation>
+    <animation name="small-idle-right" id="1101">
+      <sprite id="12121" time="100"/>
+    </animation>
+    <animation name="small-walking-left" id="1200">
+      <sprite id="12111" time="100"/>
+      <sprite id="12212" time="100"/>
+    </animation>
+    <animation name="small-walking-right" id="1201">
+      <sprite id="12121" time="100"/>
+      <sprite id="12222" time="100"/>
+    </animation>
+    <animation name="small-running-left" id="1300">
+      <sprite id="12311" time="50"/>
+      <sprite id="12312" time="50"/>
+    </animation>
+    <animation name="small-running-right" id="1301">
+      <sprite id="12321" time="50"/>
+      <sprite id="12322" time="50"/>
+    </animation>
+    <animation name="small-brace-left" id="1400">
+      <sprite id="11511" time="100"/>
+    </animation>
+    <animation name="small-brace-right" id="1401">
+      <sprite id="11521" time="100"/>
+    </animation>
+    <animation name="small-jump-walk-left" id="1500">
+      <sprite id="12413" time="100"/>
+    </animation>
+    <animation name="small-jump-walk-right" id="1501">
+      <sprite id="12417" time="100"/>
+    </animation>
+    <animation name="small-jump-run-left" id="1600">
+      <sprite id="12423" time="100"/>
+    </animation>
+    <animation name="small-jump-run-right" id="1601">
+      <sprite id="12427" time="100"/>
+    </animation>
+  </animationgroup>
+</asset>

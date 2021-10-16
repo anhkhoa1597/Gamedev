@@ -10,10 +10,10 @@ class CScene
 protected:
 	LPKEYEVENTHANDLER key_handler;
 	int id;
-	LPCWSTR sceneFilePath;
+	string sceneFilePath;
 
 public:
-	CScene(int id, LPCWSTR filePath)
+	CScene(int id, string filePath)
 	{
 		this->id = id;
 		this->sceneFilePath = filePath;

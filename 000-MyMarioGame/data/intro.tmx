@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <setting/>
+  <assetgroup>
+    <scene id="0" type="0" source="intro.tmx"/>
+    <scene id="1" type="1" source="scene01.tmx"/>
+    <scene id="2" type="1" source="scene02.tmx"/>
+  </assetgroup>
+  <objectgroup>
+     
+  </objectgroup>
+</data>

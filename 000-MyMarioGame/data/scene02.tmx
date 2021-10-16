@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <setting start="2" width="500" height="270"/>
+  <scenegroup>
+    <scene id="0" type="0" source="intro.tmx"/>
+    <scene id="1" type="1" source="scene01.tmx"/>
+    <scene id="2" type="1" source="scene02.tmx"/>
+  </scenesgroup>
+  <texturegroup>  
+    <texture id="-100" source="texture\bbox.png"/>
+    <texture id="0" source="texture\mario.png"/>
+    <texture id="10" source="texture\enemies.png"/>
+    <texture id="20" source="texture\misc.png"/>
+  </texturegroup>
+</data>

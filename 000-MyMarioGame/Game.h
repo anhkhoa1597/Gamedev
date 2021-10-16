@@ -12,6 +12,7 @@ using namespace std;
 #include "Texture.h"
 #include "KeyEventHandler.h"
 #include "Scene.h"
+#include "tinyxml2.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -108,6 +109,7 @@ public:
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void Load(LPCWSTR gameFile);
+	void Load(string gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
 
