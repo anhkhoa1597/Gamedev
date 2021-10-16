@@ -70,7 +70,7 @@ void Map::Load(string filepath)
 
 	//load graphic of game
 	//tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
-	tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");
+	tinyxml2::XMLElement* pLayer = map->NextSiblingElement("layer");
 	while (pLayer != nullptr)
 	{
 		string name = pLayer->Attribute("name");

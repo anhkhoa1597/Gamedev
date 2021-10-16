@@ -10,6 +10,7 @@
 
 CGameObject::CGameObject()
 {
+	//translationX = translationY = 0;
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
@@ -34,9 +35,11 @@ void CGameObject::RenderBoundingBox()
 
 	float cx, cy; 
 	CGame::GetInstance()->GetCamPos(cx, cy);
-	float transitionX = rect.right / 2;
-	float transitionY = rect.bottom / 2;
-	CGame::GetInstance()->Draw(x - cx + transitionX, y - cy + transitionY, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.5f);
+
+	//translationX, translationY to draw base adjust the coor of boundingbox to the top left corner
+	float translationX = (float)rect.right / 2;
+	float translationX = (float)rect.bottom / 2;
+	CGame::GetInstance()->Draw(x - cx + translationX, y - cy + translationX, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.5f);
 }
 
 CGameObject::~CGameObject()

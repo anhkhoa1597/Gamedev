@@ -33,7 +33,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 void CSprite::Draw(float x, float y)
 {
 	CGame* g = CGame::GetInstance();
-	float cx, cy;
+	float cx = 0, cy = 0;
 	g->GetCamPos(cx, cy);
 
 	cx = (FLOAT)floor(cx);

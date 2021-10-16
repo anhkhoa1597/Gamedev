@@ -15,7 +15,7 @@
 			 ***To make animation weren't blurred: + the textures's width and height are even
 												   + the width must divisible to lenght
 		0.9: fix tileset transparent, fix boudingbox of object
-
+		0.10: add file from scene-manager
 ================================================================ */
 
 #include <windows.h>
@@ -389,67 +389,6 @@ void ClearScene()
 void Reload()
 {
 	ClearScene();
-
-	//// Main ground
-	//for (int i = 0; i < NUM_BRICKS; i++)
-	//{
-	//	CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
-	//	objects.push_back(b);
-	//}
-
-	//// Short, low platform
-	//for (int i = 1; i < 3; i++)
-	//{
-	//	CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y - 44.0f);
-	//	objects.push_back(b);
-	//}
-
-	//// Vertical column 1
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	CBrick* b = new CBrick(0, BRICK_Y - i * BRICK_WIDTH);
-	//	objects.push_back(b);
-	//}
-
-	//// Vertical column 2
-	//for (int i = 1; i < 3; i++)
-	//{
-	//	CBrick* b = new CBrick(BRICK_X + 300.0f, BRICK_Y - i * BRICK_WIDTH);
-	//	objects.push_back(b);
-	//}
-
-	//// Vertical column 3
-	//for (int i = 1; i < 4; i++)
-	//{
-	//	CBrick* b = new CBrick(BRICK_X + 400.0f, BRICK_Y - i * BRICK_WIDTH);
-	//	objects.push_back(b);
-	//}
-
-	//// Vertical column 4
-	//for (int i = 1; i < 5; i++)
-	//{
-	//	CBrick* b = new CBrick(BRICK_X + 500.0f, BRICK_Y - i * BRICK_WIDTH);
-	//	objects.push_back(b);
-	//}
-
-	//// Second cloud platform 
-	//CPlatform* p = new CPlatform(90.0f, GROUND_Y - 74.0f,
-	//	16, 15, 16, ID_SPRITE_CLOUD_BEGIN, ID_SPRITE_CLOUD_MIDDLE, ID_SPRITE_CLOUD_END);
-	//objects.push_back(p);
-	
-	////GOOMBA
-	//for (int j = 0; j < 1; j++)
-	//{
-	//	CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
-	//	objects.push_back(goomba);
-	//}
-
-	//// COINS 
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
-	//	objects.push_back(c);
-	//}
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }

@@ -2,8 +2,6 @@
 
 #include "Animation.h"
 #include "Sprite.h"
-#include "Texture.h"
-#include "Textures.h"
 
 class CAnimations
 {
@@ -13,8 +11,8 @@ class CAnimations
 
 public:
 	void Add(int id, LPANIMATION ani);
-	void Add(LPCWSTR filePath, int id, int length, int defaultTime);
 	LPANIMATION Get(int id);
+	void Clear();
 
 	static CAnimations* GetInstance();
 };
