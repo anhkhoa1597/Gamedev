@@ -6,6 +6,7 @@
 #include "Brick.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "Tileset.h"
 //#include "Koopas.h"
 
 
@@ -17,15 +18,11 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 
-	void _ParseSection_SPRITES(string line);
-	void _ParseSection_ANIMATIONS(string line);
-
-	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
 
-	void LoadAssets(LPCWSTR assetFile);
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);
+	void LoadTileset(string tilesetFile);
 public:
 	CPlayScene(int id, string filePath);
 

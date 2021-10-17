@@ -13,6 +13,7 @@ using namespace std;
 #include "KeyEventHandler.h"
 #include "Scene.h"
 #include "tinyxml2.h"
+#include "debug.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -56,10 +57,6 @@ class CGame
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
-
-	void _ParseSection_SETTINGS(string line);
-	void _ParseSection_SCENES(string line);
-
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -72,7 +69,7 @@ public:
 
 	void Draw(float x, float y, LPTEXTURE tex, int l, int t, int r, int b, float alpha = 1.0f)
 	{
-		RECT rect;
+		RECT rect{};
 		rect.left = l;
 		rect.top = t;
 		rect.right = r;
@@ -108,13 +105,9 @@ public:
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	void Load(LPCWSTR gameFile);
 	void Load(string gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
-
-	void _ParseSection_TEXTURES(string line);
-
 
 	~CGame();
 };

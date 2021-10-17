@@ -21,16 +21,8 @@
 #include <windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
-#include <list>
 
-#include "Animations.h"
-
-#include "Map1_1.h"
-#include "Map.h"
-
-#include "SampleKeyEventHandler.h"
-
-#include "AssetIDs.h"
+#include "Game.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"000 - MyMarioGame"
@@ -43,12 +35,6 @@
 
 extern int screenWidth;
 extern int screenHeight;
-CGame *game;
-Map* currentMap;
-
-list<LPGAMEOBJECT> objects;
-
-CSampleKeyHandler * keyHandler; 
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -63,148 +49,9 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void LoadTileSet()
-{
-
-}
-
-void LoadAssetsGoomba()
-{
-	CTextures* textures = CTextures::GetInstance();
-	CSprites* sprites = CSprites::GetInstance();
-	CAnimations* animations = CAnimations::GetInstance();
-
-	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
-
-	sprites->Add(ID_SPRITE_GOOMBA_WALK + 1, 5, 14, 21, 29, texEnemy);  
-	sprites->Add(ID_SPRITE_GOOMBA_WALK + 2, 25, 14, 41, 29, texEnemy); 
-
-	sprites->Add(ID_SPRITE_GOOMBA_DIE + 1, 45, 21, 61, 29, texEnemy);
-
-	LPANIMATION ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_GOOMBA_WALK + 1);
-	ani->Add(ID_SPRITE_GOOMBA_WALK + 2);
-	animations->Add(ID_ANI_GOOMBA_WALKING, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_GOOMBA_DIE + 1);
-	animations->Add(ID_ANI_GOOMBA_DIE, ani);
-
-}
-void LoadAssetsBrick()
-{
-	CTextures* textures = CTextures::GetInstance();
-	CSprites* sprites = CSprites::GetInstance();
-	CAnimations* animations = CAnimations::GetInstance();
-
-	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(ID_SPRITE_BRICK + 1, 372, 153, 372 + 15, 153 + 15, texMisc);
-
-	LPANIMATION ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_BRICK + 1);
-	animations->Add(ID_ANI_BRICK, ani);
-}
-void LoadAssetsCoin()
-{
-	CTextures* textures = CTextures::GetInstance();
-	CSprites* sprites = CSprites::GetInstance();
-	CAnimations* animations = CAnimations::GetInstance();
-
-	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
-
-	sprites->Add(ID_SPRITE_COIN + 1, 303, 99, 303 + 9, 99 + 15, texMisc);
-	sprites->Add(ID_SPRITE_COIN + 2, 321, 99, 321 + 9, 99 + 15, texMisc);
-	sprites->Add(ID_SPRITE_COIN + 3, 338, 99, 338 + 9, 99 + 15, texMisc);
-
-	LPANIMATION ani = new CAnimation(300);
-	ani->Add(ID_SPRITE_COIN + 1);
-	ani->Add(ID_SPRITE_COIN + 2);
-	ani->Add(ID_SPRITE_COIN + 3);
-	animations->Add(ID_ANI_COIN, ani);
-}
-
-void LoadAssetsOther()
-{
-	CTextures* textures = CTextures::GetInstance();
-	CSprites* sprites = CSprites::GetInstance();
-
-	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(ID_SPRITE_CLOUD_BEGIN, 390, 117, 390 + 15, 117 + 14, texMisc);
-	sprites->Add(ID_SPRITE_CLOUD_MIDDLE, 408, 117, 408 + 15, 117 + 14, texMisc);
-	sprites->Add(ID_SPRITE_CLOUD_END, 426, 117, 426 + 15, 117 + 14, texMisc);
-
-}
-
-/*
-	Load all game resources
-	In this example: load textures, sprites, animations and mario object
-
-	TO-DO: Improve this function by loading texture,sprite,animation,object from file
-*/
-void LoadResources()
-{
-	currentMap = new Map1_1();
-	CTextures* textures = CTextures::GetInstance();
-	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
-	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
-	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
-	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
-
-	LoadTileSet();
-	//LoadAssetsGoomba();
-	//LoadAssetsBrick();
-	//LoadAssetsCoin();
-	//LoadAssetsOther();
-}
-
-void ClearScene()
-{ 
-	list<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
-	{
-		delete (*it);
-	}
-	objects.clear();
-}
-
 //#define MARIO_START_X 88.0f
 #define MARIO_START_X 24.0f
 #define MARIO_START_Y 0.0f
-
-#define BRICK_X 0.0f
-#define GOOMBA_X 200.0f
-#define COIN_X 100.0f
-
-#define BRICK_Y GROUND_Y + 20.0f
-#define NUM_BRICKS 70
-
-/*
-* Reload all objects of current scene 
-* NOTE: super bad way to build a scene! We need to load a scene from data instead of hard-coding like this 
-*/
-void Reload()
-{
-	ClearScene();
-}
-
-bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
-
-void PurgeDeletedObjects()
-{
-	list<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
-	{
-		LPGAMEOBJECT o = *it;
-		if (o->IsDeleted())
-		{
-			delete o;
-			*it = NULL;
-		}
-	}
-	objects.erase(
-		std::remove_if(objects.begin(), objects.end(), IsGameObjectDeleted),
-		objects.end());
-}
 
 /*
 	Update world status for this frame
@@ -212,22 +59,7 @@ void PurgeDeletedObjects()
 */
 void Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-	vector<LPGAMEOBJECT> coObjects;
-	list<LPGAMEOBJECT>::iterator i;
-	for (i = objects.begin(); i != objects.end(); ++i)
-	{
-		coObjects.push_back(*i);
-	}
-
-	for (i = objects.begin(); i != objects.end(); ++i)
-	{
-		(*i)->Update(dt,&coObjects);
-	}
-
-	PurgeDeletedObjects();
-	currentMap->Update();
+	CGame::GetInstance()->GetCurrentScene()->Update(dt);
 }
 
 /*
@@ -248,12 +80,8 @@ void Render()
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
-	currentMap->Render();
-	list<LPGAMEOBJECT>::iterator i;
-	for (i = objects.begin(); i != objects.end(); ++i)
-	{
-		(*i)->Render();
-	}
+
+	CGame::GetInstance()->GetCurrentScene()->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
@@ -333,9 +161,11 @@ int Run()
 		{
 			frameStart = now;
 
-			game->ProcessKeyboard();			
+			CGame::GetInstance()->ProcessKeyboard();
 			Update(dt);
 			Render();
+
+			CGame::GetInstance()->SwitchScene();
 		}
 		else
 			Sleep(tickPerFrame - dt);	
@@ -358,11 +188,8 @@ int WINAPI WinMain(
 	game->Init(hWnd, hInstance);
 	game->InitKeyboard();
 	
-	//game->Load(L"mario-sample.txt");
-	game->Load("data/mario-game.tmx");
 
-	//LoadResources();
-	//Reload();
+	game->Load("data/mario-game.tmx");
 
 	SetWindowPos(hWnd, 0, 0, 0, screenWidth * 2, screenHeight * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

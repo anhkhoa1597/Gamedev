@@ -162,7 +162,7 @@ void InitDirectX(HWND hWnd)
 	}
 
 	// Get the back buffer from the swapchain
-	ID3D10Texture2D* pBackBuffer;
+	ID3D10Texture2D* pBackBuffer = nullptr;
 	hr = pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBackBuffer);
 	if (hr != S_OK)
 	{
@@ -187,7 +187,7 @@ void InitDirectX(HWND hWnd)
 	pD3DDevice->OMSetRenderTargets(1, &pRenderTargetView, NULL);
 
 	// create and set the viewport
-	D3D10_VIEWPORT viewPort;
+	D3D10_VIEWPORT viewPort{};
 	viewPort.Width = BackBufferWidth;
 	viewPort.Height = BackBufferHeight;
 	viewPort.MinDepth = 0.0f;
@@ -368,7 +368,7 @@ void Render()
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
-	WNDCLASSEX wc;
+	WNDCLASSEX wc{};
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	wc.style = CS_HREDRAW | CS_VREDRAW;

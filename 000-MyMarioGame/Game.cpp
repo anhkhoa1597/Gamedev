@@ -65,7 +65,8 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	}
 
 	// Get the back buffer from the swapchain
-	ID3D10Texture2D* pBackBuffer;
+	ID3D10Texture2D* pBackBuffer = nullptr;
+
 	hr = pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBackBuffer);
 	if (hr != S_OK)
 	{
@@ -87,7 +88,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	pD3DDevice->OMSetRenderTargets(1, &pRenderTargetView, NULL);
 
 	// create and set the viewport
-	D3D10_VIEWPORT viewPort;
+	D3D10_VIEWPORT viewPort{};
 	viewPort.Width = backBufferWidth;
 	viewPort.Height = backBufferHeight;
 	viewPort.MinDepth = 0.0f;
@@ -100,7 +101,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	//
 	//
 
-	D3D10_SAMPLER_DESC desc;
+	D3D10_SAMPLER_DESC desc{};
 	desc.Filter = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR;
 	desc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
 	desc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
@@ -363,7 +364,7 @@ void CGame::InitKeyboard()
 	// Set the buffer size to DINPUT_BUFFERSIZE (defined above) elements.
 	//
 	// The buffer size is a DWORD property associated with the device.
-	DIPROPDWORD dipdw;
+	DIPROPDWORD dipdw{};
 
 	dipdw.diph.dwSize = sizeof(DIPROPDWORD);
 	dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
@@ -431,85 +432,9 @@ void CGame::ProcessKeyboard()
 	}
 }
 
-#define MAX_GAME_LINE 1024
-
-
-#define GAME_FILE_SECTION_UNKNOWN -1
-#define GAME_FILE_SECTION_SETTINGS 1
-#define GAME_FILE_SECTION_SCENES 2
-#define GAME_FILE_SECTION_TEXTURES 3
-
-//
-//void CGame::_ParseSection_SETTINGS(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//	if (tokens[0] == "start")
-//		next_scene = atoi(tokens[1].c_str());
-//	else
-//		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
-//}
-//
-//void CGame::_ParseSection_SCENES(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//	int id = atoi(tokens[0].c_str());
-//	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
-//
-//	LPSCENE scene = new CPlayScene(id, path);
-//	scenes[id] = scene;
-//}
-
 /*
 	Load game campaign file and load/initiate first scene
 */
-void CGame::Load(LPCWSTR gameFile)
-{
-	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
-
-	ifstream f;
-	f.open(gameFile);
-	char str[MAX_GAME_LINE];
-
-	// current resource section flag
-	int section = GAME_FILE_SECTION_UNKNOWN;
-
-	while (f.getline(str, MAX_GAME_LINE))
-	{
-		string line(str);
-
-		if (line[0] == '#') continue;	// skip comment lines	
-
-		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
-		if (line == "[TEXTURES]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
-		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
-		if (line[0] == '[')
-		{
-			section = GAME_FILE_SECTION_UNKNOWN;
-			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
-			continue;
-		}
-
-		//
-		// data section
-		//
-		switch (section)
-		{
-		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
-		case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
-		}
-	}
-	f.close();
-
-	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-
-	SwitchScene();
-}
-
 void CGame::Load(string gameFile)
 {
 	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
@@ -531,10 +456,23 @@ void CGame::Load(string gameFile)
 	tinyxml2::XMLElement* pScene = pSceneGroup->FirstChildElement("scene");
 	while (pScene != nullptr)
 	{
-		int id;
+		int id, type;
 		pScene->QueryIntAttribute("id", &id);
+		pScene->QueryIntAttribute("type", &type);
 		string path = pScene->Attribute("source");
-		LPSCENE scene = new CPlayScene(id, path);
+		LPSCENE scene{};
+		switch (type)
+		{
+		case 0:
+			//intro scene
+			//not create class IntroScene yet so temp use PlayScene
+			scene = new CPlayScene(id, path);
+			break;
+		case 1:
+			//play scene
+			scene = new CPlayScene(id, path);
+			break;
+		}
 		scenes[id] = scene;
 
 		pScene = pScene->NextSiblingElement("scene");
@@ -578,20 +516,6 @@ void CGame::InitiateSwitchScene(int scene_id)
 {
 	next_scene = scene_id;
 }
-
-
-//void CGame::_ParseSection_TEXTURES(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//
-//	int texID = atoi(tokens[0].c_str());
-//	wstring path = ToWSTR(tokens[1]);
-//
-//	CTextures::GetInstance()->Add(texID, path.c_str());
-//}
-
 
 CGame::~CGame()
 {

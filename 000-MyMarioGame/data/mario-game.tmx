@@ -11,5 +11,6 @@
     <texture id="0" source="texture\mario.png"/>
     <texture id="10" source="texture\enemies.png"/>
     <texture id="20" source="texture\misc.png"/>
+    <texture id="30" source="texture\stage-tileset-transparent.png"/>
   </texturegroup>
 </data>
