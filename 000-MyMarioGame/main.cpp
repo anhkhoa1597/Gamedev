@@ -16,6 +16,8 @@
 												   + the width must divisible to lenght
 		0.9: fix tileset transparent, fix boudingbox of object
 		0.10: add file from scene-manager
+		0.11: modified some function of class scene and playscene, CGame to load file tmx to manage scene.
+
 ================================================================ */
 
 #include <windows.h>

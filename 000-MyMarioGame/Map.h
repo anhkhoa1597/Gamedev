@@ -5,23 +5,9 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <unordered_map>
 
-#include "Collision.h"
-#include "Game.h"
-#include "Sprites.h"
-#include "GameObject.h"
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
-#include "Coin.h"
-#include "Platform.h"
-#include "Ground.h"
-#include "Pipes.h"
-#include "Tileset.h"
-#include "AssetIDs.h"
-#include "AssetPaths.h"
 #include "debug.h"
-#include "tinyxml2.h"
 using namespace std;
 
 /*
@@ -30,16 +16,15 @@ using namespace std;
 
 class Map
 {
-	int Next;
 	int width;
 	int height;
 	int tile_width;
 	int tile_height;
 	list<vector<vector<unsigned int>>> tiled_background;
 public:
-	Map();
-	virtual ~Map();
-	virtual void Render();
-	virtual void Update();
+	Map(int width, int height, int tile_width, int tile_height);
+	~Map();
+	void Render();
+	void Update();
 	void Load(string filePath);
-};
+}; typedef Map* LPMap;

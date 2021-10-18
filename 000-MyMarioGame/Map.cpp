@@ -25,20 +25,17 @@ void parse_tiles(const std::string& gid_list, int height, std::vector<std::vecto
     tiled_background = tiles;
 }
 
-Map::Map()
+Map::Map(int width, int height, int tile_width, int tile_height)
 {
-	Next = -1;
-	width = 0;
-	height = 0;
-	tile_width = 0;
-	tile_height = 0;
+	this->width = width;
+	this->height = height;
+	this->tile_width = tile_width;
+	this->tile_height = tile_height;
 }
 
 Map::~Map()
 {
-
 }
-
 
 void Map::Load(string filepath)
 {
@@ -51,22 +48,6 @@ void Map::Load(string filepath)
 		map->QueryIntAttribute("tilewidth", &tile_width);
 		map->QueryIntAttribute("tileheight", &tile_height);
 	}
-
-	//load tile-set
-	int tileWidth, tileHeight, spacing, tileCount, column;
-	tinyxml2::XMLElement* pTileset = map->FirstChildElement("tileset");
-	string sourceTileset = pTileset->Attribute("source");
-	sourceTileset = filepath + "/../" + sourceTileset;
-	doc.LoadFile(sourceTileset.c_str());
-	tinyxml2::XMLElement* pTileset_tsx = doc.FirstChildElement("tileset");
-	{
-		pTileset_tsx->QueryIntAttribute("tilewidth", &tileWidth);
-		pTileset_tsx->QueryIntAttribute("tileheight", &tileHeight);
-		pTileset_tsx->QueryIntAttribute("spacing", &spacing);
-		pTileset_tsx->QueryIntAttribute("tilecount", &tileCount);
-		pTileset_tsx->QueryIntAttribute("column", &column);
-	}
-	tileset = new Tileset(tileWidth, tileHeight, spacing, tileCount, column);
 
 	//load graphic of game
 	//tinyxml2::XMLElement* pLayer = map->FirstChildElement("layer");

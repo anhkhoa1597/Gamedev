@@ -167,20 +167,18 @@ void CPlayScene::LoadTileset(string tilesetFile)
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(tilesetFile.c_str());
 
-	Tileset* tileset;
 	tinyxml2::XMLElement* pTileset = doc.FirstChildElement("tileset");
 	{
-		int id, tileWidth, tileHeight, spacing, tileCount, column;
-		pTileset->QueryIntAttribute("id", &id);
+		int texId, tileWidth, tileHeight, spacing, tileCount, column;
+		pTileset->QueryIntAttribute("texid", &texId);
 		pTileset->QueryIntAttribute("tilewidth", &tileWidth);
 		pTileset->QueryIntAttribute("tileheight", &tileHeight);
 		pTileset->QueryIntAttribute("spacing", &spacing);
 		pTileset->QueryIntAttribute("tilecount", &tileCount);
 		pTileset->QueryIntAttribute("columns", &column);
-		tileset = new Tileset(id, tileWidth, tileHeight, spacing, tileCount, column);
+		Tilesets::GetInstance()->Add(texId, tileWidth,tileHeight,spacing,tileCount,column);
 	}
-
-
+	
 	DebugOut(L"[INFO] Done loading tileset from %s\n", tilesetFile);
 }
 
@@ -191,6 +189,13 @@ void CPlayScene::LoadMap(string mapFile)
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(mapFile.c_str());
 	tinyxml2::XMLElement* pMap = doc.FirstChildElement("map");
+	int width, height, tileWidth, tileHeight;
+	{
+		pMap->QueryIntAttribute("width", &width);
+		pMap->QueryIntAttribute("height", &height);
+		pMap->QueryIntAttribute("tilewidth", &tileWidth);
+		pMap->QueryIntAttribute("tileheight", &tileHeight);
+	}
 
 	//load tileset
 	tinyxml2::XMLElement* pTileset = pMap->FirstChildElement("tileset");
@@ -199,6 +204,30 @@ void CPlayScene::LoadMap(string mapFile)
 		LoadTileset(path);
 	}
 
+	//Load Tiled-background
+	tinyxml2::XMLElement* pLayer = pMap->FirstChildElement("layer");
+	while (pLayer != nullptr)
+	{
+		string name = pLayer->Attribute("name");
+		if (name == "background") {}
+		else
+		{
+			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
+			if (pData != nullptr) string gid_data = pData->GetText();
+			
+			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
+			vector<vector<unsigned int>> background;
+			
+			
+			tiled_background.push_back(background);
+		}
+			vector<vector<unsigned int>> background;
+			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
+			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
+			tiled_background.push_back(background);
+
+		pLayer = pLayer->NextSiblingElement("layer");
+	}
 
 	DebugOut(L"[INFO] Done loading map from %s\n", mapFile);
 }

@@ -140,7 +140,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Map1_1.h" />
+    <ClInclude Include="Maps.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Pipes.h" />
     <ClInclude Include="Platform.h" />
@@ -153,6 +153,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tileset.h" />
+    <ClInclude Include="Tilesets.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
@@ -169,7 +170,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Map1-1.cpp" />
+    <ClCompile Include="Maps.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Pipes.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tileset.cpp" />
+    <ClCompile Include="Tilesets.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>

@@ -6,7 +6,8 @@
 #include "Brick.h"
 #include "Mario.h"
 #include "Goomba.h"
-#include "Tileset.h"
+#include "Tilesets.h"
+#include "Map.h"
 //#include "Koopas.h"
 
 
