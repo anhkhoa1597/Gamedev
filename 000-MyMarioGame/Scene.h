@@ -1,6 +1,9 @@
 #pragma once
 
 #include "KeyEventHandler.h"
+#include <string>
+
+using namespace std;
 
 /*
 *  Abstract class for a game scene
@@ -8,10 +11,9 @@
 class CScene
 {
 protected:
+	string sceneFilePath;
 	LPKEYEVENTHANDLER key_handler;
 	int id;
-	string sceneFilePath;
-
 public:
 	CScene(int id, string filePath)
 	{

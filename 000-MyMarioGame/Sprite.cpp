@@ -41,8 +41,8 @@ void CSprite::Draw(float x, float y)
 
 	D3DXMATRIX matTranslation;
 	
-	float translationX = (this->right - this->left + 1) / 2;
-	float translationY = (this->bottom - this->top + 1) / 2;
+	float translationX = (float)(this->right - this->left + 1) / 2;
+	float translationY = (float)(this->bottom - this->top + 1) / 2;
 
 	x = (FLOAT)floor(x + translationX);
 	y = (FLOAT)floor(y + translationY);

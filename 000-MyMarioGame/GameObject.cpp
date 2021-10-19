@@ -38,7 +38,7 @@ void CGameObject::RenderBoundingBox()
 
 	//translationX, translationY to draw base adjust the coor of boundingbox to the top left corner
 	float translationX = (float)rect.right / 2;
-	float translationX = (float)rect.bottom / 2;
+	float translationY = (float)rect.bottom / 2;
 	CGame::GetInstance()->Draw(x - cx + translationX, y - cy + translationX, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.5f);
 }
 

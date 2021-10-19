@@ -17,103 +17,98 @@ using namespace std;
 CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
+	map = NULL;
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
 }
 
-
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_ASSETS	1
-#define SCENE_SECTION_OBJECTS	2
-
-#define ASSETS_SECTION_UNKNOWN -1
-#define ASSETS_SECTION_SPRITES 1
-#define ASSETS_SECTION_ANIMATIONS 2
-
-#define MAX_SCENE_LINE 1024
-
 /*
 	Parse a line in section [OBJECTS]
 */
-void CPlayScene::_ParseSection_OBJECTS(string line)
-{
-	vector<string> tokens = split(line);
-
-	// skip invalid lines - an object set must have at least id, x, y
-	if (tokens.size() < 2) return;
-
-	int object_type = atoi(tokens[0].c_str());
-	float x = (float)atof(tokens[1].c_str());
-	float y = (float)atof(tokens[2].c_str());
-
-	CGameObject* obj = NULL;
-
-	switch (object_type)
-	{
-	case OBJECT_TYPE_MARIO:
-		if (player != NULL)
-		{
-			DebugOut(L"[ERROR] MARIO object was created before!\n");
-			return;
-		}
-		obj = new CMario(x, y);
-		player = (CMario*)obj;
-
-		DebugOut(L"[INFO] Player object has been created!\n");
-		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
-	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-
-	case OBJECT_TYPE_PLATFORM:
-	{
-
-		float cell_width = (float)atof(tokens[3].c_str());
-		float cell_height = (float)atof(tokens[4].c_str());
-		int length = atoi(tokens[5].c_str());
-		int sprite_begin = atoi(tokens[6].c_str());
-		int sprite_middle = atoi(tokens[7].c_str());
-		int sprite_end = atoi(tokens[8].c_str());
-
-		obj = new CPlatform(
-			x, y,
-			cell_width, cell_height, length,
-			sprite_begin, sprite_middle, sprite_end
-		);
-
-		break;
-	}
-
-	case OBJECT_TYPE_PORTAL:
-	{
-		float r = (float)atof(tokens[3].c_str());
-		float b = (float)atof(tokens[4].c_str());
-		int scene_id = atoi(tokens[5].c_str());
-		obj = new CPortal(x, y, r, b, scene_id);
-	}
-	break;
-
-
-	default:
-		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
-		return;
-	}
-
-	// General object setup
-	obj->SetPosition(x, y);
-
-
-	objects.push_back(obj);
-}
+//void CPlayScene::_ParseSection_OBJECTS(string line)
+//{
+//	vector<string> tokens = split(line);
+//
+//	// skip invalid lines - an object set must have at least id, x, y
+//	if (tokens.size() < 2) return;
+//
+//	int object_type = atoi(tokens[0].c_str());
+//	float x = (float)atof(tokens[1].c_str());
+//	float y = (float)atof(tokens[2].c_str());
+//
+//	CGameObject* obj = NULL;
+//
+//	switch (object_type)
+//	{
+//	case OBJECT_TYPE_MARIO:
+//		if (player != NULL)
+//		{
+//			DebugOut(L"[ERROR] MARIO object was created before!\n");
+//			return;
+//		}
+//		obj = new CMario(x, y);
+//		player = (CMario*)obj;
+//
+//		DebugOut(L"[INFO] Player object has been created!\n");
+//		break;
+//	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
+//	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
+//	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+//
+//	case OBJECT_TYPE_PLATFORM:
+//	{
+//
+//		float cell_width = (float)atof(tokens[3].c_str());
+//		float cell_height = (float)atof(tokens[4].c_str());
+//		int length = atoi(tokens[5].c_str());
+//		int sprite_begin = atoi(tokens[6].c_str());
+//		int sprite_middle = atoi(tokens[7].c_str());
+//		int sprite_end = atoi(tokens[8].c_str());
+//
+//		obj = new CPlatform(
+//			x, y,
+//			cell_width, cell_height, length,
+//			sprite_begin, sprite_middle, sprite_end
+//		);
+//
+//		break;
+//	}
+//
+//	case OBJECT_TYPE_PORTAL:
+//	{
+//		float r = (float)atof(tokens[3].c_str());
+//		float b = (float)atof(tokens[4].c_str());
+//		int scene_id = atoi(tokens[5].c_str());
+//		obj = new CPortal(x, y, r, b, scene_id);
+//	}
+//	break;
+//
+//
+//	default:
+//		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
+//		return;
+//	}
+//
+//	// General object setup
+//	obj->SetPosition(x, y);
+//
+//
+//	objects.push_back(obj);
+//}
 
 void CPlayScene::LoadAssets(string assetFile)
 {
-	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
+	DebugOut(L"[INFO] Start loading assets from : %s \n", ToLPCWSTR(assetFile));
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(assetFile.c_str());
 	tinyxml2::XMLElement* pAsset = doc.FirstChildElement("asset");
 
+	if (pAsset == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading tileset file : %s\n", ToLPCWSTR(assetFile));
+		return;
+	}
 	//Load Sprites
 	tinyxml2::XMLElement* pSpriteGroup = pAsset->FirstChildElement("spritegroup");
 	tinyxml2::XMLElement* pSprite = pSpriteGroup->FirstChildElement("sprite");
@@ -158,16 +153,23 @@ void CPlayScene::LoadAssets(string assetFile)
 
 		pAnimation = pAnimation->NextSiblingElement("animation");
 	}
-	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
+	DebugOut(L"[INFO] Done loading assets from %s\n", ToLPCWSTR(assetFile));
 }
 
 void CPlayScene::LoadTileset(string tilesetFile)
 {
-	DebugOut(L"[INFO] Start loading tileset from : %s \n", tilesetFile);
+	DebugOut(L"[INFO] Start loading tileset from : %s \n", ToLPCWSTR(tilesetFile));
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(tilesetFile.c_str());
 
 	tinyxml2::XMLElement* pTileset = doc.FirstChildElement("tileset");
+
+	if (pTileset == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading tileset file : %s\n", ToLPCWSTR(tilesetFile));
+		return;
+	}
+
 	{
 		int texId, tileWidth, tileHeight, spacing, tileCount, column;
 		pTileset->QueryIntAttribute("texid", &texId);
@@ -179,16 +181,22 @@ void CPlayScene::LoadTileset(string tilesetFile)
 		Tilesets::GetInstance()->Add(texId, tileWidth,tileHeight,spacing,tileCount,column);
 	}
 	
-	DebugOut(L"[INFO] Done loading tileset from %s\n", tilesetFile);
+	DebugOut(L"[INFO] Done loading tileset from %s\n", ToLPCWSTR(tilesetFile));
 }
 
 void CPlayScene::LoadMap(string mapFile)
 {
-	DebugOut(L"[INFO] Start loading map from : %s \n", mapFile);
+	DebugOut(L"[INFO] Start loading map from : %s \n", ToLPCWSTR(mapFile));
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(mapFile.c_str());
 	tinyxml2::XMLElement* pMap = doc.FirstChildElement("map");
+	if (pMap == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading map file : %s\n", ToLPCWSTR(mapFile));
+		return;
+	}
+	int id = -1;
 	int width, height, tileWidth, tileHeight;
 	{
 		pMap->QueryIntAttribute("width", &width);
@@ -196,12 +204,22 @@ void CPlayScene::LoadMap(string mapFile)
 		pMap->QueryIntAttribute("tilewidth", &tileWidth);
 		pMap->QueryIntAttribute("tileheight", &tileHeight);
 	}
-
-	//load tileset
-	tinyxml2::XMLElement* pTileset = pMap->FirstChildElement("tileset");
+	LPMap map = new Map(width, height, tileWidth, tileHeight);
+	//Load extra properties
+	tinyxml2::XMLElement* pProperty = pMap->FirstChildElement("properties")->FirstChildElement("property");
+	while (pProperty != nullptr)
 	{
-		string path = pTileset->Attribute("source");
-		LoadTileset(path);
+		string nameProperty = pProperty->Attribute("name");
+		if (nameProperty == "id") pProperty->QueryIntAttribute("value", &id);
+		else if (nameProperty == "source")
+		{
+			//load tileset
+			string path = pProperty->Attribute("value");
+			LoadTileset(path);
+		}
+		//load other property
+		else {}
+		pProperty = pProperty->NextSiblingElement("property");
 	}
 
 	//Load Tiled-background
@@ -213,33 +231,70 @@ void CPlayScene::LoadMap(string mapFile)
 		else
 		{
 			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
-			if (pData != nullptr) string gid_data = pData->GetText();
-			
-			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
-			vector<vector<unsigned int>> background;
-			
-			
-			tiled_background.push_back(background);
+			map->AddLayer(pData->GetText());
 		}
-			vector<vector<unsigned int>> background;
-			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
-			if (pData != NULL) parse_tiles(pData->GetText(), height, background);
-			tiled_background.push_back(background);
-
 		pLayer = pLayer->NextSiblingElement("layer");
 	}
+	this->map = map;
+	if (id < 0) return;
+	Maps::GetInstance()->Add(id, map);
 
-	DebugOut(L"[INFO] Done loading map from %s\n", mapFile);
+	//Load Objects
+	tinyxml2::XMLElement* pObjectGroup = pMap->FirstChildElement("objectgroup");
+	tinyxml2::XMLElement* pObject = pObjectGroup->FirstChildElement("object");
+	while (pObject != nullptr)
+	{
+		float x, y, width, height;
+		pObject->QueryFloatAttribute("x", &x);
+		pObject->QueryFloatAttribute("y", &y);
+		pObject->QueryFloatAttribute("width", &width);
+		pObject->QueryFloatAttribute("height", &height);
+		string name = pObject->Attribute("name");
+		CGameObject* obj = NULL;
+		if (name == "mario")
+		{
+			if (player != NULL)
+			{
+				DebugOut(L"[ERROR] MARIO object was created before!\n");
+				return;
+			}
+			obj = new CMario(x, y);
+			player = (CMario*)obj;
+
+			DebugOut(L"[INFO] Player object has been created!\n");
+			break;
+		}
+		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
+		else if (name == "platform") obj = new Ground(x, y, width, height);
+		else if (name == "s_platform") obj = new Ground(x, y, width, height); //need create class SPlatform
+		else if (name == "coin") obj = new CCoin(x, y);
+		else if (name == "brick") obj = new CBrick(x, y);
+		else if (name == "q_brick") obj = new CBrick(x, y); //need create class QBrick
+		else if (name == "s_brick") obj = new CBrick(x, y); //need create class SBrick
+		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
+		else DebugOut(L"[ERROR] Invalid object type: %s\n", ToLPCWSTR(name));
+
+		// General object setup
+		obj->SetPosition(x, y);
+		objects.push_back(obj);
+		pObject = pObject->NextSiblingElement("object");
+	}
+
+	DebugOut(L"[INFO] Done loading map from %s\n", ToLPCWSTR(mapFile));
 }
 
 void CPlayScene::Load()
 {
-	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
+	DebugOut(L"[INFO] Start loading scene from : %s \n", ToLPCWSTR(sceneFilePath));
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(sceneFilePath.c_str());
 	tinyxml2::XMLElement* pScene = doc.FirstChildElement("scene");
-
+	if (pScene == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading scene file : %s\n", ToLPCWSTR(sceneFilePath));
+		return;
+	}
 	//Load Setting
 	tinyxml2::XMLElement* pSetting = pScene->FirstChildElement("setting");
 	{
@@ -263,7 +318,7 @@ void CPlayScene::Load()
 		LoadMap(path);
 	}
 
-	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
+	DebugOut(L"[INFO] Done loading scene : %s\n", ToLPCWSTR(sceneFilePath));
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -302,6 +357,9 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	//render tiled-map
+	map->Render();
+	//render objects
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
@@ -332,7 +390,7 @@ void CPlayScene::Unload()
 
 	objects.clear();
 	player = NULL;
-
+	map = NULL;
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
 

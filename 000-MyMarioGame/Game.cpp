@@ -437,12 +437,16 @@ void CGame::ProcessKeyboard()
 */
 void CGame::Load(string gameFile)
 {
-	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
+	DebugOut(L"[INFO] Start loading game file : %s\n", ToLPCWSTR(gameFile));
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(gameFile.c_str());
 	tinyxml2::XMLElement* pData = doc.FirstChildElement("data");
-
+	if (pData == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading game file : %s\n", ToLPCWSTR(gameFile));
+		return;
+	}
 	//Load Setting
 	tinyxml2::XMLElement* pSetting = pData->FirstChildElement("setting");
 	{
@@ -490,7 +494,7 @@ void CGame::Load(string gameFile)
 
 		pTexture = pTexture->NextSiblingElement("texture");
 	}
-	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", ToLPCWSTR(gameFile));
 
 	SwitchScene();
 }

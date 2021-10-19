@@ -8,6 +8,8 @@
 #include <unordered_map>
 
 #include "debug.h"
+#include "GameObject.h"
+#include "AssetIDs.h"
 using namespace std;
 
 /*
@@ -23,6 +25,7 @@ class Map
 	list<vector<vector<unsigned int>>> tiled_background;
 public:
 	Map(int width, int height, int tile_width, int tile_height);
+	void AddLayer(string layer);
 	~Map();
 	void Render();
 	void Update();

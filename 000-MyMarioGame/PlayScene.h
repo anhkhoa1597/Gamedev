@@ -7,7 +7,8 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Tilesets.h"
-#include "Map.h"
+#include "Maps.h"
+#include "Ground.h"
 //#include "Koopas.h"
 
 
@@ -18,7 +19,7 @@ protected:
 	LPGAMEOBJECT player;
 
 	vector<LPGAMEOBJECT> objects;
-
+	LPMap map;
 	void _ParseSection_OBJECTS(string line);
 
 	void LoadAssets(string assetFile);
