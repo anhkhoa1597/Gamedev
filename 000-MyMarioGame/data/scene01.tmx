@@ -5,6 +5,7 @@
     <asset source="data\mario.tmx"/>
     <asset source="data\brick.tmx"/>
     <asset source="data\coin.tmx"/>
+    <!-- <asset source="data\hud-font.tmx"/> -->
     <!-- <asset source="data\goomba.tmx"/>
     <asset source="data\cloud.tmx"/> -->
   </assetgroup>

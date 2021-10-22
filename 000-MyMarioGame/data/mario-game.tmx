@@ -12,5 +12,6 @@
         <texture id="10" source="textures\enemies.png"/>
         <texture id="20" source="textures\misc.png"/>
         <texture id="30" source="textures\stage-tileset-transparent.png"/>
+        <!-- <texture id="40" source="textures\hud_font.png"/> -->
     </texturegroup>
 </data>

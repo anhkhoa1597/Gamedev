@@ -22,80 +22,6 @@ CPlayScene::CPlayScene(int id, string filePath) :
 	key_handler = new CSampleKeyHandler(this);
 }
 
-/*
-	Parse a line in section [OBJECTS]
-*/
-//void CPlayScene::_ParseSection_OBJECTS(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	// skip invalid lines - an object set must have at least id, x, y
-//	if (tokens.size() < 2) return;
-//
-//	int object_type = atoi(tokens[0].c_str());
-//	float x = (float)atof(tokens[1].c_str());
-//	float y = (float)atof(tokens[2].c_str());
-//
-//	CGameObject* obj = NULL;
-//
-//	switch (object_type)
-//	{
-//	case OBJECT_TYPE_MARIO:
-//		if (player != NULL)
-//		{
-//			DebugOut(L"[ERROR] MARIO object was created before!\n");
-//			return;
-//		}
-//		obj = new CMario(x, y);
-//		player = (CMario*)obj;
-//
-//		DebugOut(L"[INFO] Player object has been created!\n");
-//		break;
-//	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
-//	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
-//	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-//
-//	case OBJECT_TYPE_PLATFORM:
-//	{
-//
-//		float cell_width = (float)atof(tokens[3].c_str());
-//		float cell_height = (float)atof(tokens[4].c_str());
-//		int length = atoi(tokens[5].c_str());
-//		int sprite_begin = atoi(tokens[6].c_str());
-//		int sprite_middle = atoi(tokens[7].c_str());
-//		int sprite_end = atoi(tokens[8].c_str());
-//
-//		obj = new CPlatform(
-//			x, y,
-//			cell_width, cell_height, length,
-//			sprite_begin, sprite_middle, sprite_end
-//		);
-//
-//		break;
-//	}
-//
-//	case OBJECT_TYPE_PORTAL:
-//	{
-//		float r = (float)atof(tokens[3].c_str());
-//		float b = (float)atof(tokens[4].c_str());
-//		int scene_id = atoi(tokens[5].c_str());
-//		obj = new CPortal(x, y, r, b, scene_id);
-//	}
-//	break;
-//
-//
-//	default:
-//		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
-//		return;
-//	}
-//
-//	// General object setup
-//	obj->SetPosition(x, y);
-//
-//
-//	objects.push_back(obj);
-//}
-
 void CPlayScene::LoadAssets(string assetFile)
 {
 	DebugOut(L"[INFO] Start loading assets from : %s \n", ToLPCWSTR(assetFile));
@@ -347,13 +273,17 @@ void CPlayScene::Update(DWORD dt)
 	cx -= (float)game->GetBackBufferWidth() / 2;
 	cy -= (float)game->GetBackBufferHeight() / 4;
 
-	//int w, h;
-	//map->GetWidthHeight(w, h);
-
-	if (cx < 0) cx = 0;
-
-	if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
-	if (cy < 0) cy = 0;
+	int w, h, l, t, r, b;
+	map->GetWidthHeight(w, h);
+	l = 0;
+	t = 0;
+	r = w - game->GetBackBufferWidth();
+	b = h - game->GetBackBufferHeight();
+	
+	if (cx < l) cx = (float)l;
+	if (cx > r) cx = (float)r;
+	if (cy > b) cy = (float)b;
+	if (cy < t) cy = (float)t;
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
 

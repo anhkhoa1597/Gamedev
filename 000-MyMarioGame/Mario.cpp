@@ -240,9 +240,9 @@ void CMario::Render()
 		aniId = GetAniIdSmall();
 
 	animations->Get(aniId)->Render(x, y);
-	//DebugOutTitle(L"x: %.2f, y:%.2fn", x, y);
-	RenderBoundingBox();
 	
+	//DebugOutTitle(L"x: %.2f, y:%.2fn", x, y);
+	//RenderBoundingBox();
 }
 
 //logic
@@ -335,28 +335,24 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 {
 	left = x;
 	top = y;
-	if (level==MARIO_LEVEL_BIG)
+	
+	if (level == MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
-			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
+			right = left + MARIO_BIG_SITTING_BBOX_WIDTH - 1;
+			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT - 1;
 		}
-		else if (ax == MARIO_ACCEL_RUN_X || ax == -MARIO_ACCEL_RUN_X)
+		else
 		{
-			right = left + MARIO_BIG_RUNNING_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT;
-		}
-		else 
-		{
-			right = left + MARIO_BIG_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT;
+			right = left + MARIO_BIG_BBOX_WIDTH - 1;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT - 1;
 		}
 	}
 	else
 	{
-		right = left + MARIO_SMALL_BBOX_WIDTH;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+		right = left + MARIO_SMALL_BBOX_WIDTH - 1;
+		bottom = top + MARIO_SMALL_BBOX_HEIGHT - 1;
 	}
 }
 

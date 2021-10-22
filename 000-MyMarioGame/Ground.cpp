@@ -2,13 +2,13 @@
 
 void Ground::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Ground::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = l + this->width;
-	b = t + this->height;
+	r = l + this->width - 1;
+	b = t + this->height - 1;
 }

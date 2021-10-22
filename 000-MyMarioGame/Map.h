@@ -25,7 +25,7 @@ class Map
 	list<vector<vector<unsigned int>>> tiled_background;
 public:
 	Map(int width, int height, int tile_width, int tile_height);
-	void GetWidthHeight(int& w, int& h) { w = this->width; h = this->height; }
+	void GetWidthHeight(int& w, int& h) { w = this->width * this->tile_width; h = this->height * this->tile_height; }
 	void AddLayer(string layer);
 	~Map();
 	void Render();

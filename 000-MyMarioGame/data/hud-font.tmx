@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- test -->
+<asset>
+  <spritegroup>
+    <sprite name="0" id="90000" left="77" top="31" right="84" bottom="38" texid="40"/>
+    <sprite name="1" id="90001" left="87" top="31" right="94" bottom="38" texid="40"/>
+    <sprite name="2" id="90002" left="97" top="31" right="104" bottom="38" texid="40"/>
+    <sprite name="3" id="90003" left="107" top="31" right="114" bottom="38" texid="40"/>
+    <sprite name="4" id="90004" left="117" top="31" right="124" bottom="38" texid="40"/>
+    <sprite name="5" id="90005" left="127" top="31" right="134" bottom="38" texid="40"/>
+    <sprite name="6" id="90006" left="137" top="31" right="144" bottom="38" texid="40"/>
+    <sprite name="7" id="90007" left="147" top="31" right="154" bottom="38" texid="40"/>
+    <sprite name="8" id="90008" left="157" top="31" right="164" bottom="38" texid="40"/>
+    <sprite name="9" id="90009" left="167" top="31" right="174" bottom="38" texid="40"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="time" id="90001">
+      <sprite id="20001" time="300"/>
+      <sprite id="20002" time="200"/>
+      <sprite id="20003" time="200"/>
+      <sprite id="20004" time="200"/>
+    </animation>
+  </animationgroup>
+</asset>
