@@ -17,6 +17,9 @@
 		0.9: fix tileset transparent, fix boudingbox of object
 		0.10: add file from scene-manager
 		0.11: modified some function of class scene and playscene, CGame to load file tmx to manage scene.
+		0.12: complete to load map tiled-background and some object
+		0.13: 
+
 
 ================================================================ */
 
@@ -31,9 +34,11 @@
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
+//#define SCREEN_WIDTH 500
+//#define SCREEN_HEIGHT 270
 
-#define SCREEN_WIDTH 500
-#define SCREEN_HEIGHT 270
+#define SCREEN_WIDTH 2560
+#define SCREEN_HEIGHT 1600
 
 extern int screenWidth;
 extern int screenHeight;
@@ -189,13 +194,11 @@ int WINAPI WinMain(
 	LPGAME game = CGame::GetInstance();
 	game->Init(hWnd, hInstance);
 	game->InitKeyboard();
-	
 
-	//game->Load(L"data/mario-game.tmx");
 	game->Load("data/mario-game.tmx");
 
 	
-	SetWindowPos(hWnd, 0, 0, 0, screenWidth * 2, screenHeight * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

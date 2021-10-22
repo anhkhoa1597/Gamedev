@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="brick" id="20001" left="274" top="188" right="289" bottom="203" texid="20"/>
+    <sprite name="brick" id="20002" left="293" top="188" right="308" bottom="203" texid="20"/>
+    <sprite name="brick" id="20003" left="312" top="188" right="327" bottom="203" texid="20"/>
+    <sprite name="brick" id="20004" left="331" top="188" right="346" bottom="203" texid="20"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="brick" id="10000">
+      <sprite id="20001" time="300"/>
+      <sprite id="20002" time="200"/>
+      <sprite id="20003" time="200"/>
+      <sprite id="20004" time="200"/>
+    </animation>
+  </animationgroup>
+</asset>

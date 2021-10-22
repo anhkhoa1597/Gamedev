@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="coin" id="40001" left="294" top="101" right="303" bottom="116" texid="20"/>
+    <sprite name="coin" id="40002" left="311" top="101" right="312" bottom="116" texid="20"/>
+    <sprite name="coin" id="40003" left="321" top="101" right="326" bottom="116" texid="20"/>
+    <sprite name="coin" id="40004" left="334" top="100" right="349" bottom="117" texid="20"/>
+    <sprite name="coin" id="40005" left="357" top="100" right="364" bottom="117" texid="20"/>
+    <sprite name="coin" id="40006" left="372" top="100" right="383" bottom="117" texid="20"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="coin" id="11000">
+      <sprite id="40001" time="300"/>
+      <sprite id="40002" time="300"/>
+      <sprite id="40003" time="300"/>
+      <sprite id="40004" time="300"/>
+      <sprite id="40005" time="300"/>
+      <sprite id="40006" time="300"/>
+    </animation>
+  </animationgroup>
+</asset>

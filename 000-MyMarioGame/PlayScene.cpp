@@ -262,7 +262,6 @@ void CPlayScene::LoadMap(string mapFile)
 			player = (CMario*)obj;
 
 			DebugOut(L"[INFO] Player object has been created!\n");
-			break;
 		}
 		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
 		else if (name == "platform") obj = new Ground(x, y, width, height);
@@ -346,11 +345,17 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame* game = CGame::GetInstance();
 	cx -= (float)game->GetBackBufferWidth() / 2;
-	cy -= (float)game->GetBackBufferHeight() / 2;
+	cy -= (float)game->GetBackBufferHeight() / 4;
+
+	//int w, h;
+	//map->GetWidthHeight(w, h);
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
+	if (cy < 0) cy = 0;
+
+	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
 }

@@ -89,8 +89,8 @@ void LoadResources()
 	for (int i = 1; i <= 768; i++)
 	{
 		int l = 1 + ((i - 1) % 48) * 17;
-		int r = 16 + ((i - 1) % 48) * 17;
 		int t = 1 + ((i - 1) / 48) * 17;
+		int r = 16 + ((i - 1) % 48) * 17;
 		int b = 16 + ((i - 1) / 48) * 17;
 		sprites->Add(i, l, t, r, b, tileSet);
 	}

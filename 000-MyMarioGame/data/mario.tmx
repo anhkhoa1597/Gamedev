@@ -17,7 +17,7 @@
     <sprite name="big-jump-walk-right" id="11417" left="955" top="93" right="972" bottom="120" texid="0"/>
     <sprite name="big-jump-run-left" id="11423" left="169" top="93" right="188" bottom="120" texid="0"/>
     <sprite name="big-jump-run-right" id="11427" left="856" top="93" right="875" bottom="120" texid="0"/>
-    <sprite name="big-sit-left" id="11511" left="55" top="102" right="60" bottom="121" texid="0"/>
+    <sprite name="big-sit-left" id="11511" left="55" top="102" right="70" bottom="121" texid="0"/>
     <sprite name="big-sit-right" id="11521" left="975" top="102" right="990" bottom="121" texid="0"/>
     <sprite name="big-brace-left" id="11611" left="195" top="92" right="212" bottom="121" texid="0"/>
     <sprite name="big-brace-right" id="11621" left="833" top="92" right="850" bottom="121" texid="0"/>
@@ -118,10 +118,10 @@
       <sprite id="12322" time="50"/>
     </animation>
     <animation name="small-brace-left" id="1400">
-      <sprite id="11511" time="100"/>
+      <sprite id="12511" time="100"/>
     </animation>
     <animation name="small-brace-right" id="1401">
-      <sprite id="11521" time="100"/>
+      <sprite id="12521" time="100"/>
     </animation>
     <animation name="small-jump-walk-left" id="1500">
       <sprite id="12413" time="100"/>

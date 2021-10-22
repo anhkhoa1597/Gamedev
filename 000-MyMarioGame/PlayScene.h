@@ -20,7 +20,6 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 	LPMap map;
-	void _ParseSection_OBJECTS(string line);
 
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);
