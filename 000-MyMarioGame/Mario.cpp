@@ -2,13 +2,6 @@
 #include "debug.h"
 
 #include "Mario.h"
-#include "Game.h"
-
-#include "Goomba.h"
-#include "Coin.h"
-#include "Portal.h"
-
-#include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -42,8 +35,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
+	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = 0;
 	}
@@ -241,7 +233,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 	
-	DebugOut(L"x: %.2f, y:%.2fn\n", x, y);
+	//DebugOut(L"x: %.2f, y:%.2fn\n", x, y);
 	//RenderBoundingBox();
 }
 
@@ -254,11 +246,6 @@ void CMario::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
-		////(TESTING)adjust when mario-big change state idle to running
-		//if (this->state == MARIO_STATE_IDLE)
-		//{
-		//	x -= MARIO_BIG_RUNNING_WIDTH_ADJUST;
-		//}
 		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;

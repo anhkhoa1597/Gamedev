@@ -3,7 +3,13 @@
 
 #include "Animation.h"
 #include "Animations.h"
+#include "Game.h"
 
+#include "Goomba.h"
+#include "Coin.h"
+#include "Portal.h"
+
+#include "Collision.h"
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
@@ -12,8 +18,11 @@
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
 
-#define MARIO_JUMP_SPEED_Y		0.6f
-#define MARIO_JUMP_RUN_SPEED_Y	0.9f
+/*#define MARIO_JUMP_SPEED_Y		0.6f
+#define MARIO_JUMP_RUN_SPEED_Y	0.9f*/
+
+#define MARIO_JUMP_SPEED_Y		0.5f
+#define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
 #define MARIO_GRAVITY			0.002f
 
@@ -80,32 +89,20 @@
 
 #pragma endregion
 
-#define GROUND_Y 160.0f
-
-
-
-
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 
 #define MARIO_BIG_BBOX_WIDTH  14
-#define MARIO_BIG_BBOX_HEIGHT 28
-
-#define MARIO_BIG_RUNNING_BBOX_WIDTH  18
-#define MARIO_BIG_RUNNING_BBOX_HEIGHT 28
+#define MARIO_BIG_BBOX_HEIGHT 27
 
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 18
 
-#define MARIO_SMALL_BBOX_WIDTH  12
+#define MARIO_SMALL_BBOX_WIDTH  14
 #define MARIO_SMALL_BBOX_HEIGHT 16
 
-#define MARIO_BIG_RUNNING_WIDTH_ADJUST (MARIO_BIG_RUNNING_BBOX_WIDTH - MARIO_BIG_BBOX_WIDTH)
 #define MARIO_SIT_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_BIG_SITTING_BBOX_HEIGHT)
 #define MARIO_CHANGE_LEVEL_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT)
-
-
-
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 
@@ -125,6 +122,7 @@ class CMario : public CGameObject
 	//float startX, startY, checkPointX, checkPointY;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithSPlatform(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 

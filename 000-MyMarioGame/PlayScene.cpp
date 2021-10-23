@@ -190,8 +190,8 @@ void CPlayScene::LoadMap(string mapFile)
 			DebugOut(L"[INFO] Player object has been created!\n");
 		}
 		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
-		else if (name == "platform") obj = new Ground(x, y, width, height);
-		else if (name == "s_platform") obj = new Ground(x, y, width, height); //need create class SPlatform
+		else if (name == "ground") obj = new Ground(x, y, width, height);
+		else if (name == "s_platform") obj = new SPlatform(x, y, width, height); //need create class SPlatform
 		else if (name == "coin") obj = new CCoin(x, y);
 		else if (name == "brick") obj = new CBrick(x, y);
 		else if (name == "q_brick") obj = new CBrick(x, y); //need create class QBrick
@@ -273,22 +273,22 @@ void CPlayScene::Update(DWORD dt)
 	cx -= (float)game->GetBackBufferWidth() / 2;
 	cy -= (float)game->GetBackBufferHeight() / 4;
 
-	//int w, h, l, t, r, b;c
-	//map->GetWidthHeight(w, h);
-	//l = 0;
-	//t = 0;
-	//r = w - game->GetBackBufferWidth();
-	//b = h - game->GetBackBufferHeight();
+	int w, h, l, t, r, b;
+	map->GetWidthHeight(w, h);
+	l = 0;
+	t = 0;
+	r = w - game->GetBackBufferWidth();
+	b = h - game->GetBackBufferHeight();
 	
-	//if (cx < l) cx = (float)l;
-	//if (cx > r) cx = (float)r;
-	//if (cy > b) cy = (float)b;
-	//if (cy < t) cy = (float)t;
+	if (cx < l) cx = (float)l;
+	if (cx > r) cx = (float)r;
+	if (cy > b) cy = (float)b;
+	if (cy < t) cy = (float)t;
 
-	if (cx < 0) cx = 0;
-	if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
+	//if (cx < 0) cx = 0;
+	//if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
 
-	CGame::GetInstance()->SetCamPos(cx, 432 - game->GetBackBufferHeight());
+	CGame::GetInstance()->SetCamPos(cx,cy);
 
 	PurgeDeletedObjects();
 }

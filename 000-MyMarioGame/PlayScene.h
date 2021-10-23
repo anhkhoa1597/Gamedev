@@ -9,6 +9,7 @@
 #include "Tilesets.h"
 #include "Maps.h"
 #include "Ground.h"
+#include "SPlatform.h"
 //#include "Koopas.h"
 
 
