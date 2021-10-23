@@ -241,7 +241,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 	
-	//DebugOutTitle(L"x: %.2f, y:%.2fn", x, y);
+	DebugOut(L"x: %.2f, y:%.2fn\n", x, y);
 	//RenderBoundingBox();
 }
 
