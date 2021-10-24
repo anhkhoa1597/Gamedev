@@ -108,6 +108,12 @@
     <ClInclude Include="SPlatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QBrick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DCoin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -186,6 +192,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Maps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QBrick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DCoin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

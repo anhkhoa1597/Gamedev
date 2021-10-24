@@ -199,12 +199,13 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		if (filterBlock == 1) 
 		{
 			if (!c->obj->IsBlocking()) continue;
-
+			int l, t, r, b;
+			c->obj->DirectBlocking(l, t, r, b);
 			//only detect collision event with direct to blocking
-			if (c->nx < 0 && !c->obj->IsBlockingFromLeft()) continue;
-			if (c->nx > 0 && !c->obj->IsBlockingFromRight()) continue;
-			if (c->ny < 0 && !c->obj->IsBlockingFromTop()) continue;
-			if (c->ny > 0 && !c->obj->IsBlockingFromBottom()) continue;
+			if (c->nx < 0 && !l) continue;
+			if (c->ny < 0 && !t) continue;
+			if (c->nx > 0 && !r) continue;
+			if (c->ny > 0 && !b) continue;
 		}
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {

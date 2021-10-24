@@ -42,10 +42,25 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
-	else if (dynamic_cast<CCoin*>(e->obj))
-		OnCollisionWithCoin(e);
+	else if (dynamic_cast<DCoin*>(e->obj))
+		OnCollisionWithDCoin(e);
+	//else if (dynamic_cast<CCoin*>(e->obj))
+	//	OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<QBrick*>(e->obj))
+		OnCollisionWithQBrick(e);
+}
+
+void CMario::OnCollisionWithQBrick(LPCOLLISIONEVENT e)
+{
+	QBrick* q_brick = dynamic_cast<QBrick*>(e->obj);
+
+	if (e->ny > 0)
+	{
+		if(q_brick->GetState() != BRICK_STATE_BBRICK) 
+			q_brick->SetState(BRICK_STATE_BBRICK);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -88,6 +103,19 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 	coin++;
 }
 
+void CMario::OnCollisionWithDCoin(LPCOLLISIONEVENT e)
+{
+	DCoin* d_coin = dynamic_cast<DCoin*>(e->obj);
+
+	if (e->ny > 0)
+	{
+		if (d_coin->GetState() != COIN_STATE_DROP)
+		{
+			d_coin->SetState(COIN_STATE_DROP);
+			coin++;
+		}
+	}
+}
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
@@ -234,6 +262,8 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 	
 	//DebugOut(L"x: %.2f, y:%.2fn\n", x, y);
+	DebugOutTitle(L"Coins: %d", coin);
+	
 	//RenderBoundingBox();
 }
 
@@ -256,7 +286,6 @@ void CMario::SetState(int state)
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
-		//x += MARIO_BIG_RUNNING_WIDTH_ADJUST;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;

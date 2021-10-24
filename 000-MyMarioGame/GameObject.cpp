@@ -10,7 +10,6 @@
 
 CGameObject::CGameObject()
 {
-	//translationX = translationY = 0;
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
@@ -21,7 +20,7 @@ CGameObject::CGameObject()
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
-	RECT rect;
+	RECT rect{};
 
 	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
 

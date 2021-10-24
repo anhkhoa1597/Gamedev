@@ -3,15 +3,14 @@
 #include "GameObject.h"
 #include "Animations.h"
 
-#define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 16
-#define BRICK_BBOX_WIDTH 16
-#define BRICK_BBOX_HEIGHT 16
+#define ID_ANI_BRICK 10100
 
 class CBrick : public CGameObject {
+	int width;
+	int height;
 public:
-	CBrick(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	CBrick(float x, float y, int width, int height) : CGameObject(x, y) { this->width = width; this->height = height; }
+	virtual void Render();
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {}
+	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

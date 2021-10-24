@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="red_mushroom" id="81000" left="156" top="121" right="171" bottom="136" texid="20"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="red_mushroom" id="8100">
+      <sprite id="81000" time="300"/>
+    </animation>
+  </animationgroup>
+</asset>

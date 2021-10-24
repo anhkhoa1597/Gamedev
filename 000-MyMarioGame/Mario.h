@@ -7,6 +7,8 @@
 
 #include "Goomba.h"
 #include "Coin.h"
+#include "DCoin.h"
+#include "QBrick.h"
 #include "Portal.h"
 
 #include "Collision.h"
@@ -122,8 +124,9 @@ class CMario : public CGameObject
 	//float startX, startY, checkPointX, checkPointY;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
-	void OnCollisionWithSPlatform(LPCOLLISIONEVENT e);
+	void OnCollisionWithQBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
+	void OnCollisionWithDCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
@@ -142,11 +145,6 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
-
-		//startX = x;
-		//startY = y;
-		//checkPointX = x;
-		//checkPointY = y;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

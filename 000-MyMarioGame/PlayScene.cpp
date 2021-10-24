@@ -7,7 +7,6 @@
 #include "Textures.h"
 #include "Sprites.h"
 #include "Portal.h"
-#include "Coin.h"
 #include "Platform.h"
 
 #include "SampleKeyEventHandler.h"
@@ -192,11 +191,27 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
 		else if (name == "ground") obj = new Ground(x, y, width, height);
 		else if (name == "s_platform") obj = new SPlatform(x, y, width, height); //need create class SPlatform
-		else if (name == "coin") obj = new CCoin(x, y);
-		else if (name == "brick") obj = new CBrick(x, y);
-		else if (name == "q_brick") obj = new CBrick(x, y); //need create class QBrick
-		else if (name == "s_brick") obj = new CBrick(x, y); //need create class SBrick
+		else if (name == "coin") obj = new DCoin(x, y, width, height);
+		else if (name == "brick") obj = new CBrick(x, y, width, height);
+		else if (name == "q_brick")
+		{
+			string drop = "";
+			tinyxml2::XMLElement* pProperty = pObject->FirstChildElement("properties")->FirstChildElement("property");
+			if (pProperty != nullptr)
+			{
+				drop = pProperty->Attribute("name");
+				if (drop == "drop")
+					drop = pProperty->Attribute("value");
+				if (drop == "coin") obj = new DCoin(x, y, width, height);
+				else if (drop == "red_mushroom") obj = new DCoin(x, y, width, height); //need create class RedMushroom
+				obj->SetPosition(x, y);
+				objects.push_back(obj);
+			}
+			obj = new QBrick(x, y, width, height);
+		}
+		else if (name == "s_brick") obj = new CBrick(x, y, width, height); //need create class SBrick
 		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
+		else if (name == "dead_zone") obj = new Ground(x, y, width, height); //need create Class deadzone
 		else DebugOut(L"[ERROR] Invalid object type: %s\n", ToLPCWSTR(name));
 
 		// General object setup
@@ -288,7 +303,7 @@ void CPlayScene::Update(DWORD dt)
 	//if (cx < 0) cx = 0;
 	//if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
 
-	CGame::GetInstance()->SetCamPos(cx,cy);
+	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
 }

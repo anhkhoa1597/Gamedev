@@ -83,3 +83,5 @@
 
 #define ID_SPRITE_TILESET 60000
 
+#define ID_SPRITE_ITEM 80000
+
