@@ -9,6 +9,7 @@
 #include "Coin.h"
 #include "DCoin.h"
 #include "QBrick.h"
+#include "Mushroom.h"
 #include "Portal.h"
 
 #include "Collision.h"
@@ -116,6 +117,7 @@ class CMario : public CGameObject
 	float ay;				// acceleration on y 
 
 	int level; 
+	int life;
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
@@ -123,10 +125,10 @@ class CMario : public CGameObject
 
 	//float startX, startY, checkPointX, checkPointY;
 
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithQBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
-	void OnCollisionWithDCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
@@ -145,6 +147,7 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		life = 3;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -161,7 +164,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
-	//void SetCheckPoint(float x, float y) { checkPointX = x; checkPointY = y; }
+
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

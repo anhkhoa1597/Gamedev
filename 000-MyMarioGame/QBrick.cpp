@@ -49,7 +49,10 @@ void QBrick::SetState(int state)
 		vy = -BRICK_BOUNCING_SPEED;
 		if (!object->IsDeleted())
 		{
-			object->SetState(COIN_STATE_DROP);
+			if (object->GetState() == COIN_STATE_IDLE)
+				object->SetState(COIN_STATE_DROP);
+			else if (object->GetState() == MUSHROOM_STATE_IDLE)
+				object->SetState(MUSHROOM_STATE_DROP);
 		}
 		break;
 	}

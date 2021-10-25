@@ -48,6 +48,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<QBrick*>(e->obj))
 		OnCollisionWithQBrick(e);
+	else if (dynamic_cast<Mushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
 }
 
 void CMario::OnCollisionWithQBrick(LPCOLLISIONEVENT e)
@@ -87,8 +89,17 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					if (life > 1)
+					{
+						life--;
+						DebugOut(L">>> Mario LIFE: %d >>> \n", life);
+						StartUntouchable();
+					}
+					else
+					{
+						DebugOut(L">>> Mario DIE >>> \n");
+						SetState(MARIO_STATE_DIE);
+					}
 				}
 			}
 		}
@@ -99,6 +110,19 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+}
+
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
+	float vx_mushroom, vy_mushroom;
+	mushroom->GetSpeed(vx_mushroom, vy_mushroom);
+	if (vx != 0 && mushroom->GetState() != MUSHROOM_STATE_IDLE)
+	{
+		if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
+		else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) life++;
+		e->obj->Delete();
+	}
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

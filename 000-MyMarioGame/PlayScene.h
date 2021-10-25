@@ -9,6 +9,7 @@
 #include "DCoin.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "Mushroom.h"
 #include "Tilesets.h"
 #include "Maps.h"
 #include "Ground.h"
@@ -37,7 +38,7 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
-
+	void AddObject(LPGAMEOBJECT object);
 	void Clear();
 	void PurgeDeletedObjects();
 

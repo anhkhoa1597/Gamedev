@@ -205,7 +205,8 @@ void CPlayScene::LoadMap(string mapFile)
 				if (drop == "drop")
 					drop = pProperty->Attribute("value");
 				if (drop == "coin") obj = new DCoin(x, y, width, height);
-				else if (drop == "red_mushroom") obj = new DCoin(x, y, width, height); //need create class RedMushroom
+				else if (drop == "red_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_RED);
+				else if (drop == "green_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_GREEN);//need create class RedMushroom
 				obj->SetPosition(x, y);
 				objects.push_back(obj);
 			}
@@ -308,6 +309,11 @@ void CPlayScene::Update(DWORD dt)
 	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
+}
+
+void CPlayScene::AddObject(LPGAMEOBJECT o)
+{
+	objects.push_back(o);
 }
 
 void CPlayScene::Render()

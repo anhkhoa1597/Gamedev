@@ -1,5 +1,13 @@
 #include "DCoin.h"
 
+DCoin::DCoin(float x, float y, int width, int height) : CGameObject(x, y) 
+{ 
+	this->width = width; 
+	this->height = height; 
+	this->initialPositionY = y; 
+	SetState(COIN_STATE_IDLE); 
+}
+
 void DCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy * dt;
@@ -13,6 +21,7 @@ void DCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		mario->IncreaseCoin();
+		return;
 	}
 }
 
