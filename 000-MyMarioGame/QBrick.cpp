@@ -1,10 +1,10 @@
 #include "QBrick.h"
 
-QBrick::QBrick(float x, float y, int width, int height) : CBrick(x, y, width, height)
+QBrick::QBrick(float x, float y, int width, int height, LPGAMEOBJECT object) : CBrick(x, y, width, height)
 {
 	SetState(BRICK_STATE_QBRICK);
-	//vy = 0;
-	this->initialPositionY = y; 
+	this->initialPositionY = y;
+	this->object = object;
 }
 
 void QBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -20,6 +20,7 @@ void QBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y = initialPositionY;
 		vy = 0;
 	}
+	if (!object->IsDeleted()) object->Update(dt, coObjects);
 }
 
 void QBrick::Render()
@@ -33,6 +34,7 @@ void QBrick::Render()
 	else if (state == BRICK_STATE_BBRICK)
 		aniId = ID_ANI_BBrick;
 
+	if(!object->IsDeleted()) object->Render();
 	animations->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
@@ -45,6 +47,10 @@ void QBrick::SetState(int state)
 		break;
 	case BRICK_STATE_BBRICK:
 		vy = -BRICK_BOUNCING_SPEED;
+		if (!object->IsDeleted())
+		{
+			object->SetState(COIN_STATE_DROP);
+		}
 		break;
 	}
 	CGameObject::SetState(state);

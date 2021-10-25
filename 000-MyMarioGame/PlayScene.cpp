@@ -169,11 +169,12 @@ void CPlayScene::LoadMap(string mapFile)
 	tinyxml2::XMLElement* pObject = pObjectGroup->FirstChildElement("object");
 	while (pObject != nullptr)
 	{
-		float x, y, width, height;
+		float x, y;
+		int width, height;
 		pObject->QueryFloatAttribute("x", &x);
 		pObject->QueryFloatAttribute("y", &y);
-		pObject->QueryFloatAttribute("width", &width);
-		pObject->QueryFloatAttribute("height", &height);
+		pObject->QueryIntAttribute("width", &width);
+		pObject->QueryIntAttribute("height", &height);
 		string name = pObject->Attribute("name");
 		CGameObject* obj = NULL;
 		if (name == "mario")
@@ -190,8 +191,8 @@ void CPlayScene::LoadMap(string mapFile)
 		}
 		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
 		else if (name == "ground") obj = new Ground(x, y, width, height);
-		else if (name == "s_platform") obj = new SPlatform(x, y, width, height); //need create class SPlatform
-		else if (name == "coin") obj = new DCoin(x, y, width, height);
+		else if (name == "s_platform") obj = new SPlatform(x, y, width, height);
+		else if (name == "coin") obj = new CCoin(x, y, width, height);
 		else if (name == "brick") obj = new CBrick(x, y, width, height);
 		else if (name == "q_brick")
 		{
@@ -207,7 +208,7 @@ void CPlayScene::LoadMap(string mapFile)
 				obj->SetPosition(x, y);
 				objects.push_back(obj);
 			}
-			obj = new QBrick(x, y, width, height);
+			obj = new QBrick(x, y, width, height, obj);
 		}
 		else if (name == "s_brick") obj = new CBrick(x, y, width, height); //need create class SBrick
 		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe

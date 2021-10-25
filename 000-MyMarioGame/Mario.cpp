@@ -42,10 +42,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
-	else if (dynamic_cast<DCoin*>(e->obj))
-		OnCollisionWithDCoin(e);
-	//else if (dynamic_cast<CCoin*>(e->obj))
-	//	OnCollisionWithCoin(e);
+	else if (dynamic_cast<CCoin*>(e->obj))
+		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<QBrick*>(e->obj))
@@ -103,19 +101,6 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 	coin++;
 }
 
-void CMario::OnCollisionWithDCoin(LPCOLLISIONEVENT e)
-{
-	DCoin* d_coin = dynamic_cast<DCoin*>(e->obj);
-
-	if (e->ny > 0)
-	{
-		if (d_coin->GetState() != COIN_STATE_DROP)
-		{
-			d_coin->SetState(COIN_STATE_DROP);
-			coin++;
-		}
-	}
-}
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
