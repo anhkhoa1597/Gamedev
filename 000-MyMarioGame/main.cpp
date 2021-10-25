@@ -19,6 +19,8 @@
 		0.11: modified some function of class scene and playscene, CGame to load file tmx to manage scene.
 		0.12: complete to load map tiled-background and some object
 		0.13: fixed mario, render bounding box
+		0.14: create class SPlatform, Ground, DCoin, QBrick
+		0.15: add feature mario hit QBrick drop coin.
 
 
 ================================================================ */
@@ -190,7 +192,6 @@ int WINAPI WinMain(
 	game->InitKeyboard();
 
 	game->Load("data/mario-game.tmx");
-
 	
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

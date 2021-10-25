@@ -12,17 +12,17 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 {
 	if (state == GOOMBA_STATE_DIE)
 	{
-		left = x - GOOMBA_BBOX_WIDTH/2;
-		top = y - GOOMBA_BBOX_HEIGHT_DIE/2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
+		left = x;
+		top = y;
+		right = left + GOOMBA_BBOX_WIDTH - 1;
+		bottom = top + GOOMBA_BBOX_HEIGHT - 1;
 	}
 	else
 	{ 
-		left = x - GOOMBA_BBOX_WIDTH/2;
-		top = y - GOOMBA_BBOX_HEIGHT/2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
+		left = x;
+		top = y;
+		right = left + GOOMBA_BBOX_WIDTH - 1;
+		bottom = top + GOOMBA_BBOX_HEIGHT - 1;
 	}
 }
 
@@ -72,7 +72,7 @@ void CGoomba::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGoomba::SetState(int state)
@@ -82,7 +82,6 @@ void CGoomba::SetState(int state)
 	{
 		case GOOMBA_STATE_DIE:
 			die_start = GetTickCount64();
-			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE)/2;
 			vx = 0;
 			vy = 0;
 			ay = 0; 

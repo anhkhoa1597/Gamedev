@@ -189,6 +189,7 @@ void CPlayScene::LoadMap(string mapFile)
 
 			DebugOut(L"[INFO] Player object has been created!\n");
 		}
+		else if (name == "goomba") obj = new CGoomba(x, y);
 		else if (name == "wall") obj = new Ground(x, y, width, height); //need create class Wall
 		else if (name == "ground") obj = new Ground(x, y, width, height);
 		else if (name == "s_platform") obj = new SPlatform(x, y, width, height);

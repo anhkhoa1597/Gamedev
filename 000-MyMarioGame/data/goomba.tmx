@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="goomba-walk" id="31001" left="0" top="0" right="15" bottom="15" texid="10"/>
+    <sprite name="goomba-walk" id="31002" left="16" top="0" right="31" bottom="15" texid="10"/>
+    <sprite name="goomba-die" id="32000" left="32" top="0" right="47" bottom="15" texid="10"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="goomba-walk" id="5000">
+      <sprite id="31001" time="100"/>
+      <sprite id="31002" time="100"/>
+    </animation>
+    <animation name="goomba-die" id="5001">
+      <sprite id="32000" time="100"/>
+    </animation>
+  </animationgroup>
+</asset>
