@@ -8,7 +8,6 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "DCoin.h"
-#include "QBrick.h"
 #include "Mushroom.h"
 #include "Portal.h"
 
@@ -130,6 +129,7 @@ class CMario : public CGameObject
 	void OnCollisionWithQBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -153,6 +153,8 @@ public:
 	void Render();
 	void SetState(int state);
 	void IncreaseCoin() { coin++; }
+	void LifeUp(int life) { this->life += life; }
+
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 
@@ -164,7 +166,6 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
-	void LifeUp(int life);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

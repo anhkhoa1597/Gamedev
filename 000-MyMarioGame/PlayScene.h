@@ -4,7 +4,6 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "Brick.h"
-#include "QBrick.h"
 #include "Coin.h"
 #include "DCoin.h"
 #include "Mario.h"

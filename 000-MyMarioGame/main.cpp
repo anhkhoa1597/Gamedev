@@ -21,7 +21,7 @@
 		0.13: fixed mario, render bounding box
 		0.14: create class SPlatform, Ground, DCoin, QBrick
 		0.15: add feature mario hit QBrick drop coin.
-
+		0.16: Add feature mario hit QBrick drop red and green mushroom
 
 ================================================================ */
 

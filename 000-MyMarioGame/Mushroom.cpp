@@ -41,29 +41,7 @@ void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
-
-	//if (dynamic_cast<CMario*>(e->obj))
-	//	OnCollisionWithMario(e);
 }
-
-void Mushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
-{
-	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	CMario* mario = dynamic_cast<CMario*>(e->obj);
-	if (GetType() == MUSHROOM_TYPE_RED) mario->SetLevel(MARIO_LEVEL_BIG);
-	else if (GetType() == MUSHROOM_TYPE_GREEN) mario->LifeUp(1);
-	isDeleted = true;
-	//float vx_mushroom, vy_mushroom;
-	//mushroom->GetSpeed(vx_mushroom, vy_mushroom);
-	//if (vx != 0 && mushroom->GetState() != MUSHROOM_STATE_IDLE)
-	//{
-	//	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
-	//	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) life++;
-	//	e->obj->Delete();
-	//}
-}
-
 
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

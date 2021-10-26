@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="121">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="138">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -174,7 +174,11 @@
   <object id="87" name="brick" x="2016" y="368" width="16" height="16"/>
   <object id="88" name="brick" x="2016" y="384" width="16" height="16"/>
   <object id="89" name="brick" x="2016" y="400" width="16" height="16"/>
-  <object id="90" name="s_brick" x="2032" y="368" width="16" height="16"/>
+  <object id="90" name="s_brick" x="2032" y="368" width="16" height="16">
+   <properties>
+    <property name="drop" value="green_mushroom"/>
+   </properties>
+  </object>
   <object id="91" name="brick" x="2032" y="384" width="16" height="16"/>
   <object id="92" name="brick" x="2032" y="400" width="16" height="16"/>
   <object id="93" name="brick" x="2048" y="400" width="16" height="16"/>
@@ -232,6 +236,37 @@
   <object id="118" name="dead_zone" x="2240" y="432" width="16" height="16"/>
   <object id="120" name="goomba" x="224" y="400">
    <point/>
+  </object>
+  <object id="122" name="s_brick" x="144" y="352" width="16" height="16">
+   <properties>
+    <property name="drop" value="multi_coin"/>
+   </properties>
+  </object>
+  <object id="123" name="s_brick" x="112" y="352" width="16" height="16">
+   <properties>
+    <property name="drop" value="coin"/>
+   </properties>
+  </object>
+  <object id="124" name="brick" x="80" y="352" width="16" height="16"/>
+  <object id="125" name="s_brick" x="144" y="304" width="16" height="16">
+   <properties>
+    <property name="drop" value="green_mushroom"/>
+   </properties>
+  </object>
+  <object id="135" name="secret_brick" x="1312" y="272" width="16" height="16">
+   <properties>
+    <property name="drop" value="coin"/>
+   </properties>
+  </object>
+  <object id="136" name="secret_brick" x="1328" y="224" width="16" height="16">
+   <properties>
+    <property name="drop" value="coin"/>
+   </properties>
+  </object>
+  <object id="137" name="secret_brick" x="1344" y="176" width="16" height="16">
+   <properties>
+    <property name="drop" value="coin"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

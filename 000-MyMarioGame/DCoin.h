@@ -8,7 +8,7 @@
 #define ID_ANI_DCOIN 12000
 
 #define COIN_BOUNCING_SPEED 0.25f
-#define COIN_BOUNCE_HEIGHT 64
+#define COIN_BOUNCE_HEIGHT 48
 #define COIN_BOUNCE_DROP 8
 
 class DCoin : public CCoin {

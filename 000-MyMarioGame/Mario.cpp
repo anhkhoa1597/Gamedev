@@ -46,22 +46,40 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
-	else if (dynamic_cast<QBrick*>(e->obj))
-		OnCollisionWithQBrick(e);
 	else if (dynamic_cast<Mushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
 }
 
-void CMario::OnCollisionWithQBrick(LPCOLLISIONEVENT e)
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
-	QBrick* q_brick = dynamic_cast<QBrick*>(e->obj);
+	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 
 	if (e->ny > 0)
 	{
-		if (q_brick->GetState() != BRICK_STATE_BBRICK)
+		if (brick->GetState() != BRICK_STATE_BBRICK)
 		{
-			q_brick->SetState(BRICK_STATE_BBRICK);
-		}		
+			if (brick->IsNoItem()) //if brick doesnt have item it is normal brick so dont need to check normal brick
+			{
+				if (level == MARIO_LEVEL_SMALL)
+				{
+					brick->SetState(BRICK_STATE_BOUNCE);
+				}
+				else if (level == MARIO_LEVEL_BIG)
+				{
+					brick->SetState(BRICK_STATE_BREAK);
+				}
+			}
+			else if (brick->GetTimesLeftToBounce() > 1)
+			{
+				brick->SetState(BRICK_STATE_BOUNCE);
+			}
+			else
+			{
+				brick->SetState(BRICK_STATE_BBRICK);
+			}
+		}
 	}
 }
 
@@ -111,7 +129,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	coin++;
+	IncreaseCoin();
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
@@ -120,11 +138,6 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
 	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) LifeUp(MUSHROOM_LIFE_UP);
 	e->obj->Delete();
-}
-
-void CMario::LifeUp(int life)
-{
-	this->life += life;
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

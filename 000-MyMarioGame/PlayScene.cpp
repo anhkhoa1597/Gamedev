@@ -194,8 +194,8 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "ground") obj = new Ground(x, y, width, height);
 		else if (name == "s_platform") obj = new SPlatform(x, y, width, height);
 		else if (name == "coin") obj = new CCoin(x, y, width, height);
-		else if (name == "brick") obj = new CBrick(x, y, width, height);
-		else if (name == "q_brick")
+		else if (name == "brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, "");
+		else if(name == "q_brick" || name == "s_brick" || name == "secret_brick")
 		{
 			string drop = "";
 			tinyxml2::XMLElement* pProperty = pObject->FirstChildElement("properties")->FirstChildElement("property");
@@ -203,15 +203,11 @@ void CPlayScene::LoadMap(string mapFile)
 			{
 				drop = pProperty->Attribute("name");
 				if (drop == "drop") drop = pProperty->Attribute("value");
-				//if (drop == "coin") obj = new DCoin(x, y, width, height, drop);
-				//else if (drop == "red_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_RED);
-				//else if (drop == "green_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_GREEN);//need create class RedMushroom
-				//obj->SetPosition(x, y);
-				//objects.push_back(obj);
 			}
-			obj = new QBrick(x, y, width, height, drop);
+			if (name == "q_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_QBRICK, drop);
+			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, drop);//need feature SBrick
+			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, drop);
 		}
-		else if (name == "s_brick") obj = new CBrick(x, y, width, height); //need create class SBrick
 		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
 		else if (name == "dead_zone") obj = new Ground(x, y, width, height); //need create Class deadzone
 		else DebugOut(L"[ERROR] Invalid object type: %s\n", ToLPCWSTR(name));
