@@ -58,8 +58,10 @@ void CMario::OnCollisionWithQBrick(LPCOLLISIONEVENT e)
 
 	if (e->ny > 0)
 	{
-		if(q_brick->GetState() != BRICK_STATE_BBRICK) 
+		if (q_brick->GetState() != BRICK_STATE_BBRICK)
+		{
 			q_brick->SetState(BRICK_STATE_BBRICK);
+		}		
 	}
 }
 
@@ -115,14 +117,14 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
-	float vx_mushroom, vy_mushroom;
-	mushroom->GetSpeed(vx_mushroom, vy_mushroom);
-	if (vx != 0 && mushroom->GetState() != MUSHROOM_STATE_IDLE)
-	{
-		if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
-		else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) life++;
-		e->obj->Delete();
-	}
+	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
+	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) LifeUp(MUSHROOM_LIFE_UP);
+	e->obj->Delete();
+}
+
+void CMario::LifeUp(int life)
+{
+	this->life += life;
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

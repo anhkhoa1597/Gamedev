@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+//#include "debug.h"
 #include "Goomba.h"
 #include "Mario.h"
 
@@ -16,6 +17,8 @@
 
 #define MUSHROOM_TYPE_RED 1
 #define MUSHROOM_TYPE_GREEN 2
+
+#define MUSHROOM_LIFE_UP 1
 
 class Mushroom : public CGameObject
 {
@@ -35,6 +38,7 @@ protected:
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithMario(LPCOLLISIONEVENT e);
 public:
 	Mushroom(float x, float y, int width, int height, int type);
 	int GetType() { return type; }

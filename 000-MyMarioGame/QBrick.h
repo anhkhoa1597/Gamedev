@@ -1,5 +1,6 @@
 #pragma once
 #include "Brick.h"
+#include "Utils.h"
 #include "DCoin.h"
 
 #define ID_ANI_QBRICK 10200
@@ -13,9 +14,9 @@
 
 class QBrick : public CBrick {
 	float initialPositionY;
-	LPGAMEOBJECT object;
+	string item;
 public:
-	QBrick(float x, float y, int width, int height, LPGAMEOBJECT object);
+	QBrick(float x, float y, int width, int height, string item);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void SetState(int state);

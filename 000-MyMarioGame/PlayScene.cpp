@@ -202,15 +202,14 @@ void CPlayScene::LoadMap(string mapFile)
 			if (pProperty != nullptr)
 			{
 				drop = pProperty->Attribute("name");
-				if (drop == "drop")
-					drop = pProperty->Attribute("value");
-				if (drop == "coin") obj = new DCoin(x, y, width, height);
-				else if (drop == "red_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_RED);
-				else if (drop == "green_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_GREEN);//need create class RedMushroom
-				obj->SetPosition(x, y);
-				objects.push_back(obj);
+				if (drop == "drop") drop = pProperty->Attribute("value");
+				//if (drop == "coin") obj = new DCoin(x, y, width, height, drop);
+				//else if (drop == "red_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_RED);
+				//else if (drop == "green_mushroom") obj = new Mushroom(x, y, width, height, MUSHROOM_TYPE_GREEN);//need create class RedMushroom
+				//obj->SetPosition(x, y);
+				//objects.push_back(obj);
 			}
-			obj = new QBrick(x, y, width, height, obj);
+			obj = new QBrick(x, y, width, height, drop);
 		}
 		else if (name == "s_brick") obj = new CBrick(x, y, width, height); //need create class SBrick
 		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
@@ -266,11 +265,21 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	size_t i = 0;
+	for (i; i < objects.size(); i++)
+	{
+		//check if object is player then break and loop again (loop again to increase perfomance)
+		if (objects[i]->IsPlayer()) 
+		{
+			i++;
+			break;
+		}
+		else coObjects.push_back(objects[i]);
+	}
+
+	//loop again from current i
+	for (i; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
@@ -303,17 +312,9 @@ void CPlayScene::Update(DWORD dt)
 	if (cy > b) cy = (float)b;
 	if (cy < t) cy = (float)t;
 
-	//if (cx < 0) cx = 0;
-	//if (cy > 432 - game->GetBackBufferHeight()) cy = 432 - game->GetBackBufferHeight();
-
 	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
-}
-
-void CPlayScene::AddObject(LPGAMEOBJECT o)
-{
-	objects.push_back(o);
 }
 
 void CPlayScene::Render()
@@ -324,6 +325,12 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
+
+void CPlayScene::AddObject(LPGAMEOBJECT o)
+{
+	objects.insert(objects.begin(), o);
+}
+
 
 /*
 *	Clear all objects from this scene

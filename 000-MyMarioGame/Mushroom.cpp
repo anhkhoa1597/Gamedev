@@ -2,11 +2,15 @@
 
 Mushroom::Mushroom(float x, float y, int width, int height, int type) : CGameObject(x, y)
 {
+	vy = 0;
+	vx = 0;
+	ax = 0;
+	ay = 0;
 	this->width = width;
 	this->height = height;
 	this->type = type;
 	this->initialPositionY = y;
-	SetState(MUSHROOM_STATE_IDLE);
+	SetState(MUSHROOM_STATE_DROP);
 }
 
 void Mushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -37,44 +41,73 @@ void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	//if (dynamic_cast<CMario*>(e->obj))
+	//	OnCollisionWithMario(e);
 }
+
+void Mushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
+{
+	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	CMario* mario = dynamic_cast<CMario*>(e->obj);
+	if (GetType() == MUSHROOM_TYPE_RED) mario->SetLevel(MARIO_LEVEL_BIG);
+	else if (GetType() == MUSHROOM_TYPE_GREEN) mario->LifeUp(1);
+	isDeleted = true;
+	//float vx_mushroom, vy_mushroom;
+	//mushroom->GetSpeed(vx_mushroom, vy_mushroom);
+	//if (vx != 0 && mushroom->GetState() != MUSHROOM_STATE_IDLE)
+	//{
+	//	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
+	//	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) life++;
+	//	e->obj->Delete();
+	//}
+}
+
 
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-	
-	if (y <= initialPositionY - 16 && state == MUSHROOM_STATE_DROP)
+	if (!isDeleted)
 	{
-		y = initialPositionY - 16;
-		ay = MUSHROOM_GRAVITY;
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		float x_mario, y_mario;
-		mario->GetPosition(x_mario, y_mario);
-		if (x < x_mario) vx = -MUSHROOM_SPEED;
-		else vx = MUSHROOM_SPEED;
-	}
-	if (state == MUSHROOM_STATE_BOUNCING && vx != 0) //vx != 0 to separate idle mushroom and moving mushroom
-	{
-		//logic game
-	}
+		vy += ay * dt;
+		vx += ax * dt;
 
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+		if (y <= initialPositionY - 16 && state == MUSHROOM_STATE_DROP)
+		{
+			y = initialPositionY - 16;
+			ay = MUSHROOM_GRAVITY;
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			float x_mario, y_mario;
+			mario->GetPosition(x_mario, y_mario);
+			if (x < x_mario) vx = -MUSHROOM_SPEED;
+			else vx = MUSHROOM_SPEED;
+		}
+		if (state == MUSHROOM_STATE_BOUNCING && vx != 0) //vx != 0 to separate idle mushroom and moving mushroom
+		{
+			//logic game
+		}
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 void Mushroom::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (type == MUSHROOM_TYPE_RED)
+	if (!isDeleted)
 	{
-		aniId = ID_ANI_RED_MUSHROOM;
+		int aniId = -1;
+		if (type == MUSHROOM_TYPE_RED)
+		{
+			aniId = ID_ANI_RED_MUSHROOM;
+		}
+		else if (type == MUSHROOM_TYPE_GREEN)
+		{
+			aniId = ID_ANI_GREEN_MUSHROOM;
+		}
+		else DebugOut(L"[ERROR] animation %d doesnt exist\n", aniId);
+		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	}
-	else if (type == MUSHROOM_TYPE_GREEN)
-	{
-		aniId = ID_ANI_GREEN_MUSHROOM;
-	}
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
 
 void Mushroom::SetState(int state)

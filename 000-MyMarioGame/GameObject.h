@@ -28,7 +28,8 @@ protected:
 	int state;
 
 	bool isDeleted; 
-
+	
+	bool isPlayer;
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -42,9 +43,9 @@ public:
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }
+	CGameObject(float x, float y, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; }
 
-
+	bool IsPlayer() { return isPlayer; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
