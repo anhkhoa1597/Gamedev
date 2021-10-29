@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
+  <properties/>
   <spritegroup>
-    <sprite name="red-mushroom" id="80010" left="156" top="121" right="171" bottom="136" texid="20"/>
-    <sprite name="green-mushroom" id="80020" left="286" top="121" right="301" bottom="136" texid="20"/>
+    <sprite name="red-mushroom" id="81000" left="156" top="121" right="171" bottom="136" texid="20"/>
+    <sprite name="green-mushroom" id="82000" left="286" top="121" right="301" bottom="136" texid="20"/>
   </spritegroup>
   <animationgroup>
     <animation name="red-mushroom" id="8100">
-      <sprite id="80010" time="300"/>
+      <sprite id="81000" time="300"/>
     </animation>
     <animation name="green-mushroom" id="8200">
-      <sprite id="80020" time="300"/>
+      <sprite id="82000" time="300"/>
     </animation>
   </animationgroup>
 </asset>

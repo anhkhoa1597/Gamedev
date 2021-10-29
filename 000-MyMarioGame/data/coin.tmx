@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
   <spritegroup>
-    <sprite name="coin" id="40010" left="290" top="100" right="305" bottom="115" texid="20"/>
-    <sprite name="coin" id="40020" left="304" top="100" right="319" bottom="115" texid="20"/>
-    <sprite name="coin" id="40030" left="315" top="100" right="330" bottom="115" texid="20"/>
-    <sprite name="coin" id="40040" left="333" top="100" right="348" bottom="115" texid="20"/>
-    <sprite name="coin" id="40050" left="352" top="100" right="367" bottom="115" texid="20"/>
-    <sprite name="coin" id="40060" left="369" top="100" right="384" bottom="115" texid="20"/>
-    <sprite name="coin" id="40070" left="387" top="100" right="402" bottom="115" texid="20"/>
-    <sprite name="coin" id="40031" left="527" top="100" right="542" bottom="115" texid="20"/>
+    <sprite name="coin" id="40001" left="290" top="100" right="305" bottom="115" texid="20"/>
+    <sprite name="coin" id="40002" left="304" top="100" right="319" bottom="115" texid="20"/>
+    <sprite name="coin" id="40003" left="315" top="100" right="330" bottom="115" texid="20"/>
+    <sprite name="coin" id="40004" left="333" top="100" right="348" bottom="115" texid="20"/>
+    <sprite name="coin" id="40005" left="352" top="100" right="367" bottom="115" texid="20"/>
+    <sprite name="coin" id="40006" left="369" top="100" right="384" bottom="115" texid="20"/>
+    <sprite name="coin" id="40007" left="387" top="100" right="402" bottom="115" texid="20"/>
+    <sprite name="coin" id="40013" left="527" top="100" right="542" bottom="115" texid="20"/>
   </spritegroup>
   <animationgroup>
-    <animation name="coin" id="11000">
-      <sprite id="40070" time="200"/>
-      <sprite id="40050" time="200"/>
-      <sprite id="40060" time="200"/>
-      <sprite id="40040" time="200"/>
+    <animation name="coin" id="11100">
+      <sprite id="40007" time="200"/>
+      <sprite id="40005" time="200"/>
+      <sprite id="40006" time="200"/>
+      <sprite id="40004" time="200"/>
     </animation>
-    <animation name="drop_coin" id="12000">
-      <sprite id="40010" time="100"/>
-      <sprite id="40031" time="100"/>
-      <sprite id="40020" time="100"/>
-      <sprite id="40030" time="100"/>
+    <animation name="drop_coin" id="11200">
+      <sprite id="40001" time="100"/>
+      <sprite id="40013" time="100"/>
+      <sprite id="40002" time="100"/>
+      <sprite id="40003" time="100"/>
     </animation>
   </animationgroup>
 </asset>

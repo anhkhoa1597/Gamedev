@@ -41,6 +41,28 @@ void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
+}
+
+void Mushroom::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+	float x_brick, y_brick;
+	brick->GetPosition(x_brick, y_brick);
+	if (e->ny < 0)
+	{
+
+		if (brick->GetState() == BRICK_STATE_BOUNCE &&
+			brick->GetState() == BRICK_STATE_BREAK &&
+			brick->GetState() == BRICK_STATE_BBRICK
+			)
+		{
+			SetState(MUSHROOM_STATE_BOUNCING);
+			if (x < x_brick - 8) vx = -MUSHROOM_SPEED;
+			else vx = MUSHROOM_SPEED;
+		}
+	}
 }
 
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -65,7 +87,7 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			//logic game
 		}
 
-		CGameObject::Update(dt, coObjects);
+		//CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 }

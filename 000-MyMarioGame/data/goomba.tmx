@@ -3,15 +3,15 @@
   <spritegroup>
     <sprite name="goomba-walk" id="31001" left="0" top="0" right="15" bottom="15" texid="10"/>
     <sprite name="goomba-walk" id="31002" left="16" top="0" right="31" bottom="15" texid="10"/>
-    <sprite name="goomba-die" id="32000" left="32" top="0" right="47" bottom="15" texid="10"/>
+    <sprite name="goomba-die" id="31000" left="32" top="0" right="47" bottom="15" texid="10"/>
   </spritegroup>
   <animationgroup>
-    <animation name="goomba-walk" id="5000">
+    <animation name="goomba-walk" id="5100">
       <sprite id="31001" time="100"/>
       <sprite id="31002" time="100"/>
     </animation>
-    <animation name="goomba-die" id="5001">
-      <sprite id="32000" time="100"/>
+    <animation name="goomba-die" id="5999">
+      <sprite id="31000" time="100"/>
     </animation>
   </animationgroup>
 </asset>

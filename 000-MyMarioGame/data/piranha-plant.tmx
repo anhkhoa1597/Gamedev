@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="piranha-plant-left-down" id="33010" left="128" top="144" right="143" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-down" id="33020" left="144" top="144" right="159" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="33030" left="160" top="144" right="175" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="33040" left="176" top="144" right="191" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="33011" left="1234" top="144" right="1249" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="33021" left="1218" top="144" right="1233" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="33031" left="1202" top="144" right="1217" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="33041" left="1186" top="144" right="1191" bottom="175" texid="10"/>
+
+  </spritegroup>
+  <animationgroup>
+    <animation name="goomba-walk" id="7100">
+      <sprite id="31001" time="100"/>
+      <sprite id="31002" time="100"/>
+    </animation>
+    <animation name="goomba-die" id="7200">
+      <sprite id="32000" time="100"/>
+    </animation>
+  </animationgroup>
+</asset>

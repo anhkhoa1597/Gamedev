@@ -14,36 +14,33 @@
 #include "Collision.h"
 #include "debug.h"
 
-#define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
+enum MarioLevels
+{
+	MARIO_LEVEL_SMALL,
+	MARIO_LEVEL_BIG,
+	MARIO_LEVEL_FIRE,
+	MARIO_LEVEL_FOX,
+	MARIO_LEVEL_BEAR,
+	MARIO_LEVEL_FROG,
+	MARIO_LEVEL_TURTLE
+};
 
-#define MARIO_ACCEL_WALK_X	0.0005f
-#define MARIO_ACCEL_RUN_X	0.0007f
+enum MarioStates
+{
+	MARIO_STATE_DIE,
+	MARIO_STATE_IDLE,
+	MARIO_STATE_WALKING_RIGHT,
+	MARIO_STATE_WALKING_LEFT,
 
-/*#define MARIO_JUMP_SPEED_Y		0.6f
-#define MARIO_JUMP_RUN_SPEED_Y	0.9f*/
+	MARIO_STATE_JUMP,
+	MARIO_STATE_RELEASE_JUMP,
 
-#define MARIO_JUMP_SPEED_Y		0.5f
-#define MARIO_JUMP_RUN_SPEED_Y	0.6f
+	MARIO_STATE_RUNNING_RIGHT,
+	MARIO_STATE_RUNNING_LEFT,
 
-#define MARIO_GRAVITY			0.002f
-
-#define MARIO_JUMP_DEFLECT_SPEED  0.4f
-
-#define MARIO_STATE_DIE				-10
-#define MARIO_STATE_IDLE			0
-#define MARIO_STATE_WALKING_RIGHT	100
-#define MARIO_STATE_WALKING_LEFT	200
-
-#define MARIO_STATE_JUMP			300
-#define MARIO_STATE_RELEASE_JUMP    301
-
-#define MARIO_STATE_RUNNING_RIGHT	400
-#define MARIO_STATE_RUNNING_LEFT	500
-
-#define MARIO_STATE_SIT				600
-#define MARIO_STATE_SIT_RELEASE		601
-
+	MARIO_STATE_SIT,
+	MARIO_STATE_SIT_RELEASE,
+};
 
 #pragma region ANIMATION_ID
 
@@ -89,10 +86,32 @@
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1601
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1600
 
+#define ID_ANI_MARIO_SMALL_TO_BIG_LEFT 1700
+#define ID_ANI_MARIO_SMALL_TO_BIG_RIGHT 1701
 #pragma endregion
 
-#define	MARIO_LEVEL_SMALL	1
-#define	MARIO_LEVEL_BIG		2
+//global variable
+//extern float	mario_walking_speed, mario_running_speed, 
+//				mario_accel_walk_x, mario_accel_run_x, 
+//				mario_jump_speed_y, mario_jump_run_speed_y, 
+//				mario_gravity, mario_jump_deflect_speed,
+//				mario_untouchable_time;
+//extern int		mario_life;
+//
+#define MARIO_WALKING_SPEED		0.1f
+#define MARIO_RUNNING_SPEED		0.2f
+
+#define MARIO_ACCEL_WALK_X	0.0005f
+#define MARIO_ACCEL_RUN_X	0.0007f
+
+#define MARIO_JUMP_SPEED_Y		0.5f
+#define MARIO_JUMP_RUN_SPEED_Y	0.6f
+
+#define MARIO_GRAVITY			0.002f
+
+#define MARIO_JUMP_DEFLECT_SPEED  0.4f
+
+#define MARIO_UNTOUCHABLE_TIME 2500
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 27
@@ -106,8 +125,6 @@
 #define MARIO_SIT_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_BIG_SITTING_BBOX_HEIGHT)
 #define MARIO_CHANGE_LEVEL_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT)
 
-#define MARIO_UNTOUCHABLE_TIME 2500
-
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
@@ -119,14 +136,14 @@ class CMario : public CGameObject
 	int life;
 	int untouchable; 
 	ULONGLONG untouchable_start;
+
 	BOOLEAN isOnPlatform;
-	int coin; 
+	int coin;
 
 	//float startX, startY, checkPointX, checkPointY;
 
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
-	void OnCollisionWithQBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
@@ -145,13 +162,16 @@ public:
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
+
 		isOnPlatform = false;
 		coin = 0;
 		life = 3;
+
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	void SetLevel(int l);
 	void IncreaseCoin() { coin++; }
 	void LifeUp(int life) { this->life += life; }
 
@@ -165,8 +185,6 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

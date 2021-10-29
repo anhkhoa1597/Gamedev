@@ -4,19 +4,25 @@
 #include "Goomba.h"
 #include "Mario.h"
 
+enum MushroomStates
+{
+	MUSHROOM_STATE_IDLE,
+	MUSHROOM_STATE_DROP,
+	MUSHROOM_STATE_BOUNCING,
+};
+
+enum MushroomTypes
+{
+	MUSHROOM_TYPE_RED,
+	MUSHROOM_TYPE_GREEN,
+};
+
 #define MUSHROOM_GRAVITY 0.002f
 #define MUSHROOM_SPEED 0.04f
 #define MUSHROOM_BOUNCING_SPEED 0.4f
 
-#define MUSHROOM_STATE_IDLE 100
-#define MUSHROOM_STATE_DROP 200
-#define MUSHROOM_STATE_BOUNCING 300
-
 #define ID_ANI_RED_MUSHROOM 8100
 #define ID_ANI_GREEN_MUSHROOM 8200
-
-#define MUSHROOM_TYPE_RED 1
-#define MUSHROOM_TYPE_GREEN 2
 
 #define MUSHROOM_LIFE_UP 1
 
@@ -38,7 +44,7 @@ protected:
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnCollisionWithMario(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 public:
 	Mushroom(float x, float y, int width, int height, int type);
 	int GetType() { return type; }

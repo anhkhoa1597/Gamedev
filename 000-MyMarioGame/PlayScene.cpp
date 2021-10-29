@@ -13,6 +13,15 @@
 
 using namespace std;
 
+// global variable
+float	mario_walking_speed, mario_running_speed,
+		mario_accel_walk_x, mario_accel_run_x,
+		mario_jump_speed_y, mario_jump_run_speed_y,
+		mario_gravity, mario_jump_deflect_speed,
+		mario_untouchable_time;
+int		mario_life;
+//
+
 CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
@@ -34,6 +43,34 @@ void CPlayScene::LoadAssets(string assetFile)
 		DebugOut(L"[ERROR] Failed to loading tileset file : %s\n", ToLPCWSTR(assetFile));
 		return;
 	}
+
+	//Load Properties
+	tinyxml2::XMLElement* pProperties = pAsset->FirstChildElement("properties");
+	if (pProperties != nullptr)
+	{
+		tinyxml2::XMLElement* pProperty = pProperties->FirstChildElement("property");
+		while (pProperty != nullptr)
+		{
+			string nameProperty = pProperty->Attribute("name");
+			if (nameProperty == "mario-walking-speed") pProperty->QueryFloatAttribute("value", &mario_walking_speed);
+			else if (nameProperty == "mario-running-speed") pProperty->QueryFloatAttribute("value", &mario_running_speed);
+			else if (nameProperty == "mario-accel-walk-x") pProperty->QueryFloatAttribute("value", &mario_accel_walk_x);
+			else if (nameProperty == "mario-accel-run-x") pProperty->QueryFloatAttribute("value", &mario_accel_run_x);
+			else if (nameProperty == "mario-jump-speed-y") pProperty->QueryFloatAttribute("value", &mario_jump_speed_y);
+			else if (nameProperty == "mario-jump-run-speed-y") pProperty->QueryFloatAttribute("value", &mario_jump_run_speed_y);
+			else if (nameProperty == "mario-gravity") pProperty->QueryFloatAttribute("value", &mario_gravity);
+			else if (nameProperty == "mario-jump-deflect-speed") pProperty->QueryFloatAttribute("value", &mario_jump_deflect_speed);
+			else if (nameProperty == "mario-untouchabletime") pProperty->QueryFloatAttribute("value", &mario_untouchable_time);
+			else if (nameProperty == "mario-life") pProperty->QueryIntAttribute("value", &mario_life);
+			//unknow property
+			else {
+				DebugOut(L"[ERROR] Unknow property %s of asset %s \n", ToLPCWSTR(nameProperty), ToLPCWSTR(assetFile));
+				return;
+			}
+			pProperty = pProperty->NextSiblingElement("property");
+		}
+	}
+	
 	//Load Sprites
 	tinyxml2::XMLElement* pSpriteGroup = pAsset->FirstChildElement("spritegroup");
 	tinyxml2::XMLElement* pSprite = pSpriteGroup->FirstChildElement("sprite");
@@ -142,8 +179,11 @@ void CPlayScene::LoadMap(string mapFile)
 			string path = pProperty->Attribute("value");
 			LoadTileset(path);
 		}
-		//load other property
-		else {}
+		//unknow property
+		else {
+			DebugOut(L"Unknow property %s of map %s\n", ToLPCWSTR(nameProperty), ToLPCWSTR(mapFile));
+			return;
+		}
 		pProperty = pProperty->NextSiblingElement("property");
 	}
 
@@ -233,6 +273,7 @@ void CPlayScene::Load()
 		DebugOut(L"[ERROR] Failed to loading scene file : %s\n", ToLPCWSTR(sceneFilePath));
 		return;
 	}
+
 	//Load Setting
 	tinyxml2::XMLElement* pSetting = pScene->FirstChildElement("setting");
 	{

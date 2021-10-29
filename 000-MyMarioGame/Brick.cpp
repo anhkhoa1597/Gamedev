@@ -51,6 +51,33 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(object);
 	}
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<Mushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+}
+
+void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
+	float x_mushroom, y_mushroom;
+	mushroom->GetPosition(x_mushroom, y_mushroom);
+	if (e->ny > 0)
+	{
+		if (state == BRICK_STATE_BOUNCE &&
+			state == BRICK_STATE_BREAK &&
+			state == BRICK_STATE_BBRICK
+			)
+		{
+			mushroom->SetState(MUSHROOM_STATE_BOUNCING);
+			if (x_mushroom < x + 8) mushroom->SetSpeed(-MUSHROOM_SPEED, -MUSHROOM_BOUNCING_SPEED);
+			else mushroom->SetSpeed(MUSHROOM_SPEED, -MUSHROOM_BOUNCING_SPEED);
+		}
+	}
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)

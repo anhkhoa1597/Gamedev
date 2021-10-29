@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-    <setting start="1" width="500" height="270"/>
+    <setting start="1"/>
+    <!-- <setting start="1" width="280" height="230"/> -->
     <scenegroup>
         <scene id="0" type="0" source="data\intro.tmx"/>
         <scene id="1" type="1" source="data\scene01.tmx"/>

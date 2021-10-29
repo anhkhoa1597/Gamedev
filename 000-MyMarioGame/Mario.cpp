@@ -11,7 +11,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -112,7 +112,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 					if (life > 1)
 					{
 						life--;
-						DebugOut(L">>> Mario LIFE: %d >>> \n", life);
+						DebugOut(L">>> Mario Life Left: %d >>> \n", life);
 						StartUntouchable();
 					}
 					else
@@ -136,7 +136,11 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
 	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
-	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) LifeUp(MUSHROOM_LIFE_UP);
+	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) 
+	{
+		LifeUp(MUSHROOM_LIFE_UP);
+		DebugOut(L">>> Mario Life Left: %d >>> \n", life);
+	} 
 	e->obj->Delete();
 }
 
@@ -398,10 +402,19 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 void CMario::SetLevel(int l)
 {
-	// Adjust position to avoid falling off platform
-	if (this->level == MARIO_LEVEL_SMALL)
+	switch (level)
 	{
+	case MARIO_LEVEL_SMALL:
 		y -= MARIO_CHANGE_LEVEL_HEIGHT_ADJUST;
+		break;
+	case MARIO_LEVEL_BIG:
+	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
+	case MARIO_LEVEL_FOX: //need create FOX MARIO
+	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
+	case MARIO_LEVEL_FROG: //need create FROG MARIO
+	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
+		break;
+	
 	}
 	level = l;
 }

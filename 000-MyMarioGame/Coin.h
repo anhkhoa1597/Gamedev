@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Animations.h"
 
-#define ID_ANI_COIN 11000
+#define ID_ANI_COIN 11100
 
 class CCoin : public CGameObject {
 	int width;

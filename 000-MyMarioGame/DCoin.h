@@ -5,7 +5,7 @@
 #include "Coin.h"
 #include "Animations.h"
 
-#define ID_ANI_DCOIN 12000
+#define ID_ANI_DCOIN 11200
 
 #define COIN_BOUNCING_SPEED 0.25f
 #define COIN_BOUNCE_HEIGHT 48

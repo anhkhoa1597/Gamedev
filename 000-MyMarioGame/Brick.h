@@ -5,16 +5,19 @@
 #include "Utils.h"
 #include "DCoin.h"
 
+enum BrickStates
+{
+	BRICK_STATE_NORMAL,
+	BRICK_STATE_QBRICK,
+	BRICK_STATE_BBRICK,
+	BRICK_STATE_BOUNCE,
+	BRICK_STATE_BREAK,
+	BRICK_STATE_SECRET,
+};
+
 #define ID_ANI_BRICK 10100
 #define ID_ANI_QBRICK 10200
 #define ID_ANI_BBRICK 10300
-
-#define BRICK_STATE_NORMAL 100
-#define BRICK_STATE_QBRICK 200
-#define BRICK_STATE_BBRICK 300
-#define BRICK_STATE_BOUNCE 400
-#define BRICK_STATE_BREAK 500
-#define BRICK_STATE_SECRET 600
 
 #define BRICK_BOUNCING_SPEED 0.2f
 #define BRICK_BOUNCE_HEIGHT 12
@@ -36,6 +39,11 @@ public:
 	virtual void Get(float& x, float& y, int& width, int& height);
 	virtual int GetTimesLeftToBounce() { return timesLeftToBounce; }
 	virtual bool IsNoItem() { return item == ""; }
+
+	int IsCollidable() { return 1; };
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
+
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void SetState(int state);
 	bool IsSecret() { return state == BRICK_STATE_SECRET; }

@@ -447,6 +447,7 @@ void CGame::Load(string gameFile)
 		DebugOut(L"[ERROR] Failed to loading game file : %s\n", ToLPCWSTR(gameFile));
 		return;
 	}
+
 	//Load Setting
 	tinyxml2::XMLElement* pSetting = pData->FirstChildElement("setting");
 	{

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
+  <properties>
+    <property name="mario-walking-speed" value="0.1"/>
+    <property name="mario-running-speed" value="0.2"/>
+    <property name="mario-accel-walk-x" value="0.0003"/>
+    <property name="mario-accel-run-x" value="0.0005"/>
+    <property name="mario-jump-speed-y" value="0.5"/>
+    <property name="mario-jump-run-speed-y" value="0.6"/>
+    <property name="mario-gravity" value="0.0015"/>
+    <property name="mario-jump-deflect-speed" value="0.4"/>
+    <property name="mario-untouchabletime" value="0.0015"/>
+    <property name="mario-life" value="3"/>
+  </properties>
   <spritegroup>
     <sprite name="big-idle-left" id="11111" left="1" top="92" right="14" bottom="119" texid="0"/>
     <sprite name="big-idle-right" id="11121" left="1029" top="92" right="1042" bottom="119" texid="0"/>
@@ -48,25 +60,21 @@
       <sprite id="11111" time="100"/>
       <sprite id="11212" time="100"/>
       <sprite id="11213" time="100"/>
-      <!-- <sprite id="11212" time="100"/> -->
     </animation>
     <animation name="big-walking-right" id="501">
       <sprite id="11121" time="100"/>
       <sprite id="11222" time="100"/>
       <sprite id="11223" time="100"/>
-      <!-- <sprite id="11222" time="100"/> -->
     </animation>
     <animation name="big-running-left" id="600">
       <sprite id="11311" time="50"/>
       <sprite id="11312" time="50"/>
       <sprite id="11313" time="50"/>
-      <!-- <sprite id="11312" time="50"/> -->
     </animation>
     <animation name="big-running-right" id="601">
       <sprite id="11321" time="50"/>
       <sprite id="11322" time="50"/>
       <sprite id="11323" time="50"/>
-      <!-- <sprite id="11322" time="50"/> -->
     </animation>
     <animation name="big-juml-walk-left" id="700">
       <sprite id="11413" time="100"/>
