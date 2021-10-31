@@ -13,23 +13,25 @@ using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 
-//MUST NOT CHANGE INDEX
 enum TypeObject
 {
 	MARIO,
 	GOOMBA,
-	WALL,
-	GROUND,
-	SPLATFORM, //the platform can walk through
+	RGOOMBA,
+	KOOPA,
+	RKOOPA,
+	RMUSHROOM, //red mushroom
+	GMUSHROOM, //green mushroom
 	COIN, //visible coin
+	DCOIN, //drop coin
+	MCOIN, //multi coin
 	BRICK, //normal brick
 	QBRICK, //question brick
 	SBRICK, //specific brick
 	SECRET_BRICK, //invisible brick
-	DCOIN, //drop coin
-	MCOIN, //multi coin
-	RMUSHROOM, //red mushroom
-	GMUSHROOM, //green mushroom
+	WALL,
+	GROUND,
+	SPLATFORM, //the platform can walk through
 	PIPE,
 	DEADZONE,
 	BBRICK, //block brick

@@ -211,15 +211,14 @@ void CPlayScene::LoadMap(string mapFile)
 	while (pObject != nullptr)
 	{
 		float x, y;
-		int width, height, type;
+		int width, height;
 		pObject->QueryFloatAttribute("x", &x);
 		pObject->QueryFloatAttribute("y", &y);
 		pObject->QueryIntAttribute("width", &width);
 		pObject->QueryIntAttribute("height", &height);
-		pObject->QueryIntAttribute("type", &type);
 		string name = pObject->Attribute("name");
 		CGameObject* obj = NULL;
-		if (type == MARIO)
+		if (name == "mario")
 		{
 			if (player != NULL)
 			{
@@ -231,13 +230,15 @@ void CPlayScene::LoadMap(string mapFile)
 
 			DebugOut(L"[INFO] Player object has been created!\n");
 		}
-		else if (type == GOOMBA) obj = new CGoomba(x, y);
-		else if (type == WALL) obj = new Wall(x, y, width, height);
-		else if (type == GROUND) obj = new Ground(x, y, width, height);
-		else if (type == SPLATFORM) obj = new SPlatform(x, y, width, height);
-		else if (type == COIN) obj = new CCoin(x, y, width, height);
-		else if (type == BRICK) obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL);
-		else if (type == QBRICK || type == SBRICK || type == SECRET_BRICK)
+		else if (name == "goomba") obj = new CGoomba(x, y, GOOMBA);
+		else if (name == "red_goomba") obj = new CGoomba(x, y, RGOOMBA);
+		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RGOOMBA, true);
+		else if (name == "wall") obj = new Wall(x, y, width, height);
+		else if (name == "ground") obj = new Ground(x, y, width, height);
+		else if (name == "s_platform") obj = new SPlatform(x, y, width, height);
+		else if (name == "coin") obj = new CCoin(x, y, width, height);
+		else if (name == "brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL);
+		else if (name == "q_brick" || name == "s_brick" || name == "secret_brick")
 		{
 			string drop = "";
 			int item = -1;
@@ -245,15 +246,23 @@ void CPlayScene::LoadMap(string mapFile)
 			if (pProperty != nullptr)
 			{
 				drop = pProperty->Attribute("name");
-				if (drop == "drop") pProperty->QueryIntAttribute("value", &item);
+				if (drop == "drop")
+				{
+					drop = pProperty->Attribute("value");
+					if (drop == "coin") item = DCOIN;
+					else if (drop == "multi_coin") item = MCOIN;
+					else if (drop == "red_mushroom") item = RMUSHROOM;
+					else if (drop == "green_mushroom") item = GMUSHROOM;
+					else DebugOut(L"[ERROR] Invalid item: %s\n", ToLPCWSTR(drop));
+				}
 			}
-			if (type == QBRICK) obj = new CBrick(x, y, width, height, BRICK_STATE_QBRICK, item);
-			else if (type == SBRICK) obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, item);
-			else if (type == SECRET_BRICK) obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, item);
+			if (name == "q_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_QBRICK, item);
+			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, item);
+			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, item);
 		}
-		else if (type == PIPE) obj = new Ground(x, y, width, height); //need create class Pipe
-		else if (type == DEADZONE) obj = new Ground(x, y, width, height); //need create class deadzone
-		else DebugOut(L"[ERROR] Invalid object type: %d\n", type);
+		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
+		else if (name == "dead_zone") obj = new Ground(x, y, width, height); //need create class deadzone
+		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
 
 		// General object setup
 		obj->SetPosition(x, y);

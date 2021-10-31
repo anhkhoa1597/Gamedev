@@ -31,13 +31,13 @@ protected:
 	int item;
 	float initial_y;
 	int timesLeftToBounce;
-
 public:
 	CBrick(float x, float y, int width, int height, int state, int item = -1);
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Get(float& x, float& y, int& width, int& height);
 	virtual int GetTimesLeftToBounce() { return timesLeftToBounce; }
+	virtual void SetUpTimesLeftToBounce() { timesLeftToBounce++; }
 	virtual bool IsNoItem() { return item == -1; }
 
 	int IsCollidable() { return 1; };

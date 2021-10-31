@@ -64,16 +64,13 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 			{
 				if (level == MARIO_LEVEL_SMALL)
 				{
+					brick->SetUpTimesLeftToBounce();
 					brick->SetState(BRICK_STATE_BOUNCE);
 				}
 				else if (level == MARIO_LEVEL_BIG)
 				{
 					brick->SetState(BRICK_STATE_BREAK);
 				}
-			}
-			else if (brick->GetTimesLeftToBounce() > 1)
-			{
-				brick->SetState(BRICK_STATE_BOUNCE);
 			}
 			else
 			{

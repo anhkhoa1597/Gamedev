@@ -1,10 +1,11 @@
 #include "Goomba.h"
 
-CGoomba::CGoomba(float x, float y):CGameObject(x, y, GOOMBA)
+CGoomba::CGoomba(float x, float y, int type, bool has_wing):CGameObject(x, y, type)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
+	this->has_wing = has_wing;
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -65,13 +66,24 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CGoomba::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
+	int aniId = -1;
+	if (type == GOOMBA)
 	{
-		aniId = ID_ANI_GOOMBA_DIE;
+		if (state == GOOMBA_STATE_WALKING) aniId = ID_ANI_GOOMBA_WALKING;
+		else if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_GOOMBA_DIE;
 	}
+	else if (type == RGOOMBA)
+	{
+		if (state == GOOMBA_STATE_WALKING) aniId = ID_ANI_RED_GOOMBA_WALKING;
+		else if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_RED_GOOMBA_DIE;
+	}
+	if (has_wing)
+	{
+		CAnimations::GetInstance()->Get(ID_ANI_WING_LEFT)->Render(x - 2, y - 10);
+		CAnimations::GetInstance()->Get(ID_ANI_WING_RIGHT)->Render(x + 10, y - 10);
+	}
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
 	//RenderBoundingBox();
 }
 
