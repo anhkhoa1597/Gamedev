@@ -3,7 +3,7 @@
 
 class SPlatform : public Ground {
 public:
-	SPlatform(float x, float y, int width, int height) : Ground(x, y, width, height) {}
+	SPlatform(float x, float y, int width, int height) : Ground(x, y, width, height) { type = SPLATFORM; }
 
 	void Update(DWORD dt) {}
 

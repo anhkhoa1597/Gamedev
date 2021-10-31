@@ -152,7 +152,7 @@ class CMario : public CGameObject
 	int GetAniIdSmall();
 
 public:
-	CMario(float x, float y) : CGameObject(x, y, true)
+	CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	{
 		isSitting = false;
 		maxVx = 0.0f;

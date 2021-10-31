@@ -1,6 +1,6 @@
 #include "Mushroom.h"
 
-Mushroom::Mushroom(float x, float y, int width, int height, int type) : CGameObject(x, y)
+Mushroom::Mushroom(float x, float y, int width, int height, int type) : CGameObject(x, y, type)
 {
 	vy = 0;
 	vx = 0;
@@ -8,8 +8,8 @@ Mushroom::Mushroom(float x, float y, int width, int height, int type) : CGameObj
 	ay = 0;
 	this->width = width;
 	this->height = height;
-	this->type = type;
 	this->initialPositionY = y;
+	isColliable = true;
 	SetState(MUSHROOM_STATE_DROP);
 }
 
@@ -32,6 +32,7 @@ void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<Mushroom*>(e->obj)) return;
+	if (dynamic_cast<Wall*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -69,11 +70,11 @@ void Mushroom::Render()
 	if (!isDeleted)
 	{
 		int aniId = -1;
-		if (type == MUSHROOM_TYPE_RED)
+		if (type == RMUSHROOM)
 		{
 			aniId = ID_ANI_RED_MUSHROOM;
 		}
-		else if (type == MUSHROOM_TYPE_GREEN)
+		else if (type == GMUSHROOM)
 		{
 			aniId = ID_ANI_GREEN_MUSHROOM;
 		}

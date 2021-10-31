@@ -200,13 +200,27 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		{
 			if (!c->obj->IsBlocking()) continue;
 			int l, t, r, b;
+			vector<unsigned int> objs;
 			c->obj->DirectBlocking(l, t, r, b);
+			c->obj->ObjectNoBlocking(objs);
 			//only detect collision event with direct to blocking
 			if (c->nx < 0 && !l) continue;
 			if (c->ny < 0 && !t) continue;
 			if (c->nx > 0 && !r) continue;
 			if (c->ny > 0 && !b) continue;
+
+			//dont detect collision event with this list object
+			if (objs.size() != 0)
+			{
+				bool isBlock = false;
+				for (unsigned int i = 0; i < objs.size(); i++)
+				{
+					if (objs[i] == objSrc->GetType()) isBlock = true;
+				}
+				if (isBlock) continue;
+			}
 		}
+		
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;

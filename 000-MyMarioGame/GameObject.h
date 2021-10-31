@@ -13,10 +13,33 @@ using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 
+//MUST NOT CHANGE INDEX
+enum TypeObject
+{
+	MARIO,
+	GOOMBA,
+	WALL,
+	GROUND,
+	SPLATFORM, //the platform can walk through
+	COIN, //visible coin
+	BRICK, //normal brick
+	QBRICK, //question brick
+	SBRICK, //specific brick
+	SECRET_BRICK, //invisible brick
+	DCOIN, //drop coin
+	MCOIN, //multi coin
+	RMUSHROOM, //red mushroom
+	GMUSHROOM, //green mushroom
+	PIPE,
+	DEADZONE,
+	BBRICK, //block brick
+	PLATFORM, //not need to use yet:)
+};
+
 class CGameObject
 {
 protected:
-
+	int type;
 	float x; 
 	float y;
 
@@ -37,13 +60,14 @@ public:
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
+	int GetType() { return this->type; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
 
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; }
+	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; this->type = type; }
 
 	bool IsPlayer() { return isPlayer; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
@@ -65,6 +89,7 @@ public:
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
 	virtual void DirectBlocking(int& l, int& t, int& r, int& b) { l = 1; t = 1; r = 1; b = 1; }
+	virtual void ObjectNoBlocking(vector<unsigned int>& type) { type = {}; }
 	~CGameObject();
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }

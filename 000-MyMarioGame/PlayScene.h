@@ -12,9 +12,9 @@
 #include "Tilesets.h"
 #include "Maps.h"
 #include "Ground.h"
+#include "Wall.h"
 #include "SPlatform.h"
 //#include "Koopas.h"
-
 
 class CPlayScene : public CScene
 {

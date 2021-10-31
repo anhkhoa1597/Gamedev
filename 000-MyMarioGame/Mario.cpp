@@ -135,8 +135,8 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
-	if (mushroom->GetType() == MUSHROOM_TYPE_RED) SetLevel(MARIO_LEVEL_BIG);
-	else if (mushroom->GetType() == MUSHROOM_TYPE_GREEN) 
+	if (mushroom->GetType() == RMUSHROOM) SetLevel(MARIO_LEVEL_BIG);
+	else if (mushroom->GetType() == GMUSHROOM) 
 	{
 		LifeUp(MUSHROOM_LIFE_UP);
 		DebugOut(L">>> Mario Life Left: %d >>> \n", life);

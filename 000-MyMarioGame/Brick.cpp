@@ -1,12 +1,12 @@
 #include "Brick.h"
 
-CBrick::CBrick(float x, float y, int width, int height, int state, string item) : CGameObject(x, y)
+CBrick::CBrick(float x, float y, int width, int height, int state, int item) : CGameObject(x, y, BRICK)
 {
 	this->width = width; 
 	this->height = height;
 	this->item = item;
 	initial_y = y;
-	if (item == "multi_coin") timesLeftToBounce = NUMBER_OF_BOUNCE;
+	if (item == MCOIN) timesLeftToBounce = NUMBER_OF_BOUNCE;
 	else timesLeftToBounce = 1;
 	SetState(state);
 }
@@ -43,14 +43,14 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float x, y;
 		int width, height;
 		Get(x, y, width, height);
-		if (item == "coin") { object = new DCoin(x, y, width, height); }
-		else if (item == "red_mushroom") { object = new Mushroom(x, y, width, height, MUSHROOM_TYPE_RED); }
-		else if (item == "green_mushroom") { object = new Mushroom(x, y, width, height, MUSHROOM_TYPE_GREEN); }
-		else if (item == "multi_coin") { object = new DCoin(x, y, width, height); }
-		else if (item == "") { return; }
+		if (item == DCOIN) { object = new DCoin(x, y, width, height); }
+		else if (item == RMUSHROOM) { object = new Mushroom(x, y, width, height, RMUSHROOM); }
+		else if (item == GMUSHROOM) { object = new Mushroom(x, y, width, height, GMUSHROOM); }
+		else if (item == MCOIN) { object = new DCoin(x, y, width, height); }
+		else if (item == -1) { return; }
 		else
 		{
-			DebugOut(L"Item %s doesnt exist. \n", ToLPCWSTR(item));
+			DebugOut(L"[ERROR] Item %d doesn't exist. \n", item);
 			return;
 		}
 		((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(object);
@@ -101,12 +101,16 @@ void CBrick::SetState(int state)
 	switch (state)
 	{
 	case BRICK_STATE_NORMAL:
+		//type = BRICK;
 		break;
 	case BRICK_STATE_QBRICK:
+		//type = QBRICK;
 		break;
 	case BRICK_STATE_SECRET:
+		//type = SECRET_BRICK;
 		break;
 	case BRICK_STATE_BBRICK:
+		//type = BBRICK;
 		break;
 	case BRICK_STATE_BOUNCE:
 		vy = -BRICK_BOUNCING_SPEED;

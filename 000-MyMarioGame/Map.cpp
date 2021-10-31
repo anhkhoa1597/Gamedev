@@ -54,8 +54,8 @@ void Map::Render()
 				if (background[row][column] != 0)
 				{
 					CAnimations* animations = CAnimations::GetInstance();
-					float x = column * tile_width;
-					float y = row * tile_height;
+					float x = (float)(column * tile_width);
+					float y = (float)(row * tile_height);
 					animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
 				}
 			}

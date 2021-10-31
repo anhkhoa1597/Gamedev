@@ -3,6 +3,7 @@
 //#include "debug.h"
 #include "Goomba.h"
 #include "Mario.h"
+#include "Wall.h"
 
 enum MushroomStates
 {
@@ -10,12 +11,6 @@ enum MushroomStates
 	MUSHROOM_STATE_DROP,
 	MUSHROOM_STATE_BOUNCING_LEFT,
 	MUSHROOM_STATE_BOUNCING_RIGHT,
-};
-
-enum MushroomTypes
-{
-	MUSHROOM_TYPE_RED,
-	MUSHROOM_TYPE_GREEN,
 };
 
 #define MUSHROOM_GRAVITY 0.002f
@@ -34,14 +29,14 @@ protected:
 	float ay;
 	int width;
 	int height;
-	int type;
 	float initialPositionY;
+	bool isColliable;
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 
-	int IsCollidable() { return 1; };
+	int IsCollidable() { return isColliable; };
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
