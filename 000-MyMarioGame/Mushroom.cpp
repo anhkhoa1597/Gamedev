@@ -41,28 +41,6 @@ void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
-	if (dynamic_cast<CBrick*>(e->obj))
-		OnCollisionWithBrick(e);
-}
-
-void Mushroom::OnCollisionWithBrick(LPCOLLISIONEVENT e)
-{
-	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-	float x_brick, y_brick;
-	brick->GetPosition(x_brick, y_brick);
-	if (e->ny < 0)
-	{
-
-		if (brick->GetState() == BRICK_STATE_BOUNCE &&
-			brick->GetState() == BRICK_STATE_BREAK &&
-			brick->GetState() == BRICK_STATE_BBRICK
-			)
-		{
-			SetState(MUSHROOM_STATE_BOUNCING);
-			if (x < x_brick - 8) vx = -MUSHROOM_SPEED;
-			else vx = MUSHROOM_SPEED;
-		}
-	}
 }
 
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -72,9 +50,9 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += ay * dt;
 		vx += ax * dt;
 
-		if (y <= initialPositionY - 16 && state == MUSHROOM_STATE_DROP)
+		if (y <= initialPositionY - height && state == MUSHROOM_STATE_DROP)
 		{
-			y = initialPositionY - 16;
+			y = initialPositionY - (height);
 			ay = MUSHROOM_GRAVITY;
 			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 			float x_mario, y_mario;
@@ -82,12 +60,6 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (x < x_mario) vx = -MUSHROOM_SPEED;
 			else vx = MUSHROOM_SPEED;
 		}
-		if (state == MUSHROOM_STATE_BOUNCING && vx != 0) //vx != 0 to separate idle mushroom and moving mushroom
-		{
-			//logic game
-		}
-
-		//CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 }
@@ -126,7 +98,13 @@ void Mushroom::SetState(int state)
 		ax = 0;
 		vy = -MUSHROOM_SPEED;
 		break;
-	case MUSHROOM_STATE_BOUNCING:
+	case MUSHROOM_STATE_BOUNCING_LEFT:
 		vy = -MUSHROOM_BOUNCING_SPEED;
+		vx = -MUSHROOM_SPEED;
+		break;
+	case MUSHROOM_STATE_BOUNCING_RIGHT:
+		vy = -MUSHROOM_BOUNCING_SPEED;
+		vx = MUSHROOM_SPEED;
+		break;
 	}
 }

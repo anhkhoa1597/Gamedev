@@ -8,7 +8,8 @@ enum MushroomStates
 {
 	MUSHROOM_STATE_IDLE,
 	MUSHROOM_STATE_DROP,
-	MUSHROOM_STATE_BOUNCING,
+	MUSHROOM_STATE_BOUNCING_LEFT,
+	MUSHROOM_STATE_BOUNCING_RIGHT,
 };
 
 enum MushroomTypes
@@ -44,7 +45,6 @@ protected:
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 public:
 	Mushroom(float x, float y, int width, int height, int type);
 	int GetType() { return type; }

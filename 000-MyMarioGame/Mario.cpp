@@ -77,7 +77,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 			}
 			else
 			{
-				brick->SetState(BRICK_STATE_BBRICK);
+				brick->SetState(BRICK_STATE_BOUNCE);
 			}
 		}
 	}
@@ -290,7 +290,7 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 	
 	//DebugOut(L"x: %.2f, y:%.2fn\n", x, y);
-	DebugOutTitle(L"Coins: %d", coin);
+	DebugOutTitle(L"Coins: %d	Life: %d", coin, life);
 	
 	//RenderBoundingBox();
 }

@@ -167,6 +167,7 @@ void CPlayScene::LoadMap(string mapFile)
 		pMap->QueryIntAttribute("tileheight", &tileHeight);
 	}
 	LPMap map = new Map(width, height, tileWidth, tileHeight);
+	
 	//Load extra properties
 	tinyxml2::XMLElement* pProperty = pMap->FirstChildElement("properties")->FirstChildElement("property");
 	while (pProperty != nullptr)
@@ -245,7 +246,7 @@ void CPlayScene::LoadMap(string mapFile)
 				if (drop == "drop") drop = pProperty->Attribute("value");
 			}
 			if (name == "q_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_QBRICK, drop);
-			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, drop);//need feature SBrick
+			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, drop);
 			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, drop);
 		}
 		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
@@ -307,6 +308,7 @@ void CPlayScene::Update(DWORD dt)
 	for (i; i < objects.size(); i++)
 	{
 		//check if object is player then break and loop again (loop again to increase perfomance)
+		//why break then loop again??? => try not to use if too much.
 		if (objects[i]->IsPlayer()) 
 		{
 			i++;

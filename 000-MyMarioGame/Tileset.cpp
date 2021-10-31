@@ -19,8 +19,6 @@ void Tileset::Load()
 {
 	for (int i = 0; i < this->tile_count; i++)
 	{
-		//0->1532
-		//4, 1 -> 69, 18, 86, 45
 		int id = ID_SPRITE_TILESET + i + 1;
 		int l = this->spacing * (i % this->column + 1) + (i % this->column) * this->tile_width;
 		int t = this->spacing * (i / this->column + 1) + (i / this->column) * this->tile_height;
