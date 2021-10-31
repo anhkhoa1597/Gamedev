@@ -360,11 +360,28 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	float cx, cy, screen_cx, screen_cy;
+	CGame::GetInstance()->GetCamPos(cx, cy);
+
+	CGame* game = CGame::GetInstance();
+	screen_cx = cx + (float)game->GetBackBufferWidth();
+	screen_cy = cy + (float)game->GetBackBufferWidth();
 	//render tiled-map
-	map->Render();
+	map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
 	//render objects
 	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
+	{
+		float x, y;
+		objects[i]->GetPosition(x, y);
+		if (x >= cx - 16 &&
+			x <= screen_cx &&
+			y >= cy - 16 &&
+			y <= screen_cy)
+		{
+			objects[i]->Render();
+		}
+	}
+
 }
 
 void CPlayScene::AddObject(LPGAMEOBJECT o)

@@ -41,7 +41,7 @@ void Map::AddLayer(string layer)
 	this->tiled_background.push_back(background);
 }
 
-void Map::Render()
+void Map::Render(float cx, float cy, float screen_cx, float screen_cy)
 {
 	list<vector<vector<unsigned int>>>::iterator i;
 	for (i = tiled_background.begin(); i != tiled_background.end(); ++i)
@@ -56,7 +56,8 @@ void Map::Render()
 					CAnimations* animations = CAnimations::GetInstance();
 					float x = (float)(column * tile_width);
 					float y = (float)(row * tile_height);
-					animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
+					if (x >= cx && x <= screen_cx && y >= cy && y <= screen_cy)
+						animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
 				}
 			}
 		}

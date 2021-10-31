@@ -28,5 +28,5 @@ public:
 	void GetWidthHeight(int& w, int& h) { w = this->width * this->tile_width; h = this->height * this->tile_height; }
 	void AddLayer(string layer);
 	~Map();
-	void Render();
+	void Render(float cx, float cy, float screen_cx, float screen_cy);
 }; typedef Map* LPMap;
