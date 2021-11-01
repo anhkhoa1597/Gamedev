@@ -4,36 +4,41 @@
     <sprite name="goomba-walk" id="31001" left="0" top="0" right="15" bottom="15" texid="10"/>
     <sprite name="goomba-walk" id="31002" left="16" top="0" right="31" bottom="15" texid="10"/>
     <sprite name="goomba-die" id="31000" left="32" top="0" right="47" bottom="15" texid="10"/>
+    <sprite name="goomba-bounce-die" id="31100" left="152" top="0" right="167" bottom="15" texid="10"/>
     <sprite name="red-goomba-walk" id="32001" left="88" top="0" right="103" bottom="15" texid="10"/>
     <sprite name="red-goomba-walk" id="32002" left="104" top="0" right="119" bottom="15" texid="10"/>
     <sprite name="red-goomba-die" id="32000" left="120" top="0" right="135" bottom="15" texid="10"/>
-    <sprite name="wing-up-left" id="30011" left="1234" top="0" right="1241" bottom="15" texid="10"/>
-    <sprite name="wing-down-left" id="30012" left="1226" top="0" right="1233" bottom="15" texid="10"/>
-    <sprite name="wing-up-right" id="30021" left="136" top="0" right="143" bottom="15" texid="10"/>
-    <sprite name="wing-down-right" id="30022" left="144" top="0" right="151" bottom="15" texid="10"/>
+    <sprite name="red-goomba-bounce-die" id="32100" left="168" top="0" right="183" bottom="15" texid="10"/>
+    <sprite name="wing-up" id="30001" left="200" top="0" right="219" bottom="15" texid="10"/>
+    <sprite name="wing-down" id="30002" left="200" top="16" right="219" bottom="31" texid="10"/>
   </spritegroup>
   <animationgroup>
     <animation name="goomba-walk" id="5100">
       <sprite id="31001" time="100"/>
       <sprite id="31002" time="100"/>
     </animation>
-    <animation name="goomba-die" id="5199">
+    <animation name="goomba-die" id="5190">
       <sprite id="31000" time="100"/>
+    </animation>
+    <animation name="goomba-bounce-die" id="5191">
+      <sprite id="31100" time="100"/>
     </animation>
     <animation name="red-goomba-walk" id="5200">
       <sprite id="32001" time="100"/>
       <sprite id="32002" time="100"/>
     </animation>
-    <animation name="red-goomba-die" id="5299">
+    <animation name="red-goomba-die" id="5290">
       <sprite id="32000" time="100"/>
     </animation>
-    <animation name="wing-left" id="5300">
-      <sprite id="30011" time="100"/>
-      <sprite id="30012" time="100"/>
+    <animation name="red-goomba-bounce-die" id="5291">
+      <sprite id="32100" time="100"/>
     </animation>
-    <animation name="wing-right" id="5301">
-      <sprite id="30021" time="100"/>
-      <sprite id="30022" time="100"/>
+    <animation name="wing-jump" id="5300">
+      <sprite id="30001" time="100"/>
+      <sprite id="30002" time="100"/>
+    </animation>
+    <animation name="wing-walk" id="5301">
+      <sprite id="30002" time="100"/>
     </animation>
   </animationgroup>
 </asset>

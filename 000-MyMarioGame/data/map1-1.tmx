@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="140">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="144">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -231,7 +231,7 @@
    </properties>
   </object>
   <object id="115" name="dead_zone" x="0" y="432" width="2816" height="16"/>
-  <object id="120" name="goomba" x="224" y="400">
+  <object id="120" name="red_wing_goomba" x="224" y="400">
    <point/>
   </object>
   <object id="122" name="s_brick" x="144" y="352" width="16" height="16">
@@ -265,10 +265,22 @@
     <property name="drop" value="coin"/>
    </properties>
   </object>
-  <object id="138" name="red_wing_goomba" x="336" y="400">
+  <object id="138" name="goomba" x="336" y="400">
    <point/>
   </object>
-  <object id="139" name="red_goomba" x="544" y="288">
+  <object id="139" name="red_goomba" x="256" y="352">
+   <point/>
+  </object>
+  <object id="140" name="red_goomba" x="152" y="288">
+   <point/>
+  </object>
+  <object id="141" name="red_goomba" x="152" y="336">
+   <point/>
+  </object>
+  <object id="142" name="red_goomba" x="120" y="336">
+   <point/>
+  </object>
+  <object id="143" name="red_goomba" x="192" y="336">
    <point/>
   </object>
  </objectgroup>

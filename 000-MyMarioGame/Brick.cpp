@@ -61,6 +61,8 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<Mushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CGoomba*>(e->obj))
+		OnCollisionWithGoomba(e);
 }
 
 void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
@@ -74,6 +76,19 @@ void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 		{
 			if (x_mushroom < x + (float)width / 2) mushroom->SetState(MUSHROOM_STATE_BOUNCING_LEFT);
 			else mushroom->SetState(MUSHROOM_STATE_BOUNCING_RIGHT);
+		}
+	}
+}
+
+void CBrick::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+	if (e->ny > 0)
+	{
+		if (state == BRICK_STATE_BOUNCE)
+		{
+			if (goomba->HasWing()) goomba->LostWing();
+			else goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
 		}
 	}
 }

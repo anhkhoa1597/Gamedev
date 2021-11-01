@@ -231,6 +231,7 @@ void CPlayScene::LoadMap(string mapFile)
 			DebugOut(L"[INFO] Player object has been created!\n");
 		}
 		else if (name == "goomba") obj = new CGoomba(x, y, GOOMBA);
+		else if (name == "wing_goomba") obj = new CGoomba(x, y, GOOMBA, true);
 		else if (name == "red_goomba") obj = new CGoomba(x, y, RGOOMBA);
 		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RGOOMBA, true);
 		else if (name == "wall") obj = new Wall(x, y, width, height);
@@ -390,7 +391,6 @@ void CPlayScene::Render()
 			objects[i]->Render();
 		}
 	}
-
 }
 
 void CPlayScene::AddObject(LPGAMEOBJECT o)
