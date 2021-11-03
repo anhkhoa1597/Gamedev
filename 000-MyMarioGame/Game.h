@@ -12,14 +12,13 @@ using namespace std;
 #include "Texture.h"
 #include "KeyEventHandler.h"
 #include "Scene.h"
+#include "GameSetting.h"
 #include "tinyxml2.h"
 #include "debug.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
-
-
 
 /*
 	Our simple game framework
@@ -54,6 +53,7 @@ class CGame
 
 	ID3D10SamplerState* pPointSamplerState;
 
+	LPGAMESETTING gameSetting = NULL;
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
@@ -105,11 +105,12 @@ public:
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	LPGAMESETTING GetGameSetting() { return gameSetting; }
 	void Load(string gameFile);
+	void LoadGameSetting(string gamesettingFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
 
 	~CGame();
 };
 typedef CGame* LPGAME;
-

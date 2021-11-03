@@ -11,10 +11,10 @@
 #define COIN_BOUNCE_HEIGHT 48
 #define COIN_BOUNCE_DROP 8
 
-class DCoin : public CCoin {
+class CDCoin : public CCoin {
 	float initial_y;
 public:
-	DCoin(float x, float y, int width, int height);
+	CDCoin(float x, float y, int width, int height);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

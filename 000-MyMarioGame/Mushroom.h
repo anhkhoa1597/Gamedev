@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-//#include "debug.h"
 #include "Goomba.h"
 #include "Mario.h"
 #include "Wall.h"

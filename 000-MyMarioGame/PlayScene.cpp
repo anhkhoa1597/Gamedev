@@ -13,21 +13,51 @@
 
 using namespace std;
 
-// global variable
-float	mario_walking_speed, mario_running_speed,
-		mario_accel_walk_x, mario_accel_run_x,
-		mario_jump_speed_y, mario_jump_run_speed_y,
-		mario_gravity, mario_jump_deflect_speed,
-		mario_untouchable_time;
-int		mario_life;
-//
-
 CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
+	setting = NULL;
 	map = NULL;
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
+}
+
+void CPlayScene::LoadSceneSetting(string scenesettingFile)
+{
+	DebugOut(L"[INFO] Start loading scene setting file : %s\n", ToLPCWSTR(scenesettingFile));
+
+	tinyxml2::XMLDocument doc;
+	doc.LoadFile(scenesettingFile.c_str());
+	tinyxml2::XMLElement* pSettings = doc.FirstChildElement("settings");
+	if (pSettings == nullptr)
+	{
+		DebugOut(L"[ERROR] Failed to loading game settings file : %s\n", ToLPCWSTR(scenesettingFile));
+		return;
+	}
+	setting = CGame::GetInstance()->GetGameSetting();
+	tinyxml2::XMLElement* pSetting = pSettings->FirstChildElement("setting");
+	while (pSetting != nullptr)
+	{
+		string name = pSetting->Attribute("name");
+		if (name == "mario-walking-speed") pSetting->QueryFloatAttribute("value", &setting->mario_walking_speed);
+		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &setting->mario_running_speed);
+		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &setting->mario_accel_walk_x);
+		else if (name == "mario-accel-run-x") pSetting->QueryFloatAttribute("value", &setting->mario_accel_run_x);
+		else if (name == "mario-jump-speed-y") pSetting->QueryFloatAttribute("value", &setting->mario_jump_speed_y);
+		else if (name == "mario-jump-run-speed-y") pSetting->QueryFloatAttribute("value", &setting->mario_jump_run_speed_y);
+		else if (name == "mario-gravity") pSetting->QueryFloatAttribute("value", &setting->mario_gravity);
+		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &setting->mario_jump_deflect_speed);
+		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &setting->mario_untouchable_time);
+		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &setting->mario_life);
+		//unknow setting
+		else
+		{
+			DebugOut(L"[ERROR] Unknow setting: %s \n", ToLPCWSTR(name));
+			return;
+		}
+		pSetting = pSetting->NextSiblingElement("setting");
+	}
+	DebugOut(L"[INFO] Done loading setting from %s\n", ToLPCWSTR(scenesettingFile));
 }
 
 void CPlayScene::LoadAssets(string assetFile)
@@ -42,33 +72,6 @@ void CPlayScene::LoadAssets(string assetFile)
 	{
 		DebugOut(L"[ERROR] Failed to loading tileset file : %s\n", ToLPCWSTR(assetFile));
 		return;
-	}
-
-	//Load Properties
-	tinyxml2::XMLElement* pProperties = pAsset->FirstChildElement("properties");
-	if (pProperties != nullptr)
-	{
-		tinyxml2::XMLElement* pProperty = pProperties->FirstChildElement("property");
-		while (pProperty != nullptr)
-		{
-			string nameProperty = pProperty->Attribute("name");
-			if (nameProperty == "mario-walking-speed") pProperty->QueryFloatAttribute("value", &mario_walking_speed);
-			else if (nameProperty == "mario-running-speed") pProperty->QueryFloatAttribute("value", &mario_running_speed);
-			else if (nameProperty == "mario-accel-walk-x") pProperty->QueryFloatAttribute("value", &mario_accel_walk_x);
-			else if (nameProperty == "mario-accel-run-x") pProperty->QueryFloatAttribute("value", &mario_accel_run_x);
-			else if (nameProperty == "mario-jump-speed-y") pProperty->QueryFloatAttribute("value", &mario_jump_speed_y);
-			else if (nameProperty == "mario-jump-run-speed-y") pProperty->QueryFloatAttribute("value", &mario_jump_run_speed_y);
-			else if (nameProperty == "mario-gravity") pProperty->QueryFloatAttribute("value", &mario_gravity);
-			else if (nameProperty == "mario-jump-deflect-speed") pProperty->QueryFloatAttribute("value", &mario_jump_deflect_speed);
-			else if (nameProperty == "mario-untouchabletime") pProperty->QueryFloatAttribute("value", &mario_untouchable_time);
-			else if (nameProperty == "mario-life") pProperty->QueryIntAttribute("value", &mario_life);
-			//unknow property
-			else {
-				DebugOut(L"[ERROR] Unknow property %s of asset %s \n", ToLPCWSTR(nameProperty), ToLPCWSTR(assetFile));
-				return;
-			}
-			pProperty = pProperty->NextSiblingElement("property");
-		}
 	}
 	
 	//Load Sprites
@@ -225,7 +228,7 @@ void CPlayScene::LoadMap(string mapFile)
 				DebugOut(L"[ERROR] MARIO object was created before!\n");
 				return;
 			}
-			obj = new CMario(x, y);
+			obj = new CMario(x, y, setting);
 			player = (CMario*)obj;
 
 			DebugOut(L"[INFO] Player object has been created!\n");
@@ -289,8 +292,10 @@ void CPlayScene::Load()
 
 	//Load Setting
 	tinyxml2::XMLElement* pSetting = pScene->FirstChildElement("setting");
+	if (pSetting != nullptr)
 	{
-		//load data setting of scene in here
+		string path = pSetting->Attribute("source");
+		LoadSceneSetting(path);
 	}
 
 	//Load Asset
@@ -397,7 +402,6 @@ void CPlayScene::AddObject(LPGAMEOBJECT o)
 {
 	objects.insert(objects.begin(), o);
 }
-
 
 /*
 *	Clear all objects from this scene

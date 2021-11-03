@@ -30,7 +30,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += vy * dt;
 	if (y <= initial_y - BRICK_BOUNCE_HEIGHT)
 	{
-		y = initial_y - BRICK_BOUNCE_HEIGHT;
+		//y = initial_y - BRICK_BOUNCE_HEIGHT;
 		vy = BRICK_BOUNCING_SPEED;
 		if (timesLeftToBounce == 0) SetState(BRICK_STATE_BBRICK);
 		else SetState(BRICK_STATE_NORMAL);
@@ -43,10 +43,10 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float x, y;
 		int width, height;
 		Get(x, y, width, height);
-		if (item == DCOIN) { object = new DCoin(x, y, width, height); }
+		if (item == DCOIN) { object = new CDCoin(x, y, width, height); }
 		else if (item == RMUSHROOM) { object = new Mushroom(x, y, width, height, RMUSHROOM); }
 		else if (item == GMUSHROOM) { object = new Mushroom(x, y, width, height, GMUSHROOM); }
-		else if (item == MCOIN) { object = new DCoin(x, y, width, height); }
+		else if (item == MCOIN) { object = new CDCoin(x, y, width, height); }
 		else if (item == -1) { return; }
 		else
 		{

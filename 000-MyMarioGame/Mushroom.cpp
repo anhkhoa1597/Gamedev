@@ -53,7 +53,7 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (y <= initialPositionY - height && state == MUSHROOM_STATE_DROP)
 		{
-			y = initialPositionY - (height);
+			//y = initialPositionY - (height);
 			ay = MUSHROOM_GRAVITY;
 			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 			float x_mario, y_mario;

@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
-  <properties>
-    <property name="mario-walking-speed" value="0.1"/>
-    <property name="mario-running-speed" value="0.2"/>
-    <property name="mario-accel-walk-x" value="0.0003"/>
-    <property name="mario-accel-run-x" value="0.0005"/>
-    <property name="mario-jump-speed-y" value="0.5"/>
-    <property name="mario-jump-run-speed-y" value="0.6"/>
-    <property name="mario-gravity" value="0.0015"/>
-    <property name="mario-jump-deflect-speed" value="0.4"/>
-    <property name="mario-untouchabletime" value="0.0015"/>
-    <property name="mario-life" value="3"/>
-  </properties>
   <spritegroup>
     <sprite name="big-idle-left" id="11111" left="1" top="92" right="14" bottom="119" texid="0"/>
     <sprite name="big-idle-right" id="11121" left="1029" top="92" right="1042" bottom="119" texid="0"/>

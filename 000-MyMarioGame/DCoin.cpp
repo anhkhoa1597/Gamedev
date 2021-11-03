@@ -1,12 +1,12 @@
 #include "DCoin.h"
 
-DCoin::DCoin(float x, float y, int width, int height) : CCoin(x, y, width, height) 
+CDCoin::CDCoin(float x, float y, int width, int height) : CCoin(x, y, width, height) 
 { 
 	initial_y = y;
 	vy = -COIN_BOUNCING_SPEED;
 }
 
-void DCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CDCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!IsDeleted())
 	{
@@ -26,7 +26,7 @@ void DCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 }
 
-void DCoin::Render()
+void CDCoin::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_DCOIN)->Render(x, y);

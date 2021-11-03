@@ -19,6 +19,7 @@
 class CPlayScene : public CScene
 {
 protected:
+	LPGAMESETTING setting;
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
 
@@ -28,6 +29,7 @@ protected:
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);
 	void LoadTileset(string tilesetFile);
+	void LoadSceneSetting(string scenesettingFile);
 public:
 	CPlayScene(int id, string filePath);
 
@@ -37,6 +39,7 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
+	LPGAMESETTING GetSceneSetting() { return setting; }
 	void AddObject(LPGAMEOBJECT object);
 	void Clear();
 	void PurgeDeletedObjects();

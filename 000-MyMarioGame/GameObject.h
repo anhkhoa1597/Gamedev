@@ -4,10 +4,12 @@
 #include <d3dx10.h>
 #include <vector>
 
+#include "GameSetting.h"
 #include "Animation.h"
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
+
 
 using namespace std;
 
@@ -55,6 +57,7 @@ protected:
 	bool isDeleted; 
 	
 	bool isPlayer;
+	LPGAMESETTING setting;
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -69,14 +72,14 @@ public:
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; this->type = type; }
+	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; this->type = type; setting = NULL; }
 
 	bool IsPlayer() { return isPlayer; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
-
+	
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die
 	//

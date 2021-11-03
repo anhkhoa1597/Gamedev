@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "Game.h"
+#include "PlayScene.h"
 
 #include "Goomba.h"
 #include "Coin.h"
@@ -90,29 +91,6 @@ enum MarioStates
 #define ID_ANI_MARIO_SMALL_TO_BIG_RIGHT 1701
 #pragma endregion
 
-//global variable
-//extern float	mario_walking_speed, mario_running_speed, 
-//				mario_accel_walk_x, mario_accel_run_x, 
-//				mario_jump_speed_y, mario_jump_run_speed_y, 
-//				mario_gravity, mario_jump_deflect_speed,
-//				mario_untouchable_time;
-//extern int		mario_life;
-//
-#define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
-
-#define MARIO_ACCEL_WALK_X	0.0005f
-#define MARIO_ACCEL_RUN_X	0.0007f
-
-#define MARIO_JUMP_SPEED_Y		0.5f
-#define MARIO_JUMP_RUN_SPEED_Y	0.6f
-
-#define MARIO_GRAVITY			0.002f
-
-#define MARIO_JUMP_DEFLECT_SPEED  0.4f
-
-#define MARIO_UNTOUCHABLE_TIME 2500
-
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 27
 
@@ -139,9 +117,7 @@ class CMario : public CGameObject
 
 	BOOLEAN isOnPlatform;
 	int coin;
-
-	//float startX, startY, checkPointX, checkPointY;
-
+	LPGAMESETTING setting;
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -152,12 +128,13 @@ class CMario : public CGameObject
 	int GetAniIdSmall();
 
 public:
-	CMario(float x, float y) : CGameObject(x, y, MARIO, true)
+	CMario(float x, float y, LPGAMESETTING setting) : CGameObject(x, y, MARIO, true)
 	{
+		this->setting = setting;
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = MARIO_GRAVITY; 
+		ay = setting->mario_gravity;
 
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
@@ -165,8 +142,7 @@ public:
 
 		isOnPlatform = false;
 		coin = 0;
-		life = 3;
-
+		life = setting->mario_life;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

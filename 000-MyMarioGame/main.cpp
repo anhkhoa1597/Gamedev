@@ -22,7 +22,7 @@
 		0.14: create class SPlatform, Ground, DCoin, QBrick
 		0.15: add feature mario hit QBrick drop coin.
 		0.16: Add feature mario hit QBrick drop red and green mushroom
-
+		0.17: add wing-goomba, red-goomba, feature collision with goomba
 ================================================================ */
 
 #include <windows.h>
