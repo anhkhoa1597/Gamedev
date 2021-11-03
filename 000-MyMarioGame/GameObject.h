@@ -72,7 +72,12 @@ public:
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() { this->x = x; this->y = y; this->isPlayer = isPlayer; this->type = type; setting = NULL; }
+	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() 
+	{ this->x = x; this->y = y; 
+		this->isPlayer = isPlayer; 
+		this->type = type; 
+		setting = CGameSettings::GetInstance()->Get(CGame::GetInstance()->GetCurrentSceneId()); 
+	}
 
 	bool IsPlayer() { return isPlayer; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;

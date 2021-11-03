@@ -105,6 +105,7 @@ public:
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	int GetCurrentSceneId() { return current_scene; }
 	LPGAMESETTING GetGameSetting() { return gameSetting; }
 	void Load(string gameFile);
 	void LoadGameSetting(string gamesettingFile);

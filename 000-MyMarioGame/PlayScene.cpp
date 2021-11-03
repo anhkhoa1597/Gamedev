@@ -262,7 +262,7 @@ void CPlayScene::LoadMap(string mapFile)
 				DebugOut(L"[ERROR] MARIO object was created before!\n");
 				return;
 			}
-			obj = new CMario(x, y, setting);
+			obj = new CMario(x, y);
 			player = (CMario*)obj;
 
 			DebugOut(L"[INFO] Player object has been created!\n");
@@ -341,6 +341,9 @@ void CPlayScene::Load()
 		LoadAssets(path);
 		pAsset = pAsset->NextSiblingElement("asset");
 	}
+
+	//setting path have setting, assetpath have id animation
+	CGameSettings::GetInstance()->Add(id, setting);
 
 	//Load Map
 	tinyxml2::XMLElement* pMap = pScene->FirstChildElement("map");

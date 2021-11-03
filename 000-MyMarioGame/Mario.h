@@ -69,7 +69,6 @@ class CMario : public CGameObject
 
 	BOOLEAN isOnPlatform;
 	int coin;
-	LPGAMESETTING setting;
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -80,14 +79,12 @@ class CMario : public CGameObject
 	int GetAniIdSmall();
 
 public:
-	CMario(float x, float y, LPGAMESETTING setting) : CGameObject(x, y, MARIO, true)
+	CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	{
-		this->setting = setting;
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = setting->mario_gravity;
-
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;

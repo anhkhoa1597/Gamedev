@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <string>
+#include <unordered_map>
 
 #include "tinyxml2.h"
 #include "debug.h"
@@ -9,7 +10,6 @@ using namespace std;
 
 class CGameSetting
 {
-	//static CGamesetting* __instance;
 public:
 #pragma region MARIO_SETTING
 	//constant
@@ -46,7 +46,19 @@ public:
 
 	CGameSetting();
 	~CGameSetting() {}
-	virtual void Load() {}
-	//static CGamesetting* GetInstance();
 }; 
 typedef CGameSetting* LPGAMESETTING;
+
+
+
+class CGameSettings
+{
+	static CGameSettings* __instance;
+
+	unordered_map<int, LPGAMESETTING> gameSettings;
+public:
+	void Add(int id, LPGAMESETTING gameSetting);
+	LPGAMESETTING Get(int id);
+
+	static CGameSettings* GetInstance();
+};

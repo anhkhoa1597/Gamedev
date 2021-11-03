@@ -1,7 +1,5 @@
 #include "GameSetting.h"
 
-//CGamesetting* CGamesetting::__instance = NULL;
-
 CGameSetting::CGameSetting()
 {
 	mario_walking_speed = 0;
@@ -29,4 +27,28 @@ CGameSetting::CGameSetting()
 	id_ani_mario_small_jump_walk_left = id_ani_mario_small_jump_walk_right =
 	id_ani_mario_small_brace_left = id_ani_mario_small_brace_right =
 	id_ani_mario_die = -1;
+}
+
+CGameSettings* CGameSettings::__instance = NULL;
+
+CGameSettings* CGameSettings::GetInstance()
+{
+	if (__instance == NULL) __instance = new CGameSettings();
+	return __instance;
+}
+
+void CGameSettings::Add(int id, LPGAMESETTING gameSetting)
+{
+	if (gameSettings[id] != NULL)
+		DebugOut(L"[WARNING] gameSetting of scene %d already exists\n", id);
+
+	gameSettings[id] = gameSetting;
+}
+
+LPGAMESETTING CGameSettings::Get(int id)
+{
+	LPGAMESETTING ani = gameSettings[id];
+	if (ani == NULL)
+		DebugOut(L"[ERROR] game setting ID %d not found\n", id);
+	return ani;
 }
