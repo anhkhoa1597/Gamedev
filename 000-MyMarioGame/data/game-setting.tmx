@@ -6,7 +6,7 @@
   <setting name="mario-accel-run-x" value="0.0007"/>
   <setting name="mario-jump-speed-y" value="0.5"/>
   <setting name="mario-jump-run-speed-y" value="0.6"/>
-  <setting name="mario-gravity" value="0.002"/> <!--must larger or equal 0.002-->
+  <setting name="mario-gravity" value="0.002"/> <!--must larger or equal 0.002!!! or try set to smaller 0.002 :))-->
   <setting name="mario-jump-deflect-speed" value="0.4"/>
   <setting name="mario-untouchabletime" value="2500"/>
   <setting name="mario-life" value="3"/>
