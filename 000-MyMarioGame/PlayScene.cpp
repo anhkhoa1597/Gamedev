@@ -102,9 +102,11 @@ void CPlayScene::LoadAssets(string assetFile)
 	tinyxml2::XMLElement* pAnimation = pAnimationGroup->FirstChildElement("animation");
 	while (pAnimation != nullptr)
 	{
+		string name = pAnimation->Attribute("name");
 		LPANIMATION ani = new CAnimation();
 		int ani_id;
 		pAnimation->QueryIntAttribute("id", &ani_id);
+		LoadIdAnimation(name, ani_id);
 		tinyxml2::XMLElement* pSprite = pAnimation->FirstChildElement("sprite");
 		while (pSprite != nullptr)
 		{
@@ -119,6 +121,38 @@ void CPlayScene::LoadAssets(string assetFile)
 		pAnimation = pAnimation->NextSiblingElement("animation");
 	}
 	DebugOut(L"[INFO] Done loading assets from %s\n", ToLPCWSTR(assetFile));
+}
+
+void CPlayScene::LoadIdAnimation(string name, int id)
+{
+	if (name == "big-idle-left") setting->id_ani_mario_idle_left = id;
+	else if (name == "big-idle-right") setting->id_ani_mario_idle_right = id;
+	else if (name == "big-walking-left") setting->id_ani_mario_walking_left = id;
+	else if (name == "big-walking-right") setting->id_ani_mario_walking_right = id;
+	else if (name == "big-running-left") setting->id_ani_mario_running_left = id;
+	else if (name == "big-running-right") setting->id_ani_mario_running_right = id;
+	else if (name == "big-jump-walk-left") setting->id_ani_mario_jump_walk_left = id;
+	else if (name == "big-jump-walk-right") setting->id_ani_mario_jump_walk_right = id;
+	else if (name == "big-jump-run-left") setting->id_ani_mario_jump_run_left = id;
+	else if (name == "big-jump-run-right") setting->id_ani_mario_jump_run_right = id;
+	else if (name == "big-sit-left") setting->id_ani_mario_sit_left = id;
+	else if (name == "big-sit-right") setting->id_ani_mario_sit_right = id;
+	else if (name == "big-brace-left") setting->id_ani_mario_brace_left = id;
+	else if (name == "big-brace-right") setting->id_ani_mario_brace_right = id;
+	else if (name == "mario-die") setting->id_ani_mario_die = id;
+	else if (name == "small-idle-left") setting->id_ani_mario_small_idle_left = id;
+	else if (name == "small-idle-right") setting->id_ani_mario_small_idle_right = id;
+	else if (name == "small-walking-left") setting->id_ani_mario_small_walking_left = id;
+	else if (name == "small-walking-right") setting->id_ani_mario_small_walking_right = id;
+	else if (name == "small-running-left") setting->id_ani_mario_small_running_left = id;
+	else if (name == "small-running-right") setting->id_ani_mario_small_running_right = id;
+	else if (name == "small-jump-walk-left") setting->id_ani_mario_small_jump_walk_left = id;
+	else if (name == "small-jump-walk-right") setting->id_ani_mario_small_jump_walk_right = id;
+	else if (name == "small-jump-run-left") setting->id_ani_mario_small_jump_run_left = id;
+	else if (name == "small-jump-run-right") setting->id_ani_mario_small_jump_run_right = id;
+	else if (name == "small-brace-left") setting->id_ani_mario_small_brace_left = id;
+	else if (name == "small-brace-right") setting->id_ani_mario_small_brace_right = id;
+	else if (name == "mario-die") setting->id_ani_mario_die = id;
 }
 
 void CPlayScene::LoadTileset(string tilesetFile)

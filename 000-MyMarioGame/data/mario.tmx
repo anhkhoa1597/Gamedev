@@ -64,16 +64,16 @@
       <sprite id="11322" time="50"/>
       <sprite id="11323" time="50"/>
     </animation>
-    <animation name="big-juml-walk-left" id="700">
+    <animation name="big-jump-walk-left" id="700">
       <sprite id="11413" time="100"/>
     </animation>
-    <animation name="big-juml-walk-right" id="701">
+    <animation name="big-jump-walk-right" id="701">
       <sprite id="11417" time="100"/>
     </animation>
-    <animation name="big-juml-run-left" id="800">
+    <animation name="big-jump-run-left" id="800">
       <sprite id="11423" time="100"/>
     </animation>
-    <animation name="big-juml-run-right" id="801">
+    <animation name="big-jump-run-right" id="801">
       <sprite id="11427" time="100"/>
     </animation>
     <animation name="big-sit-left" id="900">
@@ -88,7 +88,7 @@
     <animation name="big-brace-right" id="1001">
       <sprite id="11621" time="100"/>
     </animation>
-    <animation name="die" id="999">
+    <animation name="mario-die" id="999">
       <sprite id="13001" time="100"/>
     </animation>
     <animation name="small-idle-left" id="1100">

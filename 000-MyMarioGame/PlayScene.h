@@ -26,6 +26,7 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	LPMap map;
 
+	void LoadIdAnimation(string name, int id);
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);
 	void LoadTileset(string tilesetFile);
