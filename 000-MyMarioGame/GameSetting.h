@@ -5,6 +5,7 @@
 
 #include "tinyxml2.h"
 #include "debug.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -40,12 +41,17 @@ public:
 		id_ani_mario_small_brace_left, id_ani_mario_small_brace_right,
 		id_ani_mario_die;
 #pragma endregion
+
 #pragma region GOOMBA
+	//constant
+
+	//id animation
 
 #pragma endregion
 
 	CGameSetting();
 	~CGameSetting() {}
+	void Load(string settingFile);
 }; 
 typedef CGameSetting* LPGAMESETTING;
 

@@ -11,7 +11,7 @@
   <setting name="mario-untouchabletime" value="2500"/>
   <setting name="mario-life" value="3"/>
 
-  <!-- <setting name="goomba-gravity" value="0.002"/>
+  <setting name="goomba-gravity" value="0.002"/>
   <setting name="goomba-walking-speed" value="0.05"/>
   <setting name="wing-goomba-gravity" value="0.0005"/>
   <setting name="wing-goomba-low-jump" value="0.1"/>
@@ -23,5 +23,5 @@
 
   <setting name="mario-life" value="3"/>
   <setting name="mario-life" value="3"/>
-  <setting name="mario-life" value="3"/> -->
+  <setting name="mario-life" value="3"/>
 </settings>

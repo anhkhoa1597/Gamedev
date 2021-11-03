@@ -22,44 +22,6 @@ CPlayScene::CPlayScene(int id, string filePath) :
 	key_handler = new CSampleKeyHandler(this);
 }
 
-void CPlayScene::LoadSceneSetting(string scenesettingFile)
-{
-	DebugOut(L"[INFO] Start loading scene setting file : %s\n", ToLPCWSTR(scenesettingFile));
-
-	tinyxml2::XMLDocument doc;
-	doc.LoadFile(scenesettingFile.c_str());
-	tinyxml2::XMLElement* pSettings = doc.FirstChildElement("settings");
-	if (pSettings == nullptr)
-	{
-		DebugOut(L"[ERROR] Failed to loading game settings file : %s\n", ToLPCWSTR(scenesettingFile));
-		return;
-	}
-	setting = CGame::GetInstance()->GetGameSetting();
-	tinyxml2::XMLElement* pSetting = pSettings->FirstChildElement("setting");
-	while (pSetting != nullptr)
-	{
-		string name = pSetting->Attribute("name");
-		if (name == "mario-walking-speed") pSetting->QueryFloatAttribute("value", &setting->mario_walking_speed);
-		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &setting->mario_running_speed);
-		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &setting->mario_accel_walk_x);
-		else if (name == "mario-accel-run-x") pSetting->QueryFloatAttribute("value", &setting->mario_accel_run_x);
-		else if (name == "mario-jump-speed-y") pSetting->QueryFloatAttribute("value", &setting->mario_jump_speed_y);
-		else if (name == "mario-jump-run-speed-y") pSetting->QueryFloatAttribute("value", &setting->mario_jump_run_speed_y);
-		else if (name == "mario-gravity") pSetting->QueryFloatAttribute("value", &setting->mario_gravity);
-		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &setting->mario_jump_deflect_speed);
-		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &setting->mario_untouchable_time);
-		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &setting->mario_life);
-		//unknow setting
-		else
-		{
-			DebugOut(L"[ERROR] Unknow setting: %s \n", ToLPCWSTR(name));
-			return;
-		}
-		pSetting = pSetting->NextSiblingElement("setting");
-	}
-	DebugOut(L"[INFO] Done loading setting from %s\n", ToLPCWSTR(scenesettingFile));
-}
-
 void CPlayScene::LoadAssets(string assetFile)
 {
 	DebugOut(L"[INFO] Start loading assets from : %s \n", ToLPCWSTR(assetFile));
@@ -329,7 +291,8 @@ void CPlayScene::Load()
 	if (pSetting != nullptr)
 	{
 		string path = pSetting->Attribute("source");
-		LoadSceneSetting(path);
+		setting = CGame::GetInstance()->GetGameSetting();
+		setting->Load(path);
 	}
 
 	//Load Asset
@@ -419,7 +382,7 @@ void CPlayScene::Render()
 	screen_cx = cx + (float)game->GetBackBufferWidth();
 	screen_cy = cy + (float)game->GetBackBufferWidth();
 	//render tiled-map
-	map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
+	//map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
 	//render objects
 	for (int i = 0; i < objects.size(); i++)
 	{

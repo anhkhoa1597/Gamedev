@@ -454,7 +454,9 @@ void CGame::Load(string gameFile)
 	{
 		pSetting->QueryIntAttribute("start", &next_scene);
 		string path = pSetting->Attribute("source");
-		LoadGameSetting(path);
+		LPGAMESETTING gameSetting = new CGameSetting();
+		gameSetting->Load(path);
+		this->gameSetting = gameSetting;
 	}
 
 	//Load Scene
@@ -516,45 +518,6 @@ void CGame::SwitchScene()
 	LPSCENE s = scenes[next_scene];
 	this->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();
-}
-
-void CGame::LoadGameSetting(string gamesettingFile)
-{
-	DebugOut(L"[INFO] Start loading game setting file : %s\n", ToLPCWSTR(gamesettingFile));
-
-	tinyxml2::XMLDocument doc;
-	doc.LoadFile(gamesettingFile.c_str());
-	tinyxml2::XMLElement* pSetting = doc.FirstChildElement("settings")->FirstChildElement("setting");
-	if (pSetting == nullptr)
-	{
-		DebugOut(L"[ERROR] Failed to loading setting from : %s\n", ToLPCWSTR(gamesettingFile));
-		return;
-	}
-	LPGAMESETTING gameSetting = new CGameSetting();
-	while (pSetting != nullptr)
-	{
-		string name = pSetting->Attribute("name");
-		if (name == "mario-walking-speed") pSetting->QueryFloatAttribute("value", &gameSetting->mario_walking_speed);
-		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &gameSetting->mario_running_speed);
-		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &gameSetting->mario_accel_walk_x);
-		else if (name == "mario-accel-run-x") pSetting->QueryFloatAttribute("value", &gameSetting->mario_accel_run_x);
-		else if (name == "mario-jump-speed-y") pSetting->QueryFloatAttribute("value", &gameSetting->mario_jump_speed_y);
-		else if (name == "mario-jump-run-speed-y") pSetting->QueryFloatAttribute("value", &gameSetting->mario_jump_run_speed_y);
-		else if (name == "mario-gravity") pSetting->QueryFloatAttribute("value", &gameSetting->mario_gravity);
-		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &gameSetting->mario_jump_deflect_speed);
-		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &gameSetting->mario_untouchable_time);
-		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &gameSetting->mario_life);
-	//unknow property
-		else 
-		{
-			DebugOut(L"[ERROR] Unknow setting: %s \n", ToLPCWSTR(name));
-			return;
-		}
-		pSetting = pSetting->NextSiblingElement("setting");
-	}
-	this->gameSetting = gameSetting;
-
-	DebugOut(L"[INFO] Done loading setting from %s\n", ToLPCWSTR(gamesettingFile));
 }
 
 void CGame::InitiateSwitchScene(int scene_id)

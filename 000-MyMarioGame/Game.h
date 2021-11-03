@@ -108,7 +108,6 @@ public:
 	int GetCurrentSceneId() { return current_scene; }
 	LPGAMESETTING GetGameSetting() { return gameSetting; }
 	void Load(string gameFile);
-	void LoadGameSetting(string gamesettingFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
 
