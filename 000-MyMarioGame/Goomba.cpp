@@ -6,8 +6,8 @@ CGoomba::CGoomba(float x, float y, int type, bool has_wing):CGameObject(x, y, ty
 	this->has_wing = has_wing;
 	die_start = -1;
 	nx = -1;
-	if (this->has_wing) ay = setting->wing_goomba_gravity;
-	else ay = setting->goomba_gravity;
+	if (this->has_wing) ay = GOOMBA_WING_GRAVITY;
+	else ay = GOOMBA_GRAVITY;
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -85,12 +85,12 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ((this->state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > setting->goomba_die_timeout))
+	if ((this->state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
 	}
-	else if ((this->state == GOOMBA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > setting->goomba_bounce_die_timeout))
+	else if ((this->state == GOOMBA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > GOOMBA_BOUNCE_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -99,7 +99,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		if (this->state == GOOMBA_STATE_WALKING)
 		{
-			if (GetTickCount64() - this->walk_start < setting->wing_goomba_walk_timeout)
+			if (GetTickCount64() - this->walk_start < GOOMBA_WALK_TIME_TO_JUMP)
 			{
 			}
 			else
@@ -118,22 +118,22 @@ void CGoomba::Render()
 	int aniId = -1;
 	if (type == GOOMBA)
 	{
-		aniId = setting->id_ani_goomba_walking;
-		if (state == GOOMBA_STATE_DIE) aniId = setting->id_ani_goomba_die;
-		else if (state == GOOMBA_STATE_BOUNCE_DIE) aniId = setting->id_ani_goomba_bounce_die;
+		aniId = ID_ANI_GOOMBA_WALKING;
+		if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_GOOMBA_DIE;
+		else if (state == GOOMBA_STATE_BOUNCE_DIE) aniId = ID_ANI_GOOMBA_BOUNCE_DIE;
 	}
 	else if (type == RGOOMBA)
 	{
-		aniId = setting->id_ani_red_goomba_walking;
-		if (state == GOOMBA_STATE_DIE) aniId = setting->id_ani_red_goomba_die;
-		else if (state == GOOMBA_STATE_BOUNCE_DIE) aniId = setting->id_ani_red_goomba_bounce_die;
+		aniId = ID_ANI_RED_GOOMBA_WALKING;
+		if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_RED_GOOMBA_DIE;
+		else if (state == GOOMBA_STATE_BOUNCE_DIE) aniId = ID_ANI_RED_GOOMBA_BOUNCE_DIE;
 	}
 	if (has_wing)
 	{
-		int aniWingId = setting->id_ani_wing_walk;
+		int aniWingId = ID_ANI_WING_WALK;
 		if (state == GOOMBA_STATE_LOW_JUMP || state == GOOMBA_STATE_HIGH_JUMP)
 		{
-			aniWingId = setting->id_ani_wing_jump;
+			aniWingId = ID_ANI_WING_JUMP;
 		}
 		CAnimations::GetInstance()->Get(aniWingId)->Render(x - 2, y - 10);
 	}
@@ -155,18 +155,18 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_WALKING: 
 			walk_start = GetTickCount64();
 			numberOfLowJump = 3;
-			vx = nx * setting->goomba_walking_speed;
+			vx = nx * GOOMBA_WALKING_SPEED;
 			break;
 		case GOOMBA_STATE_LOW_JUMP:
-			vy = -setting->wing_goomba_low_jump;
+			vy = -GOOMBA_WING_LOW_JUMP;
 			numberOfLowJump--;
 			break;
 		case GOOMBA_STATE_HIGH_JUMP:
-			vy = -setting->wing_goomba_high_jump;
+			vy = -GOOMBA_WING_HIGH_JUMP;
 			break;
 		case GOOMBA_STATE_BOUNCE_DIE:
 			die_start = GetTickCount64();
-			vy = -setting->goomba_bouncing_speed;
+			vy = -GOOMBA_BOUNCING_SPEED;
 			break;
 	}
 	CGameObject::SetState(state);
