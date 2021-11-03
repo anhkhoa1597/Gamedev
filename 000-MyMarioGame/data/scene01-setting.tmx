@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--mario-gravity must larger or equal 0.002-->
 <settings>
-  <setting name="mario-walking-speed" value="0.05"/>
-  <setting name="mario-running-speed" value="0.1"/>
+  <setting name="mario-walking-speed" value="0.2"/>
+  <setting name="mario-running-speed" value="0.4"/>
 </settings>

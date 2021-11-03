@@ -13,7 +13,7 @@
     <sprite name="wing-down" id="30002" left="200" top="16" right="219" bottom="31" texid="10"/>
   </spritegroup>
   <animationgroup>
-    <animation name="goomba-walk" id="5100">
+    <animation name="goomba-walking" id="5100">
       <sprite id="31001" time="100"/>
       <sprite id="31002" time="100"/>
     </animation>
@@ -23,7 +23,7 @@
     <animation name="goomba-bounce-die" id="5191">
       <sprite id="31100" time="100"/>
     </animation>
-    <animation name="red-goomba-walk" id="5200">
+    <animation name="red-goomba-walking" id="5200">
       <sprite id="32001" time="100"/>
       <sprite id="32002" time="100"/>
     </animation>

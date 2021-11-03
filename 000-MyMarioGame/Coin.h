@@ -2,8 +2,8 @@
 
 #include "GameObject.h"
 #include "Animations.h"
-
-#define ID_ANI_COIN 11100
+#include "Mario.h"
+#include "PlayScene.h"
 
 class CCoin : public CGameObject {
 	int width;
@@ -13,4 +13,14 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
+};
+
+
+
+class CDropCoin : public CCoin {
+	float initial_y;
+public:
+	CDropCoin(float x, float y, int width, int height);
+	void Render();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

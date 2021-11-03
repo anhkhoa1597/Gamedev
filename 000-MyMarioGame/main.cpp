@@ -24,6 +24,7 @@
 		0.16: Add feature mario hit QBrick drop red and green mushroom
 		0.17: add wing-goomba, red-goomba, feature collision with goomba
 		0.18: add setting game, setting scene.
+		0.19: add more setting in setting class, change name of Class, convert almost constant to setting.
 ================================================================ */
 
 #include <windows.h>

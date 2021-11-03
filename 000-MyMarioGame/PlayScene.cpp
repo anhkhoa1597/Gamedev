@@ -68,7 +68,7 @@ void CPlayScene::LoadAssets(string assetFile)
 		LPANIMATION ani = new CAnimation();
 		int ani_id;
 		pAnimation->QueryIntAttribute("id", &ani_id);
-		LoadIdAnimation(name, ani_id);
+		setting->LoadIdAnimations(name, ani_id);
 		tinyxml2::XMLElement* pSprite = pAnimation->FirstChildElement("sprite");
 		while (pSprite != nullptr)
 		{
@@ -83,38 +83,6 @@ void CPlayScene::LoadAssets(string assetFile)
 		pAnimation = pAnimation->NextSiblingElement("animation");
 	}
 	DebugOut(L"[INFO] Done loading assets from %s\n", ToLPCWSTR(assetFile));
-}
-
-void CPlayScene::LoadIdAnimation(string name, int id)
-{
-	if (name == "big-idle-left") setting->id_ani_mario_idle_left = id;
-	else if (name == "big-idle-right") setting->id_ani_mario_idle_right = id;
-	else if (name == "big-walking-left") setting->id_ani_mario_walking_left = id;
-	else if (name == "big-walking-right") setting->id_ani_mario_walking_right = id;
-	else if (name == "big-running-left") setting->id_ani_mario_running_left = id;
-	else if (name == "big-running-right") setting->id_ani_mario_running_right = id;
-	else if (name == "big-jump-walk-left") setting->id_ani_mario_jump_walk_left = id;
-	else if (name == "big-jump-walk-right") setting->id_ani_mario_jump_walk_right = id;
-	else if (name == "big-jump-run-left") setting->id_ani_mario_jump_run_left = id;
-	else if (name == "big-jump-run-right") setting->id_ani_mario_jump_run_right = id;
-	else if (name == "big-sit-left") setting->id_ani_mario_sit_left = id;
-	else if (name == "big-sit-right") setting->id_ani_mario_sit_right = id;
-	else if (name == "big-brace-left") setting->id_ani_mario_brace_left = id;
-	else if (name == "big-brace-right") setting->id_ani_mario_brace_right = id;
-	else if (name == "mario-die") setting->id_ani_mario_die = id;
-	else if (name == "small-idle-left") setting->id_ani_mario_small_idle_left = id;
-	else if (name == "small-idle-right") setting->id_ani_mario_small_idle_right = id;
-	else if (name == "small-walking-left") setting->id_ani_mario_small_walking_left = id;
-	else if (name == "small-walking-right") setting->id_ani_mario_small_walking_right = id;
-	else if (name == "small-running-left") setting->id_ani_mario_small_running_left = id;
-	else if (name == "small-running-right") setting->id_ani_mario_small_running_right = id;
-	else if (name == "small-jump-walk-left") setting->id_ani_mario_small_jump_walk_left = id;
-	else if (name == "small-jump-walk-right") setting->id_ani_mario_small_jump_walk_right = id;
-	else if (name == "small-jump-run-left") setting->id_ani_mario_small_jump_run_left = id;
-	else if (name == "small-jump-run-right") setting->id_ani_mario_small_jump_run_right = id;
-	else if (name == "small-brace-left") setting->id_ani_mario_small_brace_left = id;
-	else if (name == "small-brace-right") setting->id_ani_mario_small_brace_right = id;
-	else if (name == "mario-die") setting->id_ani_mario_die = id;
 }
 
 void CPlayScene::LoadTileset(string tilesetFile)
@@ -165,7 +133,7 @@ void CPlayScene::LoadMap(string mapFile)
 		pMap->QueryIntAttribute("tilewidth", &tileWidth);
 		pMap->QueryIntAttribute("tileheight", &tileHeight);
 	}
-	LPMap map = new Map(width, height, tileWidth, tileHeight);
+	LPMAP map = new CMap(width, height, tileWidth, tileHeight);
 	
 	//Load extra properties
 	tinyxml2::XMLElement* pProperty = pMap->FirstChildElement("properties")->FirstChildElement("property");
@@ -202,7 +170,7 @@ void CPlayScene::LoadMap(string mapFile)
 	}
 	this->map = map;
 	if (id < 0) return;
-	Maps::GetInstance()->Add(id, map);
+	CMaps::GetInstance()->Add(id, map);
 
 	//Load Objects
 	tinyxml2::XMLElement* pObjectGroup = pMap->FirstChildElement("objectgroup");
@@ -233,9 +201,9 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "wing_goomba") obj = new CGoomba(x, y, GOOMBA, true);
 		else if (name == "red_goomba") obj = new CGoomba(x, y, RGOOMBA);
 		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RGOOMBA, true);
-		else if (name == "wall") obj = new Wall(x, y, width, height);
-		else if (name == "ground") obj = new Ground(x, y, width, height);
-		else if (name == "s_platform") obj = new SPlatform(x, y, width, height);
+		else if (name == "wall") obj = new CWall(x, y, width, height);
+		else if (name == "ground") obj = new CGround(x, y, width, height);
+		else if (name == "s_platform") obj = new CSpecificPlatform(x, y, width, height);
 		else if (name == "coin") obj = new CCoin(x, y, width, height);
 		else if (name == "brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL);
 		else if (name == "q_brick" || name == "s_brick" || name == "secret_brick")
@@ -260,8 +228,8 @@ void CPlayScene::LoadMap(string mapFile)
 			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, item);
 			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, item);
 		}
-		else if (name == "pipe") obj = new Ground(x, y, width, height); //need create class Pipe
-		else if (name == "dead_zone") obj = new Ground(x, y, width, height); //need create class deadzone
+		else if (name == "pipe") obj = new CGround(x, y, width, height); //need create class Pipe
+		else if (name == "dead_zone") obj = new CGround(x, y, width, height); //need create class deadzone
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
 
 		// General object setup
@@ -382,7 +350,7 @@ void CPlayScene::Render()
 	screen_cx = cx + (float)game->GetBackBufferWidth();
 	screen_cy = cy + (float)game->GetBackBufferWidth();
 	//render tiled-map
-	//map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
+	map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
 	//render objects
 	for (int i = 0; i < objects.size(); i++)
 	{

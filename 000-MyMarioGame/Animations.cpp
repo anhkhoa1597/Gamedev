@@ -27,7 +27,7 @@ LPANIMATION CAnimations::Get(int id)
 
 void CAnimations::Clear()
 {
-	for (auto x : animations)
+	for (auto &x : animations)
 	{
 		LPANIMATION ani = x.second;
 		delete ani;

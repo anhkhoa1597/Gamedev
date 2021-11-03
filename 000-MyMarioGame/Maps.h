@@ -2,15 +2,15 @@
 
 #include "Map.h"
 
-class Maps
+class CMaps
 {
-	static Maps* __instance;
-	unordered_map<int, LPMap> maps;
+	static CMaps* __instance;
+	unordered_map<int, LPMAP> maps;
 
 public:
-	void Add(int id, LPMap map);
-	LPMap Get(int id);
+	void Add(int id, LPMAP map);
+	LPMAP Get(int id);
 	void Clear();
 
-	static Maps* GetInstance();
+	static CMaps* GetInstance();
 };

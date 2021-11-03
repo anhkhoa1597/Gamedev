@@ -2,8 +2,8 @@
 
 #include "GameObject.h"
 #include "Animations.h"
+#include "Coin.h"
 #include "Utils.h"
-#include "DCoin.h"
 
 enum BrickStates
 {
@@ -14,15 +14,6 @@ enum BrickStates
 	BRICK_STATE_BREAK,
 	BRICK_STATE_SECRET,
 };
-
-#define ID_ANI_BRICK 10100
-#define ID_ANI_QBRICK 10200
-#define ID_ANI_BBRICK 10300
-
-#define BRICK_BOUNCING_SPEED 0.2f
-#define BRICK_BOUNCE_HEIGHT 12
-
-#define NUMBER_OF_BOUNCE 10
 
 class CBrick : public CGameObject {
 protected:

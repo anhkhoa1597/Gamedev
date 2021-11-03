@@ -11,17 +11,20 @@
     <sprite name="coin" id="40013" left="527" top="100" right="542" bottom="115" texid="20"/>
   </spritegroup>
   <animationgroup>
-    <animation name="coin" id="11100">
+    <animation name="coin-spinning" id="11100">
       <sprite id="40007" time="200"/>
       <sprite id="40005" time="200"/>
       <sprite id="40006" time="200"/>
       <sprite id="40004" time="200"/>
     </animation>
-    <animation name="drop_coin" id="11200">
+    <animation name="coin-drop" id="11200">
       <sprite id="40001" time="100"/>
       <sprite id="40013" time="100"/>
       <sprite id="40002" time="100"/>
       <sprite id="40003" time="100"/>
+    </animation>
+    <animation name="coin-idle" id="11300">
+      <sprite id="40004" time="100"/>
     </animation>
   </animationgroup>
 </asset>

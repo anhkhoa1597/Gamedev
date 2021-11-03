@@ -14,44 +14,104 @@ class CGameSetting
 public:
 #pragma region MARIO_SETTING
 	//constant
-	float mario_walking_speed;
-	float mario_running_speed;
-	float mario_accel_walk_x;
-	float mario_accel_run_x;
-	float mario_jump_speed_y;
-	float mario_jump_run_speed_y;
-	float mario_gravity;
-	float mario_jump_deflect_speed;
-	float mario_untouchable_time;
-	int	mario_life;
-	//animation
-	int id_ani_mario_idle_left, id_ani_mario_idle_right,
-		id_ani_mario_walking_left, id_ani_mario_walking_right,
-		id_ani_mario_running_left, id_ani_mario_running_right,
-		id_ani_mario_jump_run_left, id_ani_mario_jump_run_right,
-		id_ani_mario_jump_walk_left, id_ani_mario_jump_walk_right,
-		id_ani_mario_sit_left, id_ani_mario_sit_right,
-		id_ani_mario_brace_left, id_ani_mario_brace_right,
-
-		id_ani_mario_small_idle_left, id_ani_mario_small_idle_right,
-		id_ani_mario_small_walking_left, id_ani_mario_small_walking_right,
-		id_ani_mario_small_running_left, id_ani_mario_small_running_right,
-		id_ani_mario_small_jump_run_left, id_ani_mario_small_jump_run_right,
-		id_ani_mario_small_jump_walk_left, id_ani_mario_small_jump_walk_right,
-		id_ani_mario_small_brace_left, id_ani_mario_small_brace_right,
-		id_ani_mario_die;
+	float mario_walking_speed = 0;
+	float mario_running_speed = 0;
+	float mario_accel_walk_x = 0;
+	float mario_accel_run_x = 0;
+	float mario_jump_speed_y = 0;
+	float mario_jump_run_speed_y = 0;
+	float mario_gravity = 0;
+	float mario_jump_deflect_speed = 0;
+	float mario_untouchable_time = 0;
+	int	mario_life = 0;
+	//id animation
+	int id_ani_mario_idle_left = -1;
+	int id_ani_mario_idle_right = -1;
+	int id_ani_mario_walking_left = -1; 
+	int id_ani_mario_walking_right = -1;
+	int id_ani_mario_running_left = -1; 
+	int id_ani_mario_running_right = -1;
+	int id_ani_mario_jump_run_left = -1; 
+	int id_ani_mario_jump_run_right = -1;
+	int id_ani_mario_jump_walk_left = -1; 
+	int id_ani_mario_jump_walk_right = -1;
+	int id_ani_mario_sit_left = -1; 
+	int id_ani_mario_sit_right = -1;
+	int id_ani_mario_brace_left = -1; 
+	int id_ani_mario_brace_right = -1;
+	int id_ani_mario_small_idle_left = -1; 
+	int id_ani_mario_small_idle_right = -1;
+	int id_ani_mario_small_walking_left = -1; 
+	int id_ani_mario_small_walking_right = -1;
+	int id_ani_mario_small_running_left = -1; 
+	int id_ani_mario_small_running_right = -1;
+	int id_ani_mario_small_jump_run_left = -1; 
+	int id_ani_mario_small_jump_run_right = -1;
+	int id_ani_mario_small_jump_walk_left = -1;
+	int id_ani_mario_small_jump_walk_right = -1;
+	int id_ani_mario_small_brace_left = -1;
+	int id_ani_mario_small_brace_right = -1;
+	int id_ani_mario_die = -1;
 #pragma endregion
 
 #pragma region GOOMBA
 	//constant
-
+	float goomba_gravity = 0;
+	float goomba_walking_speed = 0;
+	float wing_goomba_gravity = 0;
+	float wing_goomba_low_jump = 0;
+	float wing_goomba_high_jump = 0;
+	float goomba_bouncing_speed = 0;
+	int goomba_die_timeout = 0;
+	int goomba_bounce_die_timeout = 0;
+	int wing_goomba_walk_timeout = 0;
 	//id animation
-
+	int id_ani_goomba_walking = -1;
+	int id_ani_goomba_die = -1;
+	int id_ani_goomba_bounce_die = -1;
+	int id_ani_red_goomba_walking = -1;
+	int id_ani_red_goomba_die = -1;
+	int id_ani_red_goomba_bounce_die = -1;
+	int id_ani_wing_jump = -1;
+	int id_ani_wing_walk = -1;
 #pragma endregion
 
-	CGameSetting();
+#pragma region BRICK
+	//constant
+	float brick_bouncing_speed = 0;
+	int brick_bounce_height = 0;
+	int brick_number_bounce_of_multi_coin = 0;
+	//id animation
+	int id_ani_brick = -1;
+	int id_ani_question_brick = -1;
+	int id_ani_block_brick = -1;
+#pragma endregion
+
+#pragma region COIN
+	//constant
+	float coin_bouncing_speed = 0;
+	int coin_bounce_height = 0;
+	int coin_drop_height = 0;
+	//id animation
+	int id_ani_coin_spinning = -1;
+	int id_ani_coin_idle = -1;
+	int id_ani_coin_drop = -1;
+#pragma endregion
+
+#pragma region MUSHROOM
+	//constant
+	float mushroom_gravity = 0;
+	float mushroom_speed = 0;
+	float mushroom_bouncing_speed = 0;
+	int mushroom_life_up = 0;
+	//id animation
+	int id_ani_red_mushroom = -1;
+	int id_ani_green_mushroom = -1;
+#pragma endregion
+	CGameSetting() {};
 	~CGameSetting() {}
 	void Load(string settingFile);
+	void LoadIdAnimations(string name, int id);
 }; 
 typedef CGameSetting* LPGAMESETTING;
 

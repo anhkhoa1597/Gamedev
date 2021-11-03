@@ -5,11 +5,11 @@
     <sprite name="brick" id="21002" left="293" top="188" right="308" bottom="203" texid="20"/>
     <sprite name="brick" id="21003" left="312" top="188" right="327" bottom="203" texid="20"/>
     <sprite name="brick" id="21004" left="331" top="188" right="346" bottom="203" texid="20"/>
-    <sprite name="q_brick" id="22001" left="157" top="188" right="172" bottom="203" texid="20"/>
-    <sprite name="q_brick" id="22002" left="176" top="188" right="191" bottom="203" texid="20"/>
-    <sprite name="q_brick" id="22003" left="196" top="188" right="211" bottom="203" texid="20"/>
-    <sprite name="q_brick" id="22004" left="215" top="188" right="230" bottom="203" texid="20"/>
-    <sprite name="b_brick" id="23001" left="235" top="188" right="250" bottom="203" texid="20"/>
+    <sprite name="q-brick" id="22001" left="157" top="188" right="172" bottom="203" texid="20"/>
+    <sprite name="q-brick" id="22002" left="176" top="188" right="191" bottom="203" texid="20"/>
+    <sprite name="q-brick" id="22003" left="196" top="188" right="211" bottom="203" texid="20"/>
+    <sprite name="q-brick" id="22004" left="215" top="188" right="230" bottom="203" texid="20"/>
+    <sprite name="b-brick" id="23001" left="235" top="188" right="250" bottom="203" texid="20"/>
   </spritegroup>
   <animationgroup>
     <animation name="brick" id="10100">
@@ -18,13 +18,13 @@
       <sprite id="21003" time="200"/>
       <sprite id="21004" time="200"/>
     </animation>
-    <animation name="q_brick" id="10200">
+    <animation name="question-brick" id="10200">
       <sprite id="22001" time="200"/>
       <sprite id="22002" time="200"/>
       <sprite id="22003" time="200"/>
       <sprite id="22004" time="200"/>
     </animation>
-    <animation name="b_brick" id="10300">
+    <animation name="block-brick" id="10300">
       <sprite id="23001" time="200"/>
     </animation>
   </animationgroup>

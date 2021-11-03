@@ -2,6 +2,20 @@
 #include "debug.h"
 
 #include "Mario.h"
+CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
+{
+	isSitting = false;
+	maxVx = 0.0f;
+	ax = 0.0f;
+	ay = setting->mario_gravity;
+	level = MARIO_LEVEL_SMALL;
+	untouchable = 0;
+	untouchable_start = -1;
+
+	isOnPlatform = false;
+	coin = 0;
+	life = setting->mario_life;
+}
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -46,7 +60,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
-	else if (dynamic_cast<Mushroom*>(e->obj))
+	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
@@ -132,11 +146,11 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
-	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 	if (mushroom->GetType() == RMUSHROOM) SetLevel(MARIO_LEVEL_BIG);
 	else if (mushroom->GetType() == GMUSHROOM) 
 	{
-		LifeUp(MUSHROOM_LIFE_UP);
+		LifeUp(setting->mushroom_life_up);
 		DebugOut(L">>> Mario Life Left: %d >>> \n", life);
 	}
 	e->obj->Delete();

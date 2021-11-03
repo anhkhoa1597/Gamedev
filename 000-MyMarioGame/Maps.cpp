@@ -1,14 +1,14 @@
 #include "Maps.h"
 
-Maps* Maps::__instance = NULL;
+CMaps* CMaps::__instance = NULL;
 
-Maps* Maps::GetInstance()
+CMaps* CMaps::GetInstance()
 {
-	if (__instance == NULL) __instance = new Maps();
+	if (__instance == NULL) __instance = new CMaps();
 	return __instance;
 }
 
-void Maps::Add(int id, LPMap map)
+void CMaps::Add(int id, LPMAP map)
 {
 	if (maps[id] != NULL)
 		DebugOut(L"[WARNING] Map %d already exists\n", id);
@@ -16,19 +16,19 @@ void Maps::Add(int id, LPMap map)
 	maps[id] = map;
 }
 
-LPMap Maps::Get(int id)
+LPMAP CMaps::Get(int id)
 {
-	LPMap map = maps[id];
+	LPMAP map = maps[id];
 	if (map == NULL)
 		DebugOut(L"[ERROR] Map ID %d not found\n", id);
 	return map;
 }
 
-void Maps::Clear()
+void CMaps::Clear()
 {
 	for (auto x : maps)
 	{
-		LPMap map = x.second;
+		LPMAP map = x.second;
 		delete map;
 	}
 

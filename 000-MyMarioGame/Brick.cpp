@@ -6,7 +6,7 @@ CBrick::CBrick(float x, float y, int width, int height, int state, int item) : C
 	this->height = height;
 	this->item = item;
 	initial_y = y;
-	if (item == MCOIN) timesLeftToBounce = NUMBER_OF_BOUNCE;
+	if (item == MCOIN) timesLeftToBounce = setting->brick_number_bounce_of_multi_coin;
 	else timesLeftToBounce = 1;
 	SetState(state);
 }
@@ -15,10 +15,10 @@ void CBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 
-	int aniId = ID_ANI_BRICK;
-	if (state == BRICK_STATE_QBRICK) aniId = ID_ANI_QBRICK;
-	else if (state == BRICK_STATE_BBRICK) aniId = ID_ANI_BBRICK;
-	else if (state == BRICK_STATE_BREAK) aniId = ID_ANI_BBRICK; //need ani break brick
+	int aniId = setting->id_ani_brick;
+	if (state == BRICK_STATE_QBRICK) aniId = setting->id_ani_question_brick;
+	else if (state == BRICK_STATE_BBRICK) aniId = setting->id_ani_block_brick;
+	else if (state == BRICK_STATE_BREAK) aniId = setting->id_ani_block_brick; //need ani break brick
 	else if (state == BRICK_STATE_SECRET) return;
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
@@ -28,10 +28,10 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	y += vy * dt;
-	if (y <= initial_y - BRICK_BOUNCE_HEIGHT)
+	if (y <= initial_y - setting->brick_bounce_height)
 	{
 		//y = initial_y - BRICK_BOUNCE_HEIGHT;
-		vy = BRICK_BOUNCING_SPEED;
+		vy = setting->brick_bouncing_speed;
 		if (timesLeftToBounce == 0) SetState(BRICK_STATE_BBRICK);
 		else SetState(BRICK_STATE_NORMAL);
 	}
@@ -43,10 +43,10 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float x, y;
 		int width, height;
 		Get(x, y, width, height);
-		if (item == DCOIN) { object = new CDCoin(x, y, width, height); }
-		else if (item == RMUSHROOM) { object = new Mushroom(x, y, width, height, RMUSHROOM); }
-		else if (item == GMUSHROOM) { object = new Mushroom(x, y, width, height, GMUSHROOM); }
-		else if (item == MCOIN) { object = new CDCoin(x, y, width, height); }
+		if (item == DCOIN) { object = new CDropCoin(x, y, width, height); }
+		else if (item == RMUSHROOM) { object = new CMushroom(x, y, width, height, RMUSHROOM); }
+		else if (item == GMUSHROOM) { object = new CMushroom(x, y, width, height, GMUSHROOM); }
+		else if (item == MCOIN) { object = new CDropCoin(x, y, width, height); }
 		else if (item == -1) { return; }
 		else
 		{
@@ -59,7 +59,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<Mushroom*>(e->obj))
+	if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -67,7 +67,7 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
-	Mushroom* mushroom = dynamic_cast<Mushroom*>(e->obj);
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 	float x_mushroom, y_mushroom;
 	mushroom->GetPosition(x_mushroom, y_mushroom);
 	if (e->ny > 0)
@@ -128,7 +128,7 @@ void CBrick::SetState(int state)
 		//type = BBRICK;
 		break;
 	case BRICK_STATE_BOUNCE:
-		vy = -BRICK_BOUNCING_SPEED;
+		vy = -setting->brick_bouncing_speed;
 		timesLeftToBounce--;
 		break;
 	case BRICK_STATE_BREAK:

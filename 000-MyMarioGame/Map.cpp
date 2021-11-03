@@ -22,7 +22,7 @@ void parse_tiles(const std::string& gid_list, int height, std::vector<std::vecto
     tiled_background = tiles;
 }
 
-Map::Map(int width, int height, int tile_width, int tile_height)
+CMap::CMap(int width, int height, int tile_width, int tile_height)
 {
 	this->width = width;
 	this->height = height;
@@ -30,18 +30,18 @@ Map::Map(int width, int height, int tile_width, int tile_height)
 	this->tile_height = tile_height;
 }
 
-Map::~Map()
+CMap::~CMap()
 {
 }
 
-void Map::AddLayer(string layer)
+void CMap::AddLayer(string layer)
 {
 	vector<vector<unsigned int>> background;
 	parse_tiles(layer, this->height, background);
 	this->tiled_background.push_back(background);
 }
 
-void Map::Render(float cx, float cy, float screen_cx, float screen_cy)
+void CMap::Render(float cx, float cy, float screen_cx, float screen_cy)
 {
 	list<vector<vector<unsigned int>>>::iterator i;
 	for (i = tiled_background.begin(); i != tiled_background.end(); ++i)

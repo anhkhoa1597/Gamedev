@@ -5,10 +5,10 @@
 #include "Animations.h"
 #include "Game.h"
 #include "PlayScene.h"
+//#include "GameSetting.h"
 
 #include "Goomba.h"
 #include "Coin.h"
-#include "DCoin.h"
 #include "Mushroom.h"
 #include "Portal.h"
 
@@ -64,7 +64,7 @@ class CMario : public CGameObject
 
 	int level; 
 	int life;
-	int untouchable; 
+	int untouchable;
 	ULONGLONG untouchable_start;
 
 	BOOLEAN isOnPlatform;
@@ -79,20 +79,8 @@ class CMario : public CGameObject
 	int GetAniIdSmall();
 
 public:
-	CMario(float x, float y) : CGameObject(x, y, MARIO, true)
-	{
-		isSitting = false;
-		maxVx = 0.0f;
-		ax = 0.0f;
-		ay = setting->mario_gravity;
-		level = MARIO_LEVEL_SMALL;
-		untouchable = 0;
-		untouchable_start = -1;
+	CMario(float x, float y);
 
-		isOnPlatform = false;
-		coin = 0;
-		life = setting->mario_life;
-	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

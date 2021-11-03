@@ -105,16 +105,7 @@
     <ClInclude Include="Maps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SPlatform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DCoin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mushroom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Koopa.h">
@@ -201,9 +192,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Maps.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DCoin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">

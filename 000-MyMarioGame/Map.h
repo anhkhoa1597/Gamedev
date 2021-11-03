@@ -16,7 +16,7 @@ using namespace std;
 	Manage Map database
 */
 
-class Map
+class CMap
 {
 	int width;
 	int height;
@@ -24,9 +24,9 @@ class Map
 	int tile_height;
 	list<vector<vector<unsigned int>>> tiled_background;
 public:
-	Map(int width, int height, int tile_width, int tile_height);
+	CMap(int width, int height, int tile_width, int tile_height);
 	void GetWidthHeight(int& w, int& h) { w = this->width * this->tile_width; h = this->height * this->tile_height; }
 	void AddLayer(string layer);
-	~Map();
+	~CMap();
 	void Render(float cx, float cy, float screen_cx, float screen_cy);
-}; typedef Map* LPMap;
+}; typedef CMap* LPMAP;

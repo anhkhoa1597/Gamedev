@@ -5,15 +5,12 @@
 #include "GameObject.h"
 #include "Brick.h"
 #include "Coin.h"
-#include "DCoin.h"
 #include "Mario.h"
 #include "Goomba.h"
 #include "Mushroom.h"
 #include "Tilesets.h"
 #include "Maps.h"
 #include "Ground.h"
-#include "Wall.h"
-#include "SPlatform.h"
 //#include "Koopas.h"
 
 class CPlayScene : public CScene
@@ -24,13 +21,11 @@ protected:
 	LPGAMEOBJECT player;
 
 	vector<LPGAMEOBJECT> objects;
-	LPMap map;
+	LPMAP map;
 
-	void LoadIdAnimation(string name, int id);
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);
 	void LoadTileset(string tilesetFile);
-	void LoadSceneSetting(string scenesettingFile);
 public:
 	CPlayScene(int id, string filePath);
 
