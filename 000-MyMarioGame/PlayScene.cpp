@@ -201,6 +201,10 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "wing_goomba") obj = new CGoomba(x, y, GOOMBA, true);
 		else if (name == "red_goomba") obj = new CGoomba(x, y, RGOOMBA);
 		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RGOOMBA, true);
+		else if (name == "koopa") obj = new CKoopa(x, y, KOOPA);
+		else if (name == "wing_koopa") obj = new CKoopa(x, y, KOOPA, true);
+		else if (name == "red_koopa") obj = new CKoopa(x, y, RKOOPA);
+		else if (name == "red_wing_koopa") obj = new CKoopa(x, y, RKOOPA, true);
 		else if (name == "wall") obj = new CWall(x, y, width, height);
 		else if (name == "ground") obj = new CGround(x, y, width, height);
 		else if (name == "s_platform") obj = new CSpecificPlatform(x, y, width, height);

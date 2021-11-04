@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-    <setting source="data\game-setting.tmx" start="1"/>
+    <setting source="data\mario-game-setting.tmx" start="1"/>
     <scenegroup>
         <scene id="0" type="0" source="data\intro.tmx"/>
         <scene id="1" type="1" source="data\scene01.tmx"/>

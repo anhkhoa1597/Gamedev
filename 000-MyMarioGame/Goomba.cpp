@@ -5,10 +5,9 @@ CGoomba::CGoomba(float x, float y, int type, bool has_wing):CGameObject(x, y, ty
 	this->ax = 0;
 	this->has_wing = has_wing;
 	die_start = -1;
-	nx = -1;
 	if (this->has_wing) ay = setting->wing_goomba_gravity;
 	else ay = setting->goomba_gravity;
-	SetState(GOOMBA_STATE_WALKING);
+	SetState(GOOMBA_STATE_WALKING_LEFT);
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -40,6 +39,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<CMushroom*>(e->obj)) return;
+	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -49,14 +49,19 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				switch (state)
 				{
-				case GOOMBA_STATE_WALKING:
+				case GOOMBA_STATE_WALKING_LEFT: case GOOMBA_STATE_WALKING_RIGHT:
+					if (GetTickCount64() - this->walk_start > setting->wing_goomba_walk_timeout)
+					{
+						SetState(GOOMBA_STATE_LOW_JUMP);
+					}
 					break;
 				case GOOMBA_STATE_LOW_JUMP:
 					if (numberOfLowJump > 0) SetState(GOOMBA_STATE_LOW_JUMP);
 					else SetState(GOOMBA_STATE_HIGH_JUMP);
 					break;
 				case GOOMBA_STATE_HIGH_JUMP:
-					SetState(GOOMBA_STATE_WALKING);
+					if (vx < 0) SetState(GOOMBA_STATE_WALKING_LEFT);
+					else if (vx > 0) SetState(GOOMBA_STATE_WALKING_RIGHT);
 					break;
 				}
 			}
@@ -69,15 +74,20 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				float l, t, r, b;
 				e->obj->GetBoundingBox(l, t, r, b);
-				if ((vx < 0 && x + (float)GOOMBA_WIDTH / 2 < l) || 
-					(vx > 0 && x + (float)GOOMBA_WIDTH / 2 > r))
-				{
-					ChangeDir();
-				}
+				if (vx < 0 && x + (float)GOOMBA_WIDTH / 2 < l) SetState(GOOMBA_STATE_WALKING_RIGHT);
+				else if (vx > 0 && x + (float)GOOMBA_WIDTH / 2 > r) SetState(GOOMBA_STATE_WALKING_LEFT);
 			}
 		}
 	}
-	else if (e->nx != 0) ChangeDir();
+	else if (e->nx != 0) vx = -vx;
+}
+
+void CGoomba::LostWing()
+{ 
+	has_wing = false;
+	if (vx < 0) SetState(GOOMBA_STATE_WALKING_LEFT);
+	else if (vx > 0) SetState(GOOMBA_STATE_WALKING_RIGHT);
+	ay = setting->goomba_gravity; 
 }
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -94,19 +104,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		isDeleted = true;
 		return;
-	}
-	if (this->has_wing)
-	{
-		if (this->state == GOOMBA_STATE_WALKING)
-		{
-			if (GetTickCount64() - this->walk_start < setting->wing_goomba_walk_timeout)
-			{
-			}
-			else
-			{
-				SetState(GOOMBA_STATE_LOW_JUMP);
-			}
-		}
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -152,10 +149,15 @@ void CGoomba::SetState(int state)
 			vy = 0;
 			ay = 0; 
 			break;
-		case GOOMBA_STATE_WALKING: 
+		case GOOMBA_STATE_WALKING_LEFT: 
 			walk_start = GetTickCount64();
 			numberOfLowJump = 3;
-			vx = nx * setting->goomba_walking_speed;
+			vx = -setting->goomba_walking_speed;
+			break;
+		case GOOMBA_STATE_WALKING_RIGHT:
+			walk_start = GetTickCount64();
+			numberOfLowJump = 3;
+			vx = setting->goomba_walking_speed;
 			break;
 		case GOOMBA_STATE_LOW_JUMP:
 			vy = -setting->wing_goomba_low_jump;

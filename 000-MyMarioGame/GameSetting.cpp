@@ -26,6 +26,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &mario_jump_deflect_speed);
 		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &mario_untouchable_time);
 		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &mario_life);
+		
 		else if (name == "goomba-gravity") pSetting->QueryFloatAttribute("value", &goomba_gravity);
 		else if (name == "goomba-walking-speed") pSetting->QueryFloatAttribute("value", &goomba_walking_speed);
 		else if (name == "wing-goomba-gravity") pSetting->QueryFloatAttribute("value", &wing_goomba_gravity);
@@ -35,6 +36,14 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "goomba-die-timeout") pSetting->QueryIntAttribute("value", &goomba_die_timeout);
 		else if (name == "goomba-bounce-die-timeout") pSetting->QueryIntAttribute("value", &goomba_bounce_die_timeout);
 		else if (name == "wing-goomba-walk-timeout") pSetting->QueryIntAttribute("value", &wing_goomba_walk_timeout);
+		
+		else if (name == "koopa-gravity") pSetting->QueryFloatAttribute("value", &koopa_gravity);
+		else if (name == "koopa-walking-speed") pSetting->QueryFloatAttribute("value", &koopa_walking_speed);
+		else if (name == "wing-koopa-gravity") pSetting->QueryFloatAttribute("value", &wing_koopa_gravity);
+		else if (name == "wing-koopa-jump-speed") pSetting->QueryFloatAttribute("value", &wing_koopa_jump_speed);
+		else if (name == "koopa-bouncing-speed") pSetting->QueryFloatAttribute("value", &koopa_bouncing_speed);
+		else if (name == "wing-koopa-walk-timeout") pSetting->QueryIntAttribute("value", &wing_koopa_walk_timeout);
+		else if (name == "koopa-die-timeout") pSetting->QueryIntAttribute("value", &koopa_die_timeout);
 		else if (name == "brick-bouncing-speed") pSetting->QueryFloatAttribute("value", &brick_bouncing_speed);
 		else if (name == "brick-bounce-height") pSetting->QueryIntAttribute("value", &brick_bounce_height);
 		else if (name == "brick-number-bounce-of-multi-coin") pSetting->QueryIntAttribute("value", &brick_number_bounce_of_multi_coin);
@@ -96,6 +105,14 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "red-goomba-bounce-die") id_ani_red_goomba_bounce_die = id;
 	else if (name == "wing-jump") id_ani_wing_jump = id;
 	else if (name == "wing-walk") id_ani_wing_walk = id;
+	//koopa
+	else if (name == "koopa-walking-left") id_ani_koopa_walking_left = id;
+	else if (name == "koopa-walking-right") id_ani_koopa_walking_right = id;
+	else if (name == "red-koopa-walking-left") id_ani_red_koopa_walking_left = id;
+	else if (name == "red-koopa-walking-right") id_ani_red_koopa_walking_right = id;
+	else if (name == "wing-left") id_ani_wing_left = id;
+	else if (name == "wing-right") id_ani_wing_right = id;
+
 	//brick
 	else if (name == "brick") id_ani_brick = id;
 	else if (name == "question-brick") id_ani_question_brick = id;

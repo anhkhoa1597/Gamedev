@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset>
+  <spritegroup>
+    <sprite name="koopa-walking-left" id="33111" left="0" top="51" right="15" bottom="76" texid="10"/>
+    <sprite name="koopa-walking-left" id="33112" left="16" top="51" right="31" bottom="76" texid="10"/>
+    <sprite name="koopa-walking-right" id="33121" left="1362" top="51" right="1377" bottom="76" texid="10"/>
+    <sprite name="koopa-walking-right" id="33122" left="1346" top="51" right="1371" bottom="76" texid="10"/>
+    <sprite name="red-koopa-walking-left" id="34111" left="96" top="51" right="111" bottom="76" texid="10"/>
+    <sprite name="red-koopa-walking-left" id="34112" left="112" top="51" right="127" bottom="76" texid="10"/>
+    <sprite name="red-koopa-walking-right" id="34121" left="1266" top="51" right="1281" bottom="76" texid="10"/>
+    <sprite name="red-koopa-walking-right" id="34122" left="1250" top="51" right="1265" bottom="76" texid="10"/>
+    <sprite name="wing-up-left" id="30011" left="136" top="0" right="143" bottom="15" texid="10"/>
+    <sprite name="wing-down-left" id="30012" left="144" top="0" right="151" bottom="15" texid="10"/>
+    <sprite name="wing-up-right" id="30021" left="1234" top="0" right="1241" bottom="15" texid="10"/>
+    <sprite name="wing-down-right" id="30022" left="1226" top="0" right="1233" bottom="15" texid="10"/>
+  </spritegroup>
+  <animationgroup>
+    <animation name="goomba-walking" id="5100">
+      <sprite id="31001" time="100"/>
+      <sprite id="31002" time="100"/>
+    </animation>
+    <animation name="goomba-die" id="5190">
+      <sprite id="31000" time="100"/>
+    </animation>
+    <animation name="goomba-bounce-die" id="5191">
+      <sprite id="31100" time="100"/>
+    </animation>
+    <animation name="red-goomba-walking" id="5200">
+      <sprite id="32001" time="100"/>
+      <sprite id="32002" time="100"/>
+    </animation>
+    <animation name="red-goomba-die" id="5290">
+      <sprite id="32000" time="100"/>
+    </animation>
+    <animation name="red-goomba-bounce-die" id="5291">
+      <sprite id="32100" time="100"/>
+    </animation>
+    <animation name="wing-jump" id="5300">
+      <sprite id="30001" time="100"/>
+      <sprite id="30002" time="100"/>
+    </animation>
+    <animation name="wing-walk" id="5301">
+      <sprite id="30002" time="100"/>
+    </animation>
+  </animationgroup>
+</asset>

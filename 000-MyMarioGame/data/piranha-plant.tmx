@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
   <spritegroup>
-    <sprite name="piranha-plant-left-down" id="33010" left="128" top="144" right="143" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-down" id="33020" left="144" top="144" right="159" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-up" id="33030" left="160" top="144" right="175" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-up" id="33040" left="176" top="144" right="191" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-down" id="33011" left="1234" top="144" right="1249" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-down" id="33021" left="1218" top="144" right="1233" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-up" id="33031" left="1202" top="144" right="1217" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-up" id="33041" left="1186" top="144" right="1191" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-down" id="34010" left="128" top="144" right="143" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-down" id="34020" left="144" top="144" right="159" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="34030" left="160" top="144" right="175" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="34040" left="176" top="144" right="191" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="34011" left="1234" top="144" right="1249" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="34021" left="1218" top="144" right="1233" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="34031" left="1202" top="144" right="1217" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="34041" left="1186" top="144" right="1191" bottom="175" texid="10"/>
 
   </spritegroup>
   <animationgroup>

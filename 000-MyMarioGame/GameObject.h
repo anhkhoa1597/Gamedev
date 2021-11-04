@@ -56,7 +56,7 @@ protected:
 
 	bool isDeleted; 
 	
-	bool isPlayer;
+	bool isPlayer = false;
 	LPGAMESETTING setting;
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -73,7 +73,8 @@ public:
 
 	CGameObject();
 	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() 
-	{ this->x = x; this->y = y; 
+	{ 
+		this->x = x; this->y = y; 
 		this->isPlayer = isPlayer; 
 		this->type = type; 
 		setting = CGameSettings::GetInstance()->Get(CGame::GetInstance()->GetCurrentSceneId()); 

@@ -7,6 +7,7 @@
 #include "Coin.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "Koopa.h"
 #include "Mushroom.h"
 #include "Tilesets.h"
 #include "Maps.h"

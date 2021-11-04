@@ -76,6 +76,24 @@ public:
 	int id_ani_wing_walk = -1;
 #pragma endregion
 
+#pragma region KOOPA
+	//constant
+	float koopa_gravity = 0;
+	float koopa_walking_speed = 0;
+	float wing_koopa_gravity = 0;
+	float wing_koopa_jump_speed = 0;
+	float koopa_bouncing_speed = 0;
+	int wing_koopa_walk_timeout = 0;
+	int koopa_die_timeout = 0;
+	//id animation
+	int id_ani_koopa_walking_left = -1;
+	int id_ani_koopa_walking_right = -1;
+	int id_ani_red_koopa_walking_left = -1;
+	int id_ani_red_koopa_walking_right = -1;
+	int id_ani_wing_left = -1;
+	int id_ani_wing_right = -1;
+#pragma endregion
+
 #pragma region BRICK
 	//constant
 	float brick_bouncing_speed = 0;

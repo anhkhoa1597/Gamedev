@@ -8,6 +8,7 @@
 //#include "GameSetting.h"
 
 #include "Goomba.h"
+#include "Koopa.h"
 #include "Coin.h"
 #include "Mushroom.h"
 #include "Portal.h"
@@ -74,6 +75,7 @@ class CMario : public CGameObject
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();

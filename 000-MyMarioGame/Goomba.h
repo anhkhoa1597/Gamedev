@@ -4,7 +4,8 @@
 
 enum GoombaStates
 {
-	GOOMBA_STATE_WALKING,
+	GOOMBA_STATE_WALKING_LEFT,
+	GOOMBA_STATE_WALKING_RIGHT,
 	GOOMBA_STATE_LOW_JUMP,
 	GOOMBA_STATE_HIGH_JUMP,
 	GOOMBA_STATE_BOUNCE_DIE,
@@ -16,8 +17,6 @@ enum GoombaStates
 #define GOOMBA_BBOX_WIDTH 16
 #define GOOMBA_BBOX_HEIGHT 15
 #define GOOMBA_BBOX_HEIGHT_DIE 7
-
-#define WING_WIDTH 8
 
 class CGoomba : public CGameObject
 {
@@ -44,7 +43,6 @@ public:
 	CGoomba(float x, float y, int type, bool has_wing = false);
 
 	bool HasWing() { return has_wing; }
-	void LostWing() { has_wing = false; SetState(GOOMBA_STATE_WALKING); ay = setting->goomba_gravity; }
-	void ChangeDir() { nx = -nx; vx = nx * vx; }
+	void LostWing();
 	virtual void SetState(int state);
 };
