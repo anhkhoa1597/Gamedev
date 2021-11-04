@@ -43,7 +43,11 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "wing-koopa-jump-speed") pSetting->QueryFloatAttribute("value", &wing_koopa_jump_speed);
 		else if (name == "koopa-bouncing-speed") pSetting->QueryFloatAttribute("value", &koopa_bouncing_speed);
 		else if (name == "wing-koopa-walk-timeout") pSetting->QueryIntAttribute("value", &wing_koopa_walk_timeout);
+		else if (name == "koopa-shield-rolling-speed") pSetting->QueryFloatAttribute("value", &koopa_shield_rolling_speed);
+		else if (name == "koopa-shield-timeout") pSetting->QueryIntAttribute("value", &koopa_shield_timeout);
+		else if (name == "koopa-shield-standing-timeout") pSetting->QueryIntAttribute("value", &koopa_shield_standing_timeout);
 		else if (name == "koopa-die-timeout") pSetting->QueryIntAttribute("value", &koopa_die_timeout);
+		else if (name == "koopa-bounce-die-timeout") pSetting->QueryIntAttribute("value", &koopa_bounce_die_timeout);
 		else if (name == "brick-bouncing-speed") pSetting->QueryFloatAttribute("value", &brick_bouncing_speed);
 		else if (name == "brick-bounce-height") pSetting->QueryIntAttribute("value", &brick_bounce_height);
 		else if (name == "brick-number-bounce-of-multi-coin") pSetting->QueryIntAttribute("value", &brick_number_bounce_of_multi_coin);
@@ -82,6 +86,8 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "big-sit-right") id_ani_mario_sit_right = id;
 	else if (name == "big-brace-left") id_ani_mario_brace_left = id;
 	else if (name == "big-brace-right") id_ani_mario_brace_right = id;
+	else if (name == "big-kick-left") id_ani_mario_kick_left = id;
+	else if (name == "big-kick-right") id_ani_mario_kick_right = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "small-idle-left") id_ani_mario_small_idle_left = id;
 	else if (name == "small-idle-right") id_ani_mario_small_idle_right = id;
@@ -95,6 +101,8 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "small-jump-run-right") id_ani_mario_small_jump_run_right = id;
 	else if (name == "small-brace-left") id_ani_mario_small_brace_left = id;
 	else if (name == "small-brace-right") id_ani_mario_small_brace_right = id;
+	else if (name == "small-kick-left") id_ani_mario_small_kick_left = id;
+	else if (name == "small-kick-right") id_ani_mario_small_kick_right = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	//goomba
 	else if (name == "goomba-walking") id_ani_goomba_walking = id;
@@ -112,7 +120,18 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "red-koopa-walking-right") id_ani_red_koopa_walking_right = id;
 	else if (name == "wing-left") id_ani_wing_left = id;
 	else if (name == "wing-right") id_ani_wing_right = id;
-
+	else if (name == "koopa-shield-idle-down") id_ani_koopa_shield_idle_down = id;
+	else if (name == "koopa-shield-idle-up") id_ani_koopa_shield_idle_up = id;
+	else if (name == "koopa-shield-standing-down") id_ani_koopa_shield_standing_down = id;
+	else if (name == "koopa-shield-standing-up") id_ani_koopa_shield_standing_up = id;
+	else if (name == "koopa-shield-rolling-down") id_ani_koopa_shield_rolling_down = id;
+	else if (name == "koopa-shield-rolling-up") id_ani_koopa_shield_rolling_up = id;
+	else if (name == "red-koopa-shield-idle-down") id_ani_red_koopa_shield_idle_down = id;
+	else if (name == "red-koopa-shield-idle-up") id_ani_red_koopa_shield_idle_up = id;
+	else if (name == "red-koopa-shield-standing-down") id_ani_red_koopa_shield_standing_down = id;
+	else if (name == "red-koopa-shield-standing-up") id_ani_red_koopa_shield_standing_up = id;
+	else if (name == "red-koopa-shield-rolling-down") id_ani_red_koopa_shield_rolling_down = id;
+	else if (name == "red-koopa-shield-rolling-up") id_ani_red_koopa_shield_rolling_up = id;
 	//brick
 	else if (name == "brick") id_ani_brick = id;
 	else if (name == "question-brick") id_ani_question_brick = id;

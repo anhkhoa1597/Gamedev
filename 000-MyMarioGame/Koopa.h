@@ -5,22 +5,36 @@
 
 enum KoopaStates
 {
-	KOOPA_STATE_WALKING,
 	KOOPA_STATE_WALKING_LEFT,
 	KOOPA_STATE_WALKING_RIGHT,
 	KOOPA_STATE_JUMPING,
-	KOOPA_STATE_BOUNCE,
-	KOOPA_STATE_SHIELD_UP_IDLE,
-	KOOPA_STATE_SHIELD_DOWN_IDLE,
-	KOOPA_STATE_SHIELD_ROLLING,
-	KOOPA_STATE_DIE,
+
+	KOOPA_STATE_SHIELD_IDLE,
+	KOOPA_STATE_SHIELD_ROLLING_LEFT,
+	KOOPA_STATE_SHIELD_ROLLING_RIGHT,
+	KOOPA_STATE_SHIELD_STANDING,
+
+	KOOPA_STATE_BOUNCE_LEFT,
+	KOOPA_STATE_BOUNCE_RIGHT,
 	KOOPA_STATE_BOUNCE_DIE,
+	//KOOPA_STATE_DIE,
+};
+
+enum ShieldTypes
+{
+	NO_SHIELD,
+	SHIELD_DOWN,
+	SHIELD_UP,
 };
 
 #define KOOPA_WIDTH 16
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 26
+
+#define KOOPA_SHIELD_BBOX_WIDTH 16
+#define KOOPA_SHIELD_BBOX_HEIGHT 16
+
 //#define GOOMBA_BBOX_HEIGHT_DIE 7
 
 //#define WING_WIDTH 8
@@ -33,21 +47,29 @@ protected:
 	bool has_wing;
 
 	ULONGLONG die_start;
+	ULONGLONG shield_start;
+	ULONGLONG standing_start;
+	
+	int type_shield;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return (state != KOOPA_STATE_DIE); };
+	virtual int IsCollidable() { return (state != KOOPA_STATE_BOUNCE_DIE); };
 	virtual int IsBlocking() { return 0; }
 
-	virtual void OnNoCollision(DWORD dt);
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+
 public:
 	CKoopa(float x, float y, int type, bool has_wing = false);
 
 	bool HasWing() { return has_wing; }
 	void LostWing();
-	void ChangeDir();
 	virtual void SetState(int state);
+	int GetTypeShield() { return type_shield; }
+	void SetTypeShield(int typeShield) { this->type_shield = typeShield; }
 };

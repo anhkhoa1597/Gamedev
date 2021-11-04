@@ -56,7 +56,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
-	if (dynamic_cast<CKoopa*>(e->obj))
+	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
@@ -144,21 +144,40 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (koopa->GetState() != KOOPA_STATE_DIE)
+		if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 		{
 			vy = -setting->mario_jump_deflect_speed;
 			if (koopa->HasWing()) koopa->LostWing();
-			else koopa->SetState(KOOPA_STATE_DIE);
+			else if (koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_LEFT || koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_RIGHT)
+				koopa->SetState(KOOPA_STATE_SHIELD_IDLE);
+			else if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE)
+			{
+				SetState(MARIO_STATE_KICK);
+				float x_koopa, y_koopa;
+				koopa->GetPosition(x_koopa, y_koopa);
+				if (x > x_koopa + KOOPA_WIDTH / 2) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+				else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
+			}
+			else if (koopa->GetTypeShield() == NO_SHIELD)
+			{
+				koopa->SetTypeShield(SHIELD_DOWN);
+				koopa->SetState(KOOPA_STATE_SHIELD_IDLE);
+			}
 		}
 	}
-	else // hit by Goomba
+	else
 	{
-		if (untouchable == 0)
+		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE)
 		{
-			if (koopa->GetState() != KOOPA_STATE_DIE)
+			SetState(MARIO_STATE_KICK);
+			if (e->nx < 0) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
+			else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+		}
+		else if (untouchable == 0)
+		{
+			if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -251,7 +270,11 @@ int CMario::GetAniIdSmall()
 				else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_mario_small_running_left;
 				else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_mario_small_walking_left;
 			}
-
+	if (state == MARIO_STATE_KICK)
+	{
+		if (nx < 0) aniId = setting->id_ani_mario_small_kick_left;
+		else aniId = setting->id_ani_mario_small_kick_right;
+	}
 	if (aniId == -1) aniId = setting->id_ani_mario_small_idle_right;;
 
 	return aniId;
@@ -287,7 +310,7 @@ int CMario::GetAniIdBig()
 			if (vx == 0)
 			{
 				if (nx > 0) aniId = setting->id_ani_mario_idle_right;
-				else aniId = aniId = setting->id_ani_mario_idle_left;
+				else aniId = setting->id_ani_mario_idle_left;
 			}
 			else if (vx > 0)
 			{
@@ -301,7 +324,11 @@ int CMario::GetAniIdBig()
 				else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_mario_running_left;
 				else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_mario_walking_left;
 			}
-
+	if (state == MARIO_STATE_KICK)
+	{
+		if (nx < 0) aniId = setting->id_ani_mario_kick_left;
+		else aniId = setting->id_ani_mario_kick_right;
+	}
 	if (aniId == -1) aniId = setting->id_ani_mario_idle_right;;
 
 	return aniId;
@@ -319,7 +346,11 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	animations->Get(aniId)->Render(x, y);
+	if (untouchable == 0)
+		animations->Get(aniId)->Render(x, y);
+	else
+		//need to make mario blinks
+		animations->Get(aniId)->Render(x, y);
 	
 	DebugOutTitle(L"Coins: %d	Life: %d", coin, life);
 	
@@ -396,7 +427,8 @@ void CMario::SetState(int state)
 		ax = 0.0f;
 		vx = 0.0f;
 		break;
-
+	case MARIO_STATE_KICK:
+		break;
 	case MARIO_STATE_DIE:
 		vy = -setting->mario_jump_deflect_speed;
 		vx = 0;

@@ -35,7 +35,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
-
+	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void SetState(int state);
 	bool IsSecret() { return state == BRICK_STATE_SECRET; }

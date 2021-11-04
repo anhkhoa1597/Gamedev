@@ -352,7 +352,7 @@ void CPlayScene::Render()
 
 	CGame* game = CGame::GetInstance();
 	screen_cx = cx + (float)game->GetBackBufferWidth();
-	screen_cy = cy + (float)game->GetBackBufferWidth();
+	screen_cy = cy + (float)game->GetBackBufferHeight();
 	//render tiled-map
 	map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
 	//render objects

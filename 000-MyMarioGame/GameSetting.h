@@ -39,6 +39,8 @@ public:
 	int id_ani_mario_sit_right = -1;
 	int id_ani_mario_brace_left = -1; 
 	int id_ani_mario_brace_right = -1;
+	int id_ani_mario_kick_left = -1;
+	int id_ani_mario_kick_right = -1;
 	int id_ani_mario_small_idle_left = -1; 
 	int id_ani_mario_small_idle_right = -1;
 	int id_ani_mario_small_walking_left = -1; 
@@ -51,6 +53,8 @@ public:
 	int id_ani_mario_small_jump_walk_right = -1;
 	int id_ani_mario_small_brace_left = -1;
 	int id_ani_mario_small_brace_right = -1;
+	int id_ani_mario_small_kick_left = -1;
+	int id_ani_mario_small_kick_right = -1;
 	int id_ani_mario_die = -1;
 #pragma endregion
 
@@ -84,7 +88,11 @@ public:
 	float wing_koopa_jump_speed = 0;
 	float koopa_bouncing_speed = 0;
 	int wing_koopa_walk_timeout = 0;
+	float koopa_shield_rolling_speed = 0;
+	int koopa_shield_timeout = 0;
+	int koopa_shield_standing_timeout = 0;
 	int koopa_die_timeout = 0;
+	int koopa_bounce_die_timeout = 0;
 	//id animation
 	int id_ani_koopa_walking_left = -1;
 	int id_ani_koopa_walking_right = -1;
@@ -92,6 +100,18 @@ public:
 	int id_ani_red_koopa_walking_right = -1;
 	int id_ani_wing_left = -1;
 	int id_ani_wing_right = -1;
+	int id_ani_koopa_shield_idle_down = -1;
+	int id_ani_koopa_shield_idle_up = -1;
+	int id_ani_koopa_shield_standing_down = -1;
+	int id_ani_koopa_shield_standing_up = -1;
+	int id_ani_koopa_shield_rolling_down = -1;
+	int id_ani_koopa_shield_rolling_up = -1;
+	int id_ani_red_koopa_shield_idle_down = -1;
+	int id_ani_red_koopa_shield_idle_up = -1;
+	int id_ani_red_koopa_shield_standing_down = -1;
+	int id_ani_red_koopa_shield_standing_up = -1;
+	int id_ani_red_koopa_shield_rolling_down = -1;
+	int id_ani_red_koopa_shield_rolling_up = -1;
 #pragma endregion
 
 #pragma region BRICK

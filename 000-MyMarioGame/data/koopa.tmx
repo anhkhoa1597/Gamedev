@@ -13,6 +13,28 @@
     <sprite name="wing-down-left" id="30012" left="144" top="0" right="151" bottom="15" texid="10"/>
     <sprite name="wing-up-right" id="30021" left="1234" top="0" right="1241" bottom="15" texid="10"/>
     <sprite name="wing-down-right" id="30022" left="1226" top="0" right="1233" bottom="15" texid="10"/>
+    
+    <sprite name="koopa-shield-idle-down" id="35111" left="32" top="48" right="47" bottom="63" texid="10"/>
+    <sprite name="koopa-shield-standing-down" id="35211" left="32" top="64" right="47" bottom="79" texid="10"/>
+    <sprite name="koopa-shield-rolling-down" id="35311" left="48" top="48" right="63" bottom="63" texid="10"/>
+    <sprite name="koopa-shield-rolling-down" id="35312" left="64" top="48" right="79" bottom="63" texid="10"/>
+    <sprite name="koopa-shield-rolling-down" id="35313" left="80" top="48" right="95" bottom="63" texid="10"/>
+    <sprite name="koopa-shield-idle-up" id="35121" left="224" top="17" right="239" bottom="32" texid="10"/>
+    <sprite name="koopa-shield-standing-up" id="35221" left="224" top="1" right="239" bottom="16" texid="10"/>
+    <sprite name="koopa-shield-rolling-up" id="35321" left="240" top="17" right="255" bottom="32" texid="10"/>
+    <sprite name="koopa-shield-rolling-up" id="35322" left="256" top="17" right="271" bottom="32" texid="10"/>
+    <sprite name="koopa-shield-rolling-up" id="35323" left="272" top="17" right="287" bottom="32" texid="10"/>
+
+    <sprite name="red-koopa-shield-idle-down" id="36111" left="128" top="48" right="143" bottom="63" texid="10"/>
+    <sprite name="red-koopa-shield-standing-down" id="36211" left="128" top="64" right="143" bottom="79" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-down" id="36311" left="144" top="48" right="159" bottom="63" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-down" id="36312" left="160" top="48" right="175" bottom="63" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-down" id="36313" left="176" top="48" right="191" bottom="63" texid="10"/>
+    <sprite name="red-koopa-shield-idle-up" id="36121" left="288" top="17" right="303" bottom="32" texid="10"/>
+    <sprite name="red-koopa-shield-standing-up" id="36221" left="288" top="1" right="303" bottom="16" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-up" id="36321" left="304" top="17" right="319" bottom="32" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-up" id="36322" left="320" top="17" right="335" bottom="32" texid="10"/>
+    <sprite name="red-koopa-shield-rolling-up" id="36323" left="336" top="17" right="351" bottom="32" texid="10"/>
   </spritegroup>
   <animationgroup>
     <animation name="koopa-walking-left" id="6100">
@@ -31,13 +53,65 @@
       <sprite id="34121" time="150"/>
       <sprite id="34122" time="150"/>
     </animation>
-    <animation name="wing-left" id="6300">
+    <animation name="wing-left" id="6000">
       <sprite id="30011" time="100"/>
       <sprite id="30012" time="100"/>
     </animation>
-    <animation name="wing-right" id="6301">
+    <animation name="wing-right" id="6001">
       <sprite id="30021" time="100"/>
       <sprite id="30022" time="100"/>
+    </animation>
+    <animation name="wing-right" id="6001">
+      <sprite id="30021" time="100"/>
+      <sprite id="30022" time="100"/>
+    </animation>
+    <animation name="koopa-shield-idle-down" id="6300">
+      <sprite id="35111" time="100"/>
+    </animation>
+    <animation name="koopa-shield-idle-up" id="6301">
+      <sprite id="35121" time="100"/>
+    </animation>
+    <animation name="koopa-shield-standing-down" id="6400">
+      <sprite id="35111" time="50"/>
+      <sprite id="35211" time="50"/>
+    </animation>
+    <animation name="koopa-shield-standing-up" id="6401">
+      <sprite id="35121" time="50"/>
+      <sprite id="35221" time="50"/>
+    </animation>
+    <animation name="koopa-shield-rolling-down" id="6500">
+      <sprite id="35311" time="50"/>
+      <sprite id="35312" time="50"/>
+      <sprite id="35313" time="50"/>
+    </animation>
+    <animation name="koopa-shield-rolling-up" id="6501">
+      <sprite id="35321" time="50"/>
+      <sprite id="35322" time="50"/>
+      <sprite id="35323" time="50"/>
+    </animation>
+    <animation name="red-koopa-shield-idle-down" id="6600">
+      <sprite id="36111" time="100"/>
+    </animation>
+    <animation name="red-koopa-shield-idle-up" id="6601">
+      <sprite id="36121" time="100"/>
+    </animation>
+    <animation name="red-koopa-shield-standing-down" id="6700">
+      <sprite id="36111" time="100"/>
+      <sprite id="36211" time="100"/>
+    </animation>
+    <animation name="red-koopa-shield-standing-up" id="6701">
+      <sprite id="36121" time="100"/>
+      <sprite id="36221" time="100"/>
+    </animation>
+    <animation name="red-koopa-shield-rolling-down" id="6800">
+      <sprite id="36311" time="100"/>
+      <sprite id="36312" time="100"/>
+      <sprite id="36313" time="100"/>
+    </animation>
+    <animation name="red-koopa-shield-rolling-up" id="6801">
+      <sprite id="36321" time="100"/>
+      <sprite id="36322" time="100"/>
+      <sprite id="36323" time="100"/>
     </animation>
   </animationgroup>
 </asset>

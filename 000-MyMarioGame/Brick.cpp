@@ -63,6 +63,8 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 }
 
 void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
@@ -89,6 +91,27 @@ void CBrick::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->HasWing()) goomba->LostWing();
 			else goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
+		}
+	}
+}
+
+void CBrick::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+	if (e->ny > 0)
+	{
+		if (state == BRICK_STATE_BOUNCE)
+		{
+			if (koopa->HasWing()) koopa->LostWing();
+			else
+			{
+				float x_koopa, y_koopa;
+				koopa->GetPosition(x_koopa, y_koopa);
+				koopa->SetTypeShield(SHIELD_UP);
+				if (x_koopa < x + width/2) koopa->SetState(KOOPA_STATE_BOUNCE_LEFT);
+				else koopa->SetState(KOOPA_STATE_BOUNCE_RIGHT);
+			}
+				
 		}
 	}
 }
