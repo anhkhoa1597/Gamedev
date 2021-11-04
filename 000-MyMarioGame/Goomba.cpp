@@ -105,6 +105,14 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isDeleted = true;
 		return;
 	}
+	if (type == RGOOMBA && has_wing)
+	{
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		float x_mario, y_mario;
+		mario->GetPosition(x_mario, y_mario);
+		if (x_mario < x) vx = -setting->goomba_walking_speed;
+		else if (x_mario > x) vx = setting->goomba_walking_speed;
+	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
