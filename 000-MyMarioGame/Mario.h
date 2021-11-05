@@ -12,6 +12,7 @@
 #include "Coin.h"
 #include "Mushroom.h"
 #include "Portal.h"
+#include "Deadzone.h"
 
 #include "Collision.h"
 #include "debug.h"
@@ -78,6 +79,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -91,6 +93,7 @@ public:
 	void SetLevel(int l);
 	void IncreaseCoin() { coin++; }
 	void LifeUp(int life) { this->life += life; }
+	void LifeDown() { this->life--; }
 
 	int IsCollidable()
 	{ 

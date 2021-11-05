@@ -114,6 +114,9 @@
     <ClInclude Include="GameSetting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Deadzone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -201,6 +204,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameSetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Deadzone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

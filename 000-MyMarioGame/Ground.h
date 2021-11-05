@@ -11,6 +11,8 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
 
+
+
 class CSpecificPlatform : public CGround {
 public:
 	CSpecificPlatform(float x, float y, int width, int height) : CGround(x, y, width, height) { type = SPLATFORM; }
@@ -21,6 +23,9 @@ public:
 	virtual int IsBlocking() { return 1; }
 	virtual void DirectBlocking(int& l, int& t, int& r, int& b) { l = 0; t = 1; r = 0; b = 0; }
 };
+
+
+
 
 class CWall : public CGround {
 public:
