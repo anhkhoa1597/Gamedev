@@ -66,6 +66,7 @@ public:
 	float wing_goomba_low_jump = 0;
 	float wing_goomba_high_jump = 0;
 	float goomba_bouncing_speed = 0;
+	float goomba_bouncing_up_speed = 0;
 	int goomba_die_timeout = 0;
 	int goomba_bounce_die_timeout = 0;
 	int wing_goomba_walk_timeout = 0;
@@ -86,6 +87,7 @@ public:
 	float koopa_walking_speed = 0;
 	float wing_koopa_gravity = 0;
 	float wing_koopa_jump_speed = 0;
+	float koopa_bouncing_up_speed = 0;
 	float koopa_bouncing_speed = 0;
 	int wing_koopa_walk_timeout = 0;
 	float koopa_shield_rolling_speed = 0;

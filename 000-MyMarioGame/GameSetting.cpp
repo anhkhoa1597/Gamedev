@@ -33,6 +33,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "wing-goomba-low-jump") pSetting->QueryFloatAttribute("value", &wing_goomba_low_jump);
 		else if (name == "wing-goomba-high-jump") pSetting->QueryFloatAttribute("value", &wing_goomba_high_jump);
 		else if (name == "goomba-bouncing-speed") pSetting->QueryFloatAttribute("value", &goomba_bouncing_speed);
+		else if (name == "goomba-bouncing-up-speed") pSetting->QueryFloatAttribute("value", &goomba_bouncing_up_speed);
 		else if (name == "goomba-die-timeout") pSetting->QueryIntAttribute("value", &goomba_die_timeout);
 		else if (name == "goomba-bounce-die-timeout") pSetting->QueryIntAttribute("value", &goomba_bounce_die_timeout);
 		else if (name == "wing-goomba-walk-timeout") pSetting->QueryIntAttribute("value", &wing_goomba_walk_timeout);
@@ -41,6 +42,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "koopa-walking-speed") pSetting->QueryFloatAttribute("value", &koopa_walking_speed);
 		else if (name == "wing-koopa-gravity") pSetting->QueryFloatAttribute("value", &wing_koopa_gravity);
 		else if (name == "wing-koopa-jump-speed") pSetting->QueryFloatAttribute("value", &wing_koopa_jump_speed);
+		else if (name == "koopa-bouncing-up-speed") pSetting->QueryFloatAttribute("value", &koopa_bouncing_up_speed);
 		else if (name == "koopa-bouncing-speed") pSetting->QueryFloatAttribute("value", &koopa_bouncing_speed);
 		else if (name == "wing-koopa-walk-timeout") pSetting->QueryIntAttribute("value", &wing_koopa_walk_timeout);
 		else if (name == "koopa-shield-rolling-speed") pSetting->QueryFloatAttribute("value", &koopa_shield_rolling_speed);

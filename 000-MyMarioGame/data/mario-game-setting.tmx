@@ -16,7 +16,8 @@
   <setting name="wing-goomba-gravity" value="0.0005"/>
   <setting name="wing-goomba-low-jump" value="0.1"/>
   <setting name="wing-goomba-high-jump" value="0.2"/>
-  <setting name="goomba-bouncing-speed" value="0.2"/>
+  <setting name="goomba-bouncing-speed" value="0.1"/>
+  <setting name="goomba-bouncing-up-speed" value="0.55"/>
   <setting name="goomba-die-timeout" value="500"/>
   <setting name="goomba-bounce-die-timeout" value="3000"/>
   <setting name="wing-goomba-walk-timeout" value="1000"/>
@@ -25,12 +26,13 @@
   <setting name="koopa-walking-speed" value="0.05"/>
   <setting name="wing-koopa-gravity" value="0.0005"/>
   <setting name="wing-koopa-jump-speed" value="0.2"/>
-  <setting name="koopa-bouncing-speed" value="0.4"/>
+  <setting name="koopa-bouncing-up-speed" value="0.55"/>
+  <setting name="koopa-bouncing-speed" value="0.1"/>
   <setting name="koopa-die-timeout" value="500"/>
   <setting name="koopa-bounce-die-timeout" value="3000"/>
   <setting name="koopa-shield-rolling-speed" value="0.125"/>
-  <setting name="koopa-shield-timeout" value="5000"/>
-  <setting name="koopa-shield-standing-timeout" value="500"/>
+  <setting name="koopa-shield-timeout" value="4000"/>
+  <setting name="koopa-shield-standing-timeout" value="1000"/>
 
 
 

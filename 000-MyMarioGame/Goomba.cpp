@@ -176,7 +176,7 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_BOUNCE_DIE:
 			die_start = GetTickCount64();
-			vy = -setting->goomba_bouncing_speed;
+			vy = -setting->goomba_bouncing_up_speed;
 			break;
 	}
 	CGameObject::SetState(state);

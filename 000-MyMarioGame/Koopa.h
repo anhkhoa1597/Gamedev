@@ -35,9 +35,7 @@ enum ShieldTypes
 #define KOOPA_SHIELD_BBOX_WIDTH 16
 #define KOOPA_SHIELD_BBOX_HEIGHT 16
 
-//#define GOOMBA_BBOX_HEIGHT_DIE 7
-
-//#define WING_WIDTH 8
+#define KOOPA_STANDING_ADJUST (KOOPA_BBOX_HEIGHT - KOOPA_SHIELD_BBOX_HEIGHT)
 
 class CKoopa : public CGameObject
 {

@@ -68,11 +68,15 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (e->ny != 0 && e->obj->IsBlocking())
 		{
 			vy = 0;
-			if (e->ny > 0 && (state == KOOPA_STATE_BOUNCE_LEFT || state == KOOPA_STATE_BOUNCE_RIGHT))
+			if (e->ny < 0 && (state == KOOPA_STATE_BOUNCE_LEFT || state == KOOPA_STATE_BOUNCE_RIGHT))
 				SetState(KOOPA_STATE_SHIELD_IDLE);
 		}
-		else if (e->nx > 0 && e->obj->IsBlocking()) SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
-		else if (e->nx < 0 && e->obj->IsBlocking()) SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+		else if (e->nx != 0 && e->obj->IsBlocking())
+		{
+			vx = -vx;
+			if (state == KOOPA_STATE_SHIELD_ROLLING_LEFT) SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
+			else if (state == KOOPA_STATE_SHIELD_ROLLING_RIGHT) SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+		}
 		if (state == KOOPA_STATE_SHIELD_ROLLING_LEFT || state == KOOPA_STATE_SHIELD_ROLLING_RIGHT)
 		{
 			if (dynamic_cast<CKoopa*>(e->obj))
@@ -93,6 +97,7 @@ void CKoopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		koopa->GetPosition(x_koopa, y_koopa);
 		if (koopa->GetState() != KOOPA_STATE_SHIELD_ROLLING_LEFT && koopa->GetState() != KOOPA_STATE_SHIELD_ROLLING_RIGHT)
 		{
+			koopa->LostWing();
 			if (x < x_koopa) koopa->SetSpeed(setting->koopa_bouncing_speed, 0);
 			else koopa->SetSpeed(-setting->koopa_bouncing_speed, 0);
 			koopa->SetState(KOOPA_STATE_BOUNCE_DIE);
@@ -124,8 +129,9 @@ void CKoopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		float x_goomba, y_goomba;
 		goomba->GetPosition(x_goomba, y_goomba);
-		if (x < x_goomba) goomba->SetSpeed(setting->goomba_walking_speed, 0);
-		else goomba->SetSpeed(-setting->goomba_walking_speed, 0);
+		goomba->LostWing();
+		if (x < x_goomba) goomba->SetSpeed(setting->goomba_bouncing_speed, 0);
+		else goomba->SetSpeed(-setting->goomba_bouncing_speed, 0);
 		goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
 	}
 }
@@ -152,6 +158,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float x_mario, y_mario;
 		mario->GetPosition(x_mario, y_mario);
+		y -= KOOPA_STANDING_ADJUST;
 		if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
 		else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
 	}
@@ -189,7 +196,7 @@ void CKoopa::Render()
 				aniId = setting->id_ani_koopa_shield_rolling_up;
 			break;
 		}
-		if (type == KOOPA_STATE_BOUNCE_DIE) aniId = setting->id_ani_koopa_shield_idle_up;
+		if (state == KOOPA_STATE_BOUNCE_DIE) aniId = setting->id_ani_koopa_shield_idle_up;
 	}
 	else if (type == RKOOPA)
 	{
@@ -212,7 +219,7 @@ void CKoopa::Render()
 				aniId = setting->id_ani_red_koopa_shield_rolling_up;
 			break;
 		}
-		if (type == KOOPA_STATE_BOUNCE_DIE || type == KOOPA_STATE_BOUNCE_LEFT || type == KOOPA_STATE_BOUNCE_RIGHT)
+		if (state == KOOPA_STATE_BOUNCE_DIE)
 			aniId = setting->id_ani_red_koopa_shield_idle_up;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -259,16 +266,16 @@ void CKoopa::SetState(int state)
 		vx = 0;
 		break;
 	case KOOPA_STATE_BOUNCE_LEFT:
-		vy = -setting->koopa_bouncing_speed;
-		vx = -setting->koopa_walking_speed;
+		vy = -setting->koopa_bouncing_up_speed;
+		vx = -setting->koopa_bouncing_speed;
 		break;
 	case KOOPA_STATE_BOUNCE_RIGHT:
-		vy = -setting->koopa_bouncing_speed;
-		vx = setting->koopa_walking_speed;
+		vy = -setting->koopa_bouncing_up_speed;
+		vx = setting->koopa_bouncing_speed;
 		break;
 	case KOOPA_STATE_BOUNCE_DIE:
 		die_start = GetTickCount64();
-		vy = -setting->goomba_bouncing_speed;
+		vy = -setting->koopa_bouncing_up_speed;
 		break;
 	}
 	CGameObject::SetState(state);

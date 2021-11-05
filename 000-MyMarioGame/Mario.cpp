@@ -85,7 +85,8 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 				}
 				else if (level == MARIO_LEVEL_BIG)
 				{
-					brick->SetState(BRICK_STATE_BREAK);
+					//brick->SetState(BRICK_STATE_BREAK);
+					brick->SetState(BRICK_STATE_BOUNCE);
 				}
 			}
 			else

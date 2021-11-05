@@ -76,7 +76,7 @@ void CBrick::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	{
 		if (state == BRICK_STATE_BOUNCE)
 		{
-			if (x_mushroom < x + (float)width / 2) mushroom->SetState(MUSHROOM_STATE_BOUNCING_LEFT);
+			if (x_mushroom < x) mushroom->SetState(MUSHROOM_STATE_BOUNCING_LEFT);
 			else mushroom->SetState(MUSHROOM_STATE_BOUNCING_RIGHT);
 		}
 	}
@@ -89,8 +89,12 @@ void CBrick::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (state == BRICK_STATE_BOUNCE)
 		{
-			if (goomba->HasWing()) goomba->LostWing();
-			else goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
+			float x_goomba, y_goomba;
+			goomba->GetPosition(x_goomba, y_goomba);
+			goomba->LostWing();
+			if (x_goomba < x) goomba->SetSpeed(-setting->brick_bouncing_speed, 0);
+			else  goomba->SetSpeed(setting->brick_bouncing_speed, 0);
+			goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
 		}
 	}
 }
@@ -107,9 +111,10 @@ void CBrick::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			{
 				float x_koopa, y_koopa;
 				koopa->GetPosition(x_koopa, y_koopa);
+				koopa->LostWing();
 				koopa->SetTypeShield(SHIELD_UP);
-				if (x_koopa < x + width/2) koopa->SetState(KOOPA_STATE_BOUNCE_LEFT);
-				else koopa->SetState(KOOPA_STATE_BOUNCE_RIGHT);
+				if (x_koopa > x) koopa->SetState(KOOPA_STATE_BOUNCE_RIGHT);
+				else koopa->SetState(KOOPA_STATE_BOUNCE_LEFT);
 			}
 				
 		}
