@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="151">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="156">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -212,7 +212,7 @@
   </object>
   <object id="102" name="q_brick" x="656" y="384" width="16" height="16">
    <properties>
-    <property name="drop" value="coin"/>
+    <property name="drop" value="green_mushroom"/>
    </properties>
   </object>
   <object id="103" name="q_brick" x="704" y="352" width="16" height="16">
@@ -231,9 +231,6 @@
    </properties>
   </object>
   <object id="115" name="dead_zone" x="0" y="432" width="2816" height="16"/>
-  <object id="120" name="red_wing_goomba" x="224" y="400">
-   <point/>
-  </object>
   <object id="122" name="s_brick" x="144" y="352" width="16" height="16">
    <properties>
     <property name="drop" value="multi_coin"/>
@@ -271,22 +268,13 @@
   <object id="139" name="red_goomba" x="256" y="352">
    <point/>
   </object>
-  <object id="140" name="red_goomba" x="152" y="288">
-   <point/>
-  </object>
-  <object id="141" name="red_goomba" x="152" y="336">
+  <object id="140" name="red_goomba" x="224" y="400">
    <point/>
   </object>
   <object id="142" name="red_goomba" x="88" y="336">
    <point/>
   </object>
-  <object id="143" name="red_goomba" x="192" y="336">
-   <point/>
-  </object>
   <object id="144" name="koopa" x="192" y="384">
-   <point/>
-  </object>
-  <object id="145" name="red_koopa" x="160" y="384">
    <point/>
   </object>
   <object id="146" name="red_wing_koopa" x="128" y="384">
@@ -299,6 +287,21 @@
    <point/>
   </object>
   <object id="150" name="red_koopa" x="120" y="320">
+   <point/>
+  </object>
+  <object id="151" name="goomba" x="496" y="400">
+   <point/>
+  </object>
+  <object id="152" name="red_koopa" x="576" y="352">
+   <point/>
+  </object>
+  <object id="153" name="red_wing_goomba" x="912" y="384">
+   <point/>
+  </object>
+  <object id="154" name="goomba" x="848" y="384">
+   <point/>
+  </object>
+  <object id="155" name="goomba" x="784" y="384">
    <point/>
   </object>
  </objectgroup>

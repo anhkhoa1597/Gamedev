@@ -83,6 +83,8 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				OnCollisionWithKoopa(e);
 			else if (dynamic_cast<CGoomba*>(e->obj))
 				OnCollisionWithGoomba(e);
+			else if (dynamic_cast<CBrick*>(e->obj))
+				OnCollisionWithBrick(e);
 		}
 	}
 }
@@ -135,6 +137,20 @@ void CKoopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
 	}
 }
+
+void CKoopa::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+
+	if (e->nx != 0)
+	{
+		if (brick->GetState() != BRICK_STATE_BBRICK)
+		{
+			brick->SetState(BRICK_STATE_BOUNCE);
+		}
+	}
+}
+
 
 void CKoopa::LostWing()
 {

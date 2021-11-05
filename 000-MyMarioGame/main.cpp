@@ -27,6 +27,7 @@
 		0.19: add more setting in setting class, change name of Class, convert almost constant to setting.
 		0.20: create Koopa, red koopa, fix goomba
 		0.21: create state koopa shield and handling collide with koopa
+		0.22: update collision of koopa.
 ================================================================ */
 
 #include <windows.h>

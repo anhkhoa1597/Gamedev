@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Mushroom.h"
 #include "Goomba.h"
+#include "Brick.h"
 
 enum KoopaStates
 {
@@ -61,6 +62,7 @@ protected:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
 public:
 	CKoopa(float x, float y, int type, bool has_wing = false);
