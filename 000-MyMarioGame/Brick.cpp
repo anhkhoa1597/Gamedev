@@ -160,6 +160,7 @@ void CBrick::SetState(int state)
 		timesLeftToBounce--;
 		break;
 	case BRICK_STATE_BREAK:
+		isDeleted = true;
 		break;
 	}
 

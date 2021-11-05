@@ -34,6 +34,18 @@ CMap::~CMap()
 {
 }
 
+void CMap::GetTileWidthHeight(int& tile_width, int& tile_height)
+{
+	tile_width = this->tile_width;
+	tile_height = this->tile_height;
+}
+
+void CMap::GetNumberTileWidthHeight(int& w, int& h)
+{
+	w = this->width;
+	h = this->height;
+}
+
 void CMap::AddLayer(string layer)
 {
 	vector<vector<unsigned int>> background;
@@ -41,23 +53,22 @@ void CMap::AddLayer(string layer)
 	this->tiled_background.push_back(background);
 }
 
-void CMap::Render(float cx, float cy, float screen_cx, float screen_cy)
+void CMap::Render(int left, int top, int right, int bottom)
 {
 	list<vector<vector<unsigned int>>>::iterator i;
 	for (i = tiled_background.begin(); i != tiled_background.end(); ++i)
 	{
 		vector<vector<unsigned int>> background = (*i);
-		for (int row = 0; row < this->height; row++)
+		for (int row = top; row < bottom; row++)
 		{
-			for (int column = 0; column < this->width; column++)
+			for (int column = left; column < right; column++)
 			{
 				if (background[row][column] != 0)
 				{
 					CAnimations* animations = CAnimations::GetInstance();
 					float x = (float)(column * tile_width);
 					float y = (float)(row * tile_height);
-					if (x >= cx && x <= screen_cx && y >= cy && y <= screen_cy)
-						animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
+					animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
 				}
 			}
 		}

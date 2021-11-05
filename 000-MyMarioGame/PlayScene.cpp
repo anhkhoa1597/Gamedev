@@ -296,20 +296,10 @@ void CPlayScene::Update(DWORD dt)
 	size_t i = 0;
 	for (i; i < objects.size(); i++)
 	{
-		//check if object is player then break and loop again (loop again to increase perfomance)
-		//why break then loop again??? => try not to use if too much.
-		if (objects[i]->IsPlayer()) 
+		if (!objects[i]->IsPlayer()) 
 		{
-			i++;
-			break;
+			coObjects.push_back(objects[i]);
 		}
-		else coObjects.push_back(objects[i]);
-	}
-
-	//loop again from current i
-	for (i; i < objects.size(); i++)
-	{
-		coObjects.push_back(objects[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
@@ -353,20 +343,21 @@ void CPlayScene::Render()
 	CGame* game = CGame::GetInstance();
 	screen_cx = cx + (float)game->GetBackBufferWidth();
 	screen_cy = cy + (float)game->GetBackBufferHeight();
+	int left, top, right, bottom, tileWidth, tileHeight, width, height;
+	map->GetTileWidthHeight(tileWidth, tileHeight);
+	map->GetNumberTileWidthHeight(width, height);
+	left = (int)cx / tileWidth;
+	right = (int)screen_cx / tileWidth + 1;
+	top = (int)cy / tileHeight;
+	bottom = (int)screen_cy / tileHeight + 1;
+	if (right > width) right -= 1;
+	if (bottom > height) bottom -= 1;
 	//render tiled-map
-	map->Render(cx - 16, cy - 16, screen_cx, screen_cy);
+	map->Render(left, top, right, bottom);
 	//render objects
 	for (int i = 0; i < objects.size(); i++)
 	{
-		float x, y;
-		objects[i]->GetPosition(x, y);
-		if (x >= cx - 16 &&
-			x <= screen_cx &&
-			y >= cy - 16 &&
-			y <= screen_cy)
-		{
-			objects[i]->Render();
-		}
+		objects[i]->Render();
 	}
 }
 

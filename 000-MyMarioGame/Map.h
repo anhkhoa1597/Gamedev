@@ -26,7 +26,9 @@ class CMap
 public:
 	CMap(int width, int height, int tile_width, int tile_height);
 	void GetWidthHeight(int& w, int& h) { w = this->width * this->tile_width; h = this->height * this->tile_height; }
+	void GetTileWidthHeight(int& tile_width, int& tile_height);
+	void GetNumberTileWidthHeight(int& w, int& h);
 	void AddLayer(string layer);
 	~CMap();
-	void Render(float cx, float cy, float screen_cx, float screen_cy);
+	void Render(int left, int right, int top, int bottom);
 }; typedef CMap* LPMAP;

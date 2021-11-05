@@ -146,7 +146,8 @@ void CKoopa::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 	{
 		if (brick->GetState() != BRICK_STATE_BBRICK)
 		{
-			brick->SetState(BRICK_STATE_BOUNCE);
+			if (brick->IsNoItem()) brick->SetState(BRICK_STATE_BREAK);
+			else brick->SetState(BRICK_STATE_BOUNCE);
 		}
 	}
 }

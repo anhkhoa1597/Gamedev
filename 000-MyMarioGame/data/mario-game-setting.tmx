@@ -30,7 +30,7 @@
   <setting name="koopa-bouncing-speed" value="0.1"/>
   <setting name="koopa-die-timeout" value="500"/>
   <setting name="koopa-bounce-die-timeout" value="3000"/>
-  <setting name="koopa-shield-rolling-speed" value="0.125"/>
+  <setting name="koopa-shield-rolling-speed" value="0.2"/>
   <setting name="koopa-shield-timeout" value="4000"/>
   <setting name="koopa-shield-standing-timeout" value="1000"/>
 
@@ -45,7 +45,7 @@
   <setting name="coin-drop-height" value="8"/>
 
   <setting name="mushroom-gravity" value="0.002"/>
-  <setting name="mushroom-speed" value="0.04"/>
+  <setting name="mushroom-speed" value="0.06"/>
   <setting name="mushroom-bouncing-speed" value="0.4"/>
   <setting name="mushroom-life-up" value="1"/>
 

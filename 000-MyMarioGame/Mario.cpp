@@ -85,8 +85,8 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 				}
 				else if (level == MARIO_LEVEL_BIG)
 				{
-					//brick->SetState(BRICK_STATE_BREAK);
-					brick->SetState(BRICK_STATE_BOUNCE);
+					brick->SetState(BRICK_STATE_BREAK);
+					//brick->SetState(BRICK_STATE_BOUNCE);
 				}
 			}
 			else
@@ -104,7 +104,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_BOUNCE_DIE)
 		{
 			vy = -setting->mario_jump_deflect_speed;
 			if (goomba->HasWing()) goomba->LostWing();
@@ -115,7 +115,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_BOUNCE_DIE)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
