@@ -56,6 +56,7 @@ class CGame
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
+	bool isReload_scene = false;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -109,6 +110,7 @@ public:
 	void Load(string gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
+	void ReloadScene() { isReload_scene = true; }
 
 	~CGame();
 };

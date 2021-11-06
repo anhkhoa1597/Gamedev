@@ -93,8 +93,7 @@ public:
 	void SetLevel(int l);
 	void IncreaseCoin() { coin++; }
 	void LifeUp(int life) { this->life += life; }
-	void LifeDown() { this->life--; }
-
+	void Dead();
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 

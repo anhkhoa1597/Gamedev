@@ -503,8 +503,8 @@ void CGame::Load(string gameFile)
 
 void CGame::SwitchScene()
 {
-	if (next_scene < 0 || next_scene == current_scene) return;
-
+	if (next_scene < 0 || (next_scene == current_scene && !isReload_scene)) return;
+	isReload_scene = false;
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
 
 	scenes[current_scene]->Unload();

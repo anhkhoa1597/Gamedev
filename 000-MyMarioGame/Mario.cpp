@@ -32,6 +32,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if (state == MARIO_STATE_DIE)
+	{
+		float cx, cy;
+		CGame::GetInstance()->GetCamPos(cx, cy);
+		if (y > cy + CGame::GetInstance()->GetBackBufferHeight())
+			Dead();
+	}
 
 	isOnPlatform = false;
 
@@ -68,6 +75,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
+	else if (dynamic_cast<CDeadzone*>(e->obj))
+		OnCollisionWithDeadzone(e);
 }
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
@@ -126,17 +135,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					if (life > 1)
-					{
-						life--;
-						DebugOut(L">>> Mario Life Left: %d >>> \n", life);
-						StartUntouchable();
-					}
-					else
-					{
-						DebugOut(L">>> Mario DIE >>> \n");
-						SetState(MARIO_STATE_DIE);
-					}
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
 				}
 			}
 		}
@@ -189,17 +189,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					if (life > 1)
-					{
-						life--;
-						DebugOut(L">>> Mario Life Left: %d >>> \n", life);
-						StartUntouchable();
-					}
-					else
-					{
-						DebugOut(L">>> Mario DIE >>> \n");
-						SetState(MARIO_STATE_DIE);
-					}
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
 				}
 			}
 		}
@@ -228,6 +219,17 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
+{
+	Dead();
+}
+
+void CMario::Dead()
+{
+	life--;
+	CGame::GetInstance()->ReloadScene();
 }
 
 //
