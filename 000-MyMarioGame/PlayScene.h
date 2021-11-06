@@ -17,7 +17,6 @@
 class CPlayScene : public CScene
 {
 protected:
-	LPGAMESETTING setting;
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
 
@@ -36,7 +35,6 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
-	LPGAMESETTING GetSceneSetting() { return setting; }
 	void AddObject(LPGAMEOBJECT object);
 	void Clear();
 	void PurgeDeletedObjects();

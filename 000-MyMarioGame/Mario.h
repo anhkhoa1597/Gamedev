@@ -5,7 +5,7 @@
 #include "Animations.h"
 #include "Game.h"
 #include "PlayScene.h"
-//#include "GameSetting.h"
+#include "GameSetting.h"
 
 #include "Goomba.h"
 #include "Koopa.h"

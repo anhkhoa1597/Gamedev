@@ -1,5 +1,7 @@
 #include "GameSetting.h"
 
+CGameSetting* CGameSetting::__instance = NULL;
+
 void CGameSetting::Load(string settingFile)
 {
 	DebugOut(L"[INFO] Start loading setting file : %s\n", ToLPCWSTR(settingFile));
@@ -148,26 +150,9 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 
 }
 
-CGameSettings* CGameSettings::__instance = NULL;
 
-CGameSettings* CGameSettings::GetInstance()
+CGameSetting* CGameSetting::GetInstance()
 {
-	if (__instance == NULL) __instance = new CGameSettings();
+	if (__instance == NULL) __instance = new CGameSetting();
 	return __instance;
-}
-
-void CGameSettings::Add(int id, LPGAMESETTING gameSetting)
-{
-	if (gameSettings[id] != NULL)
-		DebugOut(L"[WARNING] gameSetting of scene %d already exists\n", id);
-
-	gameSettings[id] = gameSetting;
-}
-
-LPGAMESETTING CGameSettings::Get(int id)
-{
-	LPGAMESETTING ani = gameSettings[id];
-	if (ani == NULL)
-		DebugOut(L"[ERROR] game setting ID %d not found\n", id);
-	return ani;
 }

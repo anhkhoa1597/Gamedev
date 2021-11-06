@@ -11,6 +11,7 @@ using namespace std;
 
 class CGameSetting
 {
+	static CGameSetting* __instance;
 public:
 #pragma region MARIO_SETTING
 	//constant
@@ -148,23 +149,11 @@ public:
 	int id_ani_red_mushroom = -1;
 	int id_ani_green_mushroom = -1;
 #pragma endregion
-	CGameSetting() {};
-	~CGameSetting() {}
+	//CGameSetting() {};
+	//~CGameSetting() {}
 	void Load(string settingFile);
 	void LoadIdAnimations(string name, int id);
+
+	static CGameSetting* GetInstance();
 }; 
 typedef CGameSetting* LPGAMESETTING;
-
-
-
-class CGameSettings
-{
-	static CGameSettings* __instance;
-
-	unordered_map<int, LPGAMESETTING> gameSettings;
-public:
-	void Add(int id, LPGAMESETTING gameSetting);
-	LPGAMESETTING Get(int id);
-
-	static CGameSettings* GetInstance();
-};

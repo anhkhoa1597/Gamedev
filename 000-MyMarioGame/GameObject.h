@@ -57,7 +57,7 @@ protected:
 	bool isDeleted; 
 	
 	bool isPlayer = false;
-	LPGAMESETTING setting;
+	LPGAMESETTING setting = CGameSetting::GetInstance();
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -77,7 +77,6 @@ public:
 		this->x = x; this->y = y; 
 		this->isPlayer = isPlayer; 
 		this->type = type; 
-		setting = CGameSettings::GetInstance()->Get(CGame::GetInstance()->GetCurrentSceneId()); 
 	}
 
 	bool IsPlayer() { return isPlayer; }

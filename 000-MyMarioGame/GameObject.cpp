@@ -15,7 +15,6 @@ CGameObject::CGameObject()
 	nx = 1;	
 	state = -1;
 	isDeleted = false;
-	setting = NULL;
 	type = -1;
 }
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
-  <setting source="data\scene01-setting.tmx"/>
+  <settings>
+    <setting source="data\scene01-setting.tmx"/>
+  </settings>
   <assetgroup>
     <asset source="data\mario.tmx"/>
     <asset source="data\brick.tmx"/>

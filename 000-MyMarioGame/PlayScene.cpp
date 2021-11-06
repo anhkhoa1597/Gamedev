@@ -16,7 +16,6 @@ using namespace std;
 CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
-	setting = NULL;
 	map = NULL;
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
@@ -68,7 +67,7 @@ void CPlayScene::LoadAssets(string assetFile)
 		LPANIMATION ani = new CAnimation();
 		int ani_id;
 		pAnimation->QueryIntAttribute("id", &ani_id);
-		setting->LoadIdAnimations(name, ani_id);
+		CGameSetting::GetInstance()->LoadIdAnimations(name, ani_id);
 		tinyxml2::XMLElement* pSprite = pAnimation->FirstChildElement("sprite");
 		while (pSprite != nullptr)
 		{
@@ -259,12 +258,11 @@ void CPlayScene::Load()
 	}
 
 	//Load Setting
-	tinyxml2::XMLElement* pSetting = pScene->FirstChildElement("setting");
+	tinyxml2::XMLElement* pSetting = pScene->FirstChildElement("settings")->FirstChildElement("setting");
 	if (pSetting != nullptr)
 	{
-		string path = pSetting->Attribute("source");
-		setting = CGame::GetInstance()->GetGameSetting();
-		setting->Load(path);
+		//get extra setting of scene
+		pSetting = pSetting->NextSiblingElement("setting");
 	}
 
 	//Load Asset
@@ -276,9 +274,6 @@ void CPlayScene::Load()
 		LoadAssets(path);
 		pAsset = pAsset->NextSiblingElement("asset");
 	}
-
-	//setting path have setting, assetpath have id animation
-	CGameSettings::GetInstance()->Add(id, setting);
 
 	//Load Map
 	tinyxml2::XMLElement* pMap = pScene->FirstChildElement("map");

@@ -2,6 +2,8 @@
 #include "debug.h"
 
 #include "Mario.h"
+
+
 CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 {
 	isSitting = false;

@@ -53,7 +53,6 @@ class CGame
 
 	ID3D10SamplerState* pPointSamplerState;
 
-	LPGAMESETTING gameSetting = NULL;
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
@@ -106,7 +105,7 @@ public:
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	int GetCurrentSceneId() { return current_scene; }
-	LPGAMESETTING GetGameSetting() { return gameSetting; }
+
 	void Load(string gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);

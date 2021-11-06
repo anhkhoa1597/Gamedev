@@ -454,9 +454,7 @@ void CGame::Load(string gameFile)
 	{
 		pSetting->QueryIntAttribute("start", &next_scene);
 		string path = pSetting->Attribute("source");
-		LPGAMESETTING gameSetting = new CGameSetting();
-		gameSetting->Load(path);
-		this->gameSetting = gameSetting;
+		CGameSetting::GetInstance()->Load(path);
 	}
 
 	//Load Scene

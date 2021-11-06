@@ -1,5 +1,6 @@
 #include "Mushroom.h"
 
+
 CMushroom::CMushroom(float x, float y, int width, int height, int type) : CGameObject(x, y, type)
 {
 	vy = 0;

@@ -1,5 +1,6 @@
 #include "Goomba.h"
 
+
 CGoomba::CGoomba(float x, float y, int type, bool has_wing):CGameObject(x, y, type)
 {
 	this->ax = 0;
