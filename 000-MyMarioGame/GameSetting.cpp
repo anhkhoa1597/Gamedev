@@ -20,6 +20,7 @@ void CGameSetting::Load(string settingFile)
 		string name = pSetting->Attribute("name");
 		if (name == "mario-walking-speed") pSetting->QueryFloatAttribute("value", &mario_walking_speed);
 		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &mario_running_speed);
+		else if (name == "mario-tele-speed") pSetting->QueryFloatAttribute("value", &mario_tele_speed);
 		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &mario_accel_walk_x);
 		else if (name == "mario-accel-run-x") pSetting->QueryFloatAttribute("value", &mario_accel_run_x);
 		else if (name == "mario-jump-speed-y") pSetting->QueryFloatAttribute("value", &mario_jump_speed_y);
@@ -28,7 +29,6 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &mario_jump_deflect_speed);
 		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &mario_untouchable_time);
 		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &mario_life);
-		
 		else if (name == "goomba-gravity") pSetting->QueryFloatAttribute("value", &goomba_gravity);
 		else if (name == "goomba-walking-speed") pSetting->QueryFloatAttribute("value", &goomba_walking_speed);
 		else if (name == "wing-goomba-gravity") pSetting->QueryFloatAttribute("value", &wing_goomba_gravity);
@@ -92,6 +92,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "big-brace-right") id_ani_mario_brace_right = id;
 	else if (name == "big-kick-left") id_ani_mario_kick_left = id;
 	else if (name == "big-kick-right") id_ani_mario_kick_right = id;
+	else if (name == "big-tele") id_ani_mario_tele = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "small-idle-left") id_ani_mario_small_idle_left = id;
 	else if (name == "small-idle-right") id_ani_mario_small_idle_right = id;
@@ -107,6 +108,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "small-brace-right") id_ani_mario_small_brace_right = id;
 	else if (name == "small-kick-left") id_ani_mario_small_kick_left = id;
 	else if (name == "small-kick-right") id_ani_mario_small_kick_right = id;
+	else if (name == "small-tele") id_ani_mario_small_tele = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	//goomba
 	else if (name == "goomba-walking") id_ani_goomba_walking = id;

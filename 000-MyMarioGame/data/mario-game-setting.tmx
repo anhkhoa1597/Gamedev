@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
   <setting name="mario-walking-speed" value="0.1"/>
+  <setting name="mario-tele-speed" value="0.02"/>
   <setting name="mario-running-speed" value="0.2"/>
   <setting name="mario-accel-walk-x" value="0.0005"/>
   <setting name="mario-accel-run-x" value="0.0007"/>

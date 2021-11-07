@@ -13,7 +13,7 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	untouchable_start = -1;
-
+	isBlockingKeyboard = false;
 	isOnPlatform = false;
 }
 
@@ -30,7 +30,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	if (state == MARIO_STATE_DIE)
+	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
+	{
+		
+	}
+	else if (state == MARIO_STATE_DIE)
 	{
 		float cx, cy;
 		CGame::GetInstance()->GetCamPos(cx, cy);
@@ -75,6 +79,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrick(e);
 	else if (dynamic_cast<CDeadzone*>(e->obj))
 		OnCollisionWithDeadzone(e);
+	else if (dynamic_cast<CPipe*>(e->obj))
+		OnCollisionWithPipe(e);
 }
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
@@ -219,13 +225,32 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
-	CPortal* p = (CPortal*)e->obj;
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
+	{
+		CPortal* p = (CPortal*)e->obj;
+		CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	}
 }
 
 void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
 {
 	Dead();
+}
+
+void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
+{
+	CPipe* pipe = dynamic_cast<CPipe*>(e->obj);
+	LPGAME game = CGame::GetInstance();
+	if (e->ny < 0 && game->IsKeyDown(DIK_DOWN))
+	{
+		SetState(MARIO_STATE_GO_DOWN);
+		pipe->SetNoBlocking();
+	}
+	else if (e->ny > 0 && game->IsKeyDown(DIK_UP))
+	{
+		SetState(MARIO_STATE_GO_UP); 
+		pipe->SetNoBlocking();
+	}
 }
 
 void CMario::Dead()
@@ -282,6 +307,8 @@ int CMario::GetAniIdSmall()
 		if (nx < 0) aniId = setting->id_ani_mario_small_kick_left;
 		else aniId = setting->id_ani_mario_small_kick_right;
 	}
+	else if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP) aniId = setting->id_ani_mario_small_tele;
+
 	if (aniId == -1) aniId = setting->id_ani_mario_small_idle_right;;
 
 	return aniId;
@@ -336,6 +363,7 @@ int CMario::GetAniIdBig()
 		if (nx < 0) aniId = setting->id_ani_mario_kick_left;
 		else aniId = setting->id_ani_mario_kick_right;
 	}
+	else if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP) aniId = setting->id_ani_mario_tele;
 	if (aniId == -1) aniId = setting->id_ani_mario_idle_right;;
 
 	return aniId;
@@ -438,6 +466,18 @@ void CMario::SetState(int state)
 		vy = -setting->mario_jump_deflect_speed;
 		vx = 0;
 		ax = 0;
+		break;
+	case MARIO_STATE_GO_DOWN:
+		isBlockingKeyboard = true;
+		vx = 0;
+		vy = setting->mario_tele_speed;
+		ay = 0;
+		break;
+	case MARIO_STATE_GO_UP:
+		isBlockingKeyboard = true;
+		vx = 0;
+		vy = -setting->mario_tele_speed;
+		ay = 0;
 		break;
 	}
 	CGameObject::SetState(state);

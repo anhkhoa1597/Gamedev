@@ -15,6 +15,7 @@ class CGameSetting
 public:
 #pragma region MARIO_SETTING
 	//constant
+	float mario_tele_speed = 0;
 	float mario_walking_speed = 0;
 	float mario_running_speed = 0;
 	float mario_accel_walk_x = 0;
@@ -42,6 +43,7 @@ public:
 	int id_ani_mario_brace_right = -1;
 	int id_ani_mario_kick_left = -1;
 	int id_ani_mario_kick_right = -1;
+	int id_ani_mario_tele = -1;
 	int id_ani_mario_small_idle_left = -1; 
 	int id_ani_mario_small_idle_right = -1;
 	int id_ani_mario_small_walking_left = -1; 
@@ -56,6 +58,7 @@ public:
 	int id_ani_mario_small_brace_right = -1;
 	int id_ani_mario_small_kick_left = -1;
 	int id_ani_mario_small_kick_right = -1;
+	int id_ani_mario_small_tele = -1;
 	int id_ani_mario_die = -1;
 #pragma endregion
 

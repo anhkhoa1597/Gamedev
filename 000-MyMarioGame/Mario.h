@@ -13,6 +13,7 @@
 #include "Mushroom.h"
 #include "Portal.h"
 #include "Deadzone.h"
+#include "Pipe.h"
 
 #include "Collision.h"
 #include "debug.h"
@@ -44,6 +45,8 @@ enum MarioStates
 	MARIO_STATE_SIT,
 	MARIO_STATE_SIT_RELEASE,
 
+	MARIO_STATE_GO_DOWN,
+	MARIO_STATE_GO_UP,
 	MARIO_STATE_KICK,
 };
 
@@ -65,7 +68,8 @@ class CMario : public CGameObject
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
-
+	
+	bool isBlockingKeyboard;
 	int level; 
 	int untouchable;
 	ULONGLONG untouchable_start;
@@ -78,6 +82,7 @@ class CMario : public CGameObject
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
+	void OnCollisionWithPipe(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -97,7 +102,7 @@ public:
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
-
+	bool IsBlockingKeyboard() { return isBlockingKeyboard; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 

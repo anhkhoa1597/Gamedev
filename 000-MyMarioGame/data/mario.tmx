@@ -23,6 +23,7 @@
     <sprite name="big-brace-right" id="11621" left="833" top="92" right="848" bottom="119" texid="0"/>
     <sprite name="big-kick-left" id="11711" left="306" top="92" right="327" bottom="119" texid="0"/>
     <sprite name="big-kick-right" id="11721" left="716" top="92" right="737" bottom="119" texid="0"/>
+    <sprite name="big-tele" id="11811" left="213" top="92" right="228" bottom="119" texid="0"/>
     <sprite name="die" id="13001" left="307" top="16" right="322" bottom="31" texid="0"/>
     <sprite name="small-idle-left" id="12111" left="3" top="16" right="18" bottom="31" texid="0"/>
     <sprite name="small-idle-right" id="12121" left="1029" top="16" right="1044" bottom="31" texid="0"/>
@@ -40,6 +41,7 @@
     <sprite name="small-jump-run-right" id="12427" left="937" top="16" right="952" bottom="31" texid="0"/>
     <sprite name="small-kick-left" id="12611" left="181" top="16" right="196" bottom="31" texid="0"/>
     <sprite name="small-kick-right" id="12621" left="847" top="16" right="862" bottom="31" texid="0"/>
+    <sprite name="small-tele" id="12711" left="127" top="16" right="142" bottom="31" texid="0"/>
     <sprite name="invisible" id="00000" left="500" top="900" right="515" bottom="931" texid="0"/>
   </spritegroup>
   <animationgroup>
@@ -93,12 +95,6 @@
     <animation name="big-brace-right" id="1001">
       <sprite id="11621" time="100"/>
     </animation>
-    <animation name="big-kick-left" id="1700">
-      <sprite id="11711" time="300"/>
-    </animation>
-    <animation name="big-kick-right" id="1701">
-      <sprite id="11721" time="300"/>
-    </animation>
     <animation name="mario-die" id="999">
       <sprite id="13001" time="100"/>
     </animation>
@@ -142,11 +138,23 @@
     <animation name="small-jump-run-right" id="1601">
       <sprite id="12427" time="100"/>
     </animation>
+    <animation name="big-kick-left" id="1700">
+      <sprite id="11711" time="300"/>
+    </animation>
+    <animation name="big-kick-right" id="1701">
+      <sprite id="11721" time="300"/>
+    </animation>
     <animation name="small-kick-left" id="1800">
       <sprite id="12611" time="300"/>
     </animation>
     <animation name="small-kick-right" id="1801">
       <sprite id="12621" time="300"/>
+    </animation>
+    <animation name="small-tele" id="1900">
+      <sprite id="12711" time="300"/>
+    </animation>
+    <animation name="big-tele" id="2000">
+      <sprite id="11811" time="300"/>
     </animation>
     <animation name="invisible" id="000">
       <sprite id="12621" time="300"/>

@@ -231,12 +231,25 @@ void CPlayScene::LoadMap(string mapFile)
 			else if (name == "s_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_NORMAL, item);
 			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, item);
 		}
-		else if (name == "pipe") obj = new CGround(x, y, width, height); //need create class Pipe
-		//else if (name == "dead_zone") obj = new CDeadzone(x, y, width, height);
+		else if (name == "pipe") obj = new CPipe(x, y, width, height);
+		else if (name == "position") {}
+		else if (name == "portal")
+		{
+			int sceneId;
+			tinyxml2::XMLElement* pProperty = pObject->FirstChildElement("properties")->FirstChildElement("property");
+			if (pProperty != nullptr) pProperty->QueryIntAttribute("value", &sceneId);
+			else 
+			{
+				DebugOut(L"[ERROR] portal dont have sceneId\n");
+				return;
+			}
+			obj = new CPortal(x, y, width, height, sceneId);
+		}
 		else if (name == "dead_zone") obj = new CGround(x, y, width, height);
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
 
 		// General object setup
+		DebugOut(L"[INFO] object %s has been created!\n", ToLPCWSTR(name));
 		obj->SetPosition(x, y);
 		objects.push_back(obj);
 		pObject = pObject->NextSiblingElement("object");
@@ -346,8 +359,8 @@ void CPlayScene::Render()
 	right = (int)screen_cx / tileWidth + 1;
 	top = (int)cy / tileHeight;
 	bottom = (int)screen_cy / tileHeight + 1;
-	if (right > width) right -= 1;
-	if (bottom > height) bottom -= 1;
+	if (right >= width) right = width;
+	if (bottom >= height) bottom = height;
 	for (int id = 1; id < map->GetNextLayerId(); id++)
 	{
 		if (id == layerObject)

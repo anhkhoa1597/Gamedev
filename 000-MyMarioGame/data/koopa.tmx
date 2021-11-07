@@ -61,10 +61,6 @@
       <sprite id="30021" time="100"/>
       <sprite id="30022" time="100"/>
     </animation>
-    <animation name="wing-right" id="6001">
-      <sprite id="30021" time="100"/>
-      <sprite id="30022" time="100"/>
-    </animation>
     <animation name="koopa-shield-idle-down" id="6300">
       <sprite id="35111" time="100"/>
     </animation>

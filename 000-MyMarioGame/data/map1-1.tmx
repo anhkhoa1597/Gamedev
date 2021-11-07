@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="162">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="164">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -135,10 +135,14 @@
   <object id="42" name="s_platform" x="2144" y="368" width="48" height="1"/>
   <object id="43" name="s_platform" x="2176" y="272" width="48" height="1"/>
   <object id="44" name="pipe" x="352" y="368" width="32" height="48"/>
-  <object id="45" name="pipe" x="1792" y="384" width="32" height="32"/>
-  <object id="46" name="pipe" x="1856" y="368" width="32" height="48"/>
-  <object id="47" name="pipe" x="2320" y="384" width="32" height="32"/>
-  <object id="48" name="pipe" x="2256" y="112" width="32" height="32"/>
+  <object id="45" name="ground" x="1792" y="384" width="32" height="32"/>
+  <object id="46" name="ground" x="1856" y="368" width="32" height="48"/>
+  <object id="47" name="ground" x="2320" y="384" width="32" height="32"/>
+  <object id="48" name="portal" x="2256" y="112" width="32" height="32">
+   <properties>
+    <property name="scene" value="2"/>
+   </properties>
+  </object>
   <object id="49" name="coin" x="1072" y="320" width="16" height="16"/>
   <object id="50" name="coin" x="1104" y="288" width="16" height="16"/>
   <object id="51" name="coin" x="1136" y="256" width="16" height="16"/>
@@ -318,8 +322,13 @@
   </object>
   <object id="160" name="brick" x="2048" y="384" width="16" height="16"/>
   <object id="161" name="brick" x="2096" y="368" width="16" height="16"/>
+  <object id="163" name="portal" x="352" y="400" width="32" height="1">
+   <properties>
+    <property name="scene" value="2"/>
+   </properties>
+  </object>
  </objectgroup>
- <layer id="5" name="graphics" width="176" height="27" visible="0">
+ <layer id="5" name="graphics" width="176" height="27">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
