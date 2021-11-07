@@ -125,14 +125,15 @@ void CPlayScene::LoadMap(string mapFile)
 		return;
 	}
 	int id = -1;
-	int width, height, tileWidth, tileHeight;
+	int width, height, tileWidth, tileHeight, nextLayerId;
 	{
 		pMap->QueryIntAttribute("width", &width);
 		pMap->QueryIntAttribute("height", &height);
 		pMap->QueryIntAttribute("tilewidth", &tileWidth);
 		pMap->QueryIntAttribute("tileheight", &tileHeight);
+		pMap->QueryIntAttribute("nextlayerid", &nextLayerId);
 	}
-	LPMAP map = new CMap(width, height, tileWidth, tileHeight);
+	LPMAP map = new CMap(width, height, tileWidth, tileHeight, nextLayerId);
 	
 	//Load extra properties
 	tinyxml2::XMLElement* pProperty = pMap->FirstChildElement("properties")->FirstChildElement("property");
@@ -148,7 +149,7 @@ void CPlayScene::LoadMap(string mapFile)
 		}
 		//unknow property
 		else {
-			DebugOut(L"Unknow property %s of map %s\n", ToLPCWSTR(nameProperty), ToLPCWSTR(mapFile));
+			DebugOut(L"[WARNING] Unknow property %s of map %s\n", ToLPCWSTR(nameProperty), ToLPCWSTR(mapFile));
 			return;
 		}
 		pProperty = pProperty->NextSiblingElement("property");
@@ -159,12 +160,10 @@ void CPlayScene::LoadMap(string mapFile)
 	while (pLayer != nullptr)
 	{
 		string name = pLayer->Attribute("name");
-		if (name == "background") {}
-		else
-		{
-			tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
-			map->AddLayer(pData->GetText());
-		}
+		int LayerId;
+		pLayer->QueryIntAttribute("id", &LayerId);
+		tinyxml2::XMLElement* pData = pLayer->FirstChildElement("data");
+		map->AddLayer(LayerId, pData->GetText());
 		pLayer = pLayer->NextSiblingElement("layer");
 	}
 	this->map = map;
@@ -173,6 +172,7 @@ void CPlayScene::LoadMap(string mapFile)
 
 	//Load Objects
 	tinyxml2::XMLElement* pObjectGroup = pMap->FirstChildElement("objectgroup");
+	pObjectGroup->QueryIntAttribute("id", &layerObject);
 	tinyxml2::XMLElement* pObject = pObjectGroup->FirstChildElement("object");
 	while (pObject != nullptr)
 	{
@@ -348,12 +348,16 @@ void CPlayScene::Render()
 	bottom = (int)screen_cy / tileHeight + 1;
 	if (right > width) right -= 1;
 	if (bottom > height) bottom -= 1;
-	//render tiled-map
-	map->Render(left, top, right, bottom);
-	//render objects
-	for (int i = 0; i < objects.size(); i++)
+	for (int id = 1; id < map->GetNextLayerId(); id++)
 	{
-		objects[i]->Render();
+		if (id == layerObject)
+		{
+			for (int i = 0; i < objects.size(); i++) //render objects
+			{
+				objects[i]->Render();
+			}
+		}
+		else map->Render(left, top, right, bottom, id); //render tiled-map
 	}
 }
 

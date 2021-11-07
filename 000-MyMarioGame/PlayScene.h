@@ -21,6 +21,7 @@ protected:
 	LPGAMEOBJECT player;
 
 	vector<LPGAMEOBJECT> objects;
+	int layerObject = -1; // layer of object to render
 	LPMAP map;
 
 	void LoadAssets(string assetFile);

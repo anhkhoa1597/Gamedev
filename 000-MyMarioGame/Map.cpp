@@ -22,12 +22,13 @@ void parse_tiles(const std::string& gid_list, int height, std::vector<std::vecto
     tiled_background = tiles;
 }
 
-CMap::CMap(int width, int height, int tile_width, int tile_height)
+CMap::CMap(int width, int height, int tile_width, int tile_height, int nextLayerId)
 {
 	this->width = width;
 	this->height = height;
 	this->tile_width = tile_width;
 	this->tile_height = tile_height;
+	this->nextLayerId = nextLayerId;
 }
 
 CMap::~CMap()
@@ -46,30 +47,35 @@ void CMap::GetNumberTileWidthHeight(int& w, int& h)
 	h = this->height;
 }
 
-void CMap::AddLayer(string layer)
+void CMap::AddLayer(int id, string layer)
 {
 	vector<vector<unsigned int>> background;
-	parse_tiles(layer, this->height, background);
-	this->tiled_background.push_back(background);
+	parse_tiles(layer, height, background);
+	layers[id] = background;
 }
 
-void CMap::Render(int left, int top, int right, int bottom)
+vector<vector<unsigned int>> CMap::GetLayer(int id)
+{ 
+	vector<vector<unsigned int>> layer = layers[id];
+	if (layer.size() == 0)
+		DebugOut(L"[ERROR] layer ID %d not found\n", id);
+		
+	return layer;
+}
+
+void CMap::Render(int left, int top, int right, int bottom, int id)
 {
-	list<vector<vector<unsigned int>>>::iterator i;
-	for (i = tiled_background.begin(); i != tiled_background.end(); ++i)
+	vector<vector<unsigned int>> layer = GetLayer(id);
+	for (int row = top; row < bottom; row++)
 	{
-		vector<vector<unsigned int>> background = (*i);
-		for (int row = top; row < bottom; row++)
+		for (int column = left; column < right; column++)
 		{
-			for (int column = left; column < right; column++)
+			if (layer[row][column] != 0)
 			{
-				if (background[row][column] != 0)
-				{
-					CAnimations* animations = CAnimations::GetInstance();
-					float x = (float)(column * tile_width);
-					float y = (float)(row * tile_height);
-					animations->Get(ID_SPRITE_TILESET + background[row][column])->Render(x, y);
-				}
+				CAnimations* animations = CAnimations::GetInstance();
+				float x = (float)(column * tile_width);
+				float y = (float)(row * tile_height);
+				animations->Get(ID_SPRITE_TILESET + layer[row][column])->Render(x, y);
 			}
 		}
 	}

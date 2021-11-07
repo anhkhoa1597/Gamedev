@@ -22,13 +22,16 @@ class CMap
 	int height;
 	int tile_width;
 	int tile_height;
-	list<vector<vector<unsigned int>>> tiled_background;
+	int nextLayerId;
+	unordered_map<int, vector<vector<unsigned int>>> layers;
 public:
-	CMap(int width, int height, int tile_width, int tile_height);
+	CMap(int width, int height, int tile_width, int tile_height, int nextLayerId);
 	void GetWidthHeight(int& w, int& h) { w = this->width * this->tile_width; h = this->height * this->tile_height; }
 	void GetTileWidthHeight(int& tile_width, int& tile_height);
 	void GetNumberTileWidthHeight(int& w, int& h);
-	void AddLayer(string layer);
+	int GetNextLayerId() { return nextLayerId; }
+	void AddLayer(int id, string layer);
+	vector<vector<unsigned int>> GetLayer(int id);
 	~CMap();
-	void Render(int left, int right, int top, int bottom);
+	void Render(int left, int right, int top, int bottom, int id);
 }; typedef CMap* LPMAP;
