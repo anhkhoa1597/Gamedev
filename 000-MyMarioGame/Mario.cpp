@@ -15,8 +15,6 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	untouchable_start = -1;
 
 	isOnPlatform = false;
-	coin = 0;
-	life = setting->mario_life;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -87,7 +85,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 	{
 		if (brick->GetState() != BRICK_STATE_BBRICK)
 		{
-			if (brick->IsNoItem()) //if brick doesnt have item it is normal brick so dont need to check normal brick
+			if (brick->IsNoItem() && brick->GetState() != BRICK_STATE_BOUNCE) //if brick doesnt have item it is normal brick so dont need to check normal brick
 			{
 				if (level == MARIO_LEVEL_SMALL)
 				{
@@ -100,7 +98,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 					//brick->SetState(BRICK_STATE_BOUNCE);
 				}
 			}
-			else
+			else if (brick->GetState() != BRICK_STATE_BOUNCE)
 			{
 				brick->SetState(BRICK_STATE_BOUNCE);
 			}
@@ -136,7 +134,9 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					//SetState(MARIO_STATE_DIE);
+					StartUntouchable();
+					CGame::GetInstance()->LifeDown();
 				}
 			}
 		}
@@ -190,7 +190,10 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					//SetState(MARIO_STATE_DIE);
+					StartUntouchable();
+					CGame::GetInstance()->LifeDown();
+
 				}
 			}
 		}
@@ -200,7 +203,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	IncreaseCoin();
+	CGame::GetInstance()->IncreaseCoin();
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
@@ -209,8 +212,7 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	if (mushroom->GetType() == RMUSHROOM) SetLevel(MARIO_LEVEL_BIG);
 	else if (mushroom->GetType() == GMUSHROOM) 
 	{
-		LifeUp(setting->mushroom_life_up);
-		DebugOut(L">>> Mario Life Left: %d >>> \n", life);
+		CGame::GetInstance()->LifeUp(setting->mushroom_life_up);
 	}
 	e->obj->Delete();
 }
@@ -228,8 +230,8 @@ void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
 
 void CMario::Dead()
 {
-	life--;
-	CGame::GetInstance()->ReloadScene();
+	CGame::GetInstance()->LifeDown();
+	//CGame::GetInstance()->ReloadScene();
 }
 
 //
@@ -356,8 +358,6 @@ void CMario::Render()
 	else
 		//need to make mario blinks
 		animations->Get(aniId)->Render(x, y);
-	
-	DebugOutTitle(L"Coins: %d	Life: %d", coin, life);
 	
 	//RenderBoundingBox();
 }

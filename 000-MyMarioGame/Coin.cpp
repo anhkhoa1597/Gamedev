@@ -34,8 +34,7 @@ void CDropCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (vy > 0 && y > initial_y - setting->coin_drop_height)
 		{
 			isDeleted = true;
-			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-			mario->IncreaseCoin();
+			CGame::GetInstance()->IncreaseCoin();
 			return;
 		}
 	}

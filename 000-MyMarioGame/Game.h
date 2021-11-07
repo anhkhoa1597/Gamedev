@@ -57,6 +57,13 @@ class CGame
 	int current_scene;
 	int next_scene = -1;
 	bool isReload_scene = false;
+
+	//data mario
+	int current_map = -1;
+	int mario_life = 0;
+	int mario_coin = 0;
+	int mario_point = 0;
+
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -111,6 +118,9 @@ public:
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
 	void ReloadScene() { isReload_scene = true; }
+	void IncreaseCoin() { mario_coin++; }
+	void LifeUp(int life) { mario_life += life; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
+	void LifeDown() { mario_life--; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
 
 	~CGame();
 };

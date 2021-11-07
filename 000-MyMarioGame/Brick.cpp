@@ -28,16 +28,20 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	y += vy * dt;
-	if (y <= initial_y - setting->brick_bounce_height)
+	if (state != BRICK_STATE_BOUNCE && y <= initial_y) // this if to avoid other object collison with
+	{
+		y = initial_y;
+	}
+	if (state == BRICK_STATE_BOUNCE && y <= initial_y - setting->brick_bounce_height)
 	{
 		//y = initial_y - BRICK_BOUNCE_HEIGHT;
 		vy = setting->brick_bouncing_speed;
-		if (timesLeftToBounce == 0) SetState(BRICK_STATE_BBRICK);
-		else SetState(BRICK_STATE_NORMAL);
 	}
-	if (y > initial_y)
+	if (state == BRICK_STATE_BOUNCE && y > initial_y - 1) // -1 to avoid bounce mario drop out ground
 	{
 		y = initial_y;
+		if (timesLeftToBounce <= 0) SetState(BRICK_STATE_BBRICK);
+		else SetState(BRICK_STATE_NORMAL);
 		vy = 0;
 		CGameObject* object = NULL;
 		float x, y;

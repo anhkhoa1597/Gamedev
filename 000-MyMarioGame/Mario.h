@@ -67,12 +67,10 @@ class CMario : public CGameObject
 	float ay;				// acceleration on y 
 
 	int level; 
-	int life;
 	int untouchable;
 	ULONGLONG untouchable_start;
 
 	BOOLEAN isOnPlatform;
-	int coin;
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -91,8 +89,7 @@ public:
 	void Render();
 	void SetState(int state);
 	void SetLevel(int l);
-	void IncreaseCoin() { coin++; }
-	void LifeUp(int life) { this->life += life; }
+	
 	void Dead();
 	int IsCollidable()
 	{ 

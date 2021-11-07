@@ -313,7 +313,7 @@
   <object id="158" name="wing_koopa" x="1424" y="288">
    <point/>
   </object>
-  <object id="159" name="red_koopa" x="2104" y="352">
+  <object id="159" name="red_koopa" x="2104" y="334">
    <point/>
   </object>
   <object id="160" name="brick" x="2048" y="384" width="16" height="16"/>

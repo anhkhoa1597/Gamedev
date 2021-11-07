@@ -232,7 +232,8 @@ void CPlayScene::LoadMap(string mapFile)
 			else if (name == "secret_brick") obj = new CBrick(x, y, width, height, BRICK_STATE_SECRET, item);
 		}
 		else if (name == "pipe") obj = new CGround(x, y, width, height); //need create class Pipe
-		else if (name == "dead_zone") obj = new CDeadzone(x, y, width, height); //need create class deadzone
+		//else if (name == "dead_zone") obj = new CDeadzone(x, y, width, height);
+		else if (name == "dead_zone") obj = new CGround(x, y, width, height);
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
 
 		// General object setup

@@ -457,6 +457,9 @@ void CGame::Load(string gameFile)
 		CGameSetting::GetInstance()->Load(path);
 	}
 
+	//Load Data
+	mario_life = CGameSetting::GetInstance()->mario_life;
+
 	//Load Scene
 	tinyxml2::XMLElement* pSceneGroup = pData->FirstChildElement("scenegroup");
 	tinyxml2::XMLElement* pScene = pSceneGroup->FirstChildElement("scene");
@@ -497,12 +500,14 @@ void CGame::Load(string gameFile)
 		pTexture = pTexture->NextSiblingElement("texture");
 	}
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", ToLPCWSTR(gameFile));
-
+	
 	SwitchScene();
 }
 
 void CGame::SwitchScene()
 {
+	DebugOutTitle(L"Coins: %d	Life: %d", mario_coin, mario_life);
+
 	if (next_scene < 0 || (next_scene == current_scene && !isReload_scene)) return;
 	isReload_scene = false;
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
