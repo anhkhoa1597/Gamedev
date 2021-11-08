@@ -186,10 +186,10 @@ void CPlayScene::LoadMap(string mapFile)
 		CGameObject* obj = NULL;
 		if (name == "mario")
 		{
-			if (player != NULL)
+			if (CGame::GetInstance()->GetState() >= 0 || player != NULL)
 			{
-				DebugOut(L"[ERROR] MARIO object was created before!\n");
-				return;
+				pObject = pObject->NextSiblingElement("object");
+				continue;
 			}
 			obj = new CMario(x, y);
 			player = (CMario*)obj;
@@ -235,15 +235,27 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "position") {}
 		else if (name == "portal")
 		{
-			int sceneId;
+			int sceneId = 0;
+			int state_mario = -1;
+			float x_mario = 0;
+			float y_mario = 0;
 			tinyxml2::XMLElement* pProperty = pObject->FirstChildElement("properties")->FirstChildElement("property");
-			if (pProperty != nullptr) pProperty->QueryIntAttribute("value", &sceneId);
-			else 
+			while (pProperty != nullptr)
 			{
-				DebugOut(L"[ERROR] portal dont have sceneId\n");
-				return;
+				string name = pProperty->Attribute("name");
+				if (name == "state")
+				{
+					string value = pProperty->Attribute("value");
+					if (value == "go_down") state_mario = MARIO_STATE_GO_DOWN;
+					else if (value == "go_up") state_mario = MARIO_STATE_GO_UP;
+				}
+				else if (name == "x") pProperty->QueryFloatAttribute("value", &x_mario);
+				else if (name == "y") pProperty->QueryFloatAttribute("value", &y_mario);
+				else if (name == "scene") pProperty->QueryIntAttribute("value", &sceneId);
+
+				pProperty = pProperty->NextSiblingElement("property");
 			}
-			obj = new CPortal(x, y, width, height, sceneId);
+			obj = new CPortal(x, y, width, height, sceneId, x_mario, y_mario, state_mario);
 		}
 		else if (name == "dead_zone") obj = new CGround(x, y, width, height);
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
@@ -296,6 +308,19 @@ void CPlayScene::Load()
 		LoadMap(path);
 	}
 
+	//Load mario from CGame when switchScene
+	LPGAME game = CGame::GetInstance();
+	if (player == NULL || game->GetState() >= 0)
+	{
+		float x_mario, y_mario;
+		game->GetInitialPos(x_mario, y_mario);
+		CGameObject* obj = new CMario(x_mario, y_mario);
+		obj->SetState(game->GetState());
+		obj->SetLevel(game->GetLevel());
+		obj->SetPosition(x_mario, y_mario);
+		player = (CMario*)obj;
+		objects.push_back(obj);
+	}
 	DebugOut(L"[INFO] Done loading scene : %s\n", ToLPCWSTR(sceneFilePath));
 }
 

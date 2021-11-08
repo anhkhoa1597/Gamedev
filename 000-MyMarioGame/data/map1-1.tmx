@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="164">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="167">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -134,13 +134,16 @@
   <object id="41" name="s_platform" x="1312" y="144" width="64" height="1"/>
   <object id="42" name="s_platform" x="2144" y="368" width="48" height="1"/>
   <object id="43" name="s_platform" x="2176" y="272" width="48" height="1"/>
-  <object id="44" name="pipe" x="352" y="368" width="32" height="48"/>
+  <object id="44" name="pipe" x="367" y="368" width="2" height="48"/>
   <object id="45" name="ground" x="1792" y="384" width="32" height="32"/>
   <object id="46" name="ground" x="1856" y="368" width="32" height="48"/>
   <object id="47" name="ground" x="2320" y="384" width="32" height="32"/>
   <object id="48" name="portal" x="2256" y="112" width="32" height="32">
    <properties>
     <property name="scene" value="2"/>
+    <property name="state" value="go_down"/>
+    <property name="x" value="144"/>
+    <property name="y" value="0"/>
    </properties>
   </object>
   <object id="49" name="coin" x="1072" y="320" width="16" height="16"/>
@@ -325,8 +328,13 @@
   <object id="163" name="portal" x="352" y="400" width="32" height="1">
    <properties>
     <property name="scene" value="2"/>
+    <property name="state" value="go_down"/>
+    <property name="x" value="136"/>
+    <property name="y" value="0"/>
    </properties>
   </object>
+  <object id="165" name="ground" x="352" y="368" width="3" height="48"/>
+  <object id="166" name="ground" x="380.667" y="368" width="3" height="48"/>
  </objectgroup>
  <layer id="5" name="graphics" width="176" height="27">
   <data encoding="csv">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="32" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="40">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="32" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="43">
  <properties>
   <property name="id" value="1011"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -61,20 +61,22 @@
   <object id="31" name="coin" x="240" y="32" width="16" height="16"/>
   <object id="32" name="coin" x="224" y="32" width="16" height="16"/>
   <object id="33" name="coin" x="208" y="48" width="16" height="16"/>
-  <object id="35" name="mario" x="144" y="0">
-   <point/>
-  </object>
-  <object id="38" name="pipe" x="352" y="0" width="32" height="32"/>
+  <object id="38" name="pipe" x="367" y="0" width="2" height="32"/>
   <object id="39" name="portal" x="352" y="0" width="32" height="1">
    <properties>
     <property name="scene" value="1"/>
+    <property name="state" value="go_up"/>
+    <property name="x" value="2328"/>
+    <property name="y" value="384"/>
    </properties>
   </object>
+  <object id="41" name="ground" x="352" y="0" width="3" height="32"/>
+  <object id="42" name="ground" x="381" y="0" width="3" height="32"/>
  </objectgroup>
  <layer id="4" name="graphics" width="32" height="12">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2629,2630,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2702,2703,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,2629,2630,0,0,0,0,0,0,0,0,0,0,0,0,2629,2630,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,2702,2703,0,0,0,0,0,0,0,0,0,0,0,0,2702,2703,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

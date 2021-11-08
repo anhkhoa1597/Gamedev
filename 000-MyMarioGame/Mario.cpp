@@ -15,6 +15,7 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	untouchable_start = -1;
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
+	isGoThroughPipe = false;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -32,7 +33,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
 	{
-		
+		if (!isGoThroughPipe && IsGoThroughOutOfPipe()) 
+			SetState(MARIO_STATE_NORMAL);
 	}
 	else if (state == MARIO_STATE_DIE)
 	{
@@ -227,7 +229,9 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
 	{
+		CGame::GetInstance()->SetLevel(level);
 		CPortal* p = (CPortal*)e->obj;
+		p->SetMarioInNextScene();
 		CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 	}
 }
@@ -243,11 +247,13 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 	LPGAME game = CGame::GetInstance();
 	if (e->ny < 0 && game->IsKeyDown(DIK_DOWN))
 	{
+		isGoThroughPipe = true;
 		SetState(MARIO_STATE_GO_DOWN);
 		pipe->SetNoBlocking();
 	}
 	else if (e->ny > 0 && game->IsKeyDown(DIK_UP))
 	{
+		isGoThroughPipe = true;
 		SetState(MARIO_STATE_GO_UP); 
 		pipe->SetNoBlocking();
 	}
@@ -257,6 +263,18 @@ void CMario::Dead()
 {
 	CGame::GetInstance()->LifeDown();
 	//CGame::GetInstance()->ReloadScene();
+}
+
+bool CMario::IsGoThroughOutOfPipe()
+{
+	float x_mario, y_mario;
+	CGame::GetInstance()->GetInitialPos(x_mario, y_mario);
+	if ((state == MARIO_STATE_GO_DOWN && y >= y_mario + PIPE_HEIGHT) || (state == MARIO_STATE_GO_UP && y < y_mario - height))
+	{
+		DebugOut(L"y %.2f, y_mario %.2f, height %d\n", y, y_mario, height);
+		return true;
+	}
+	return false;
 }
 
 //
@@ -468,18 +486,27 @@ void CMario::SetState(int state)
 		ax = 0;
 		break;
 	case MARIO_STATE_GO_DOWN:
-		isBlockingKeyboard = true;
 		vx = 0;
+		ax = 0;
 		vy = setting->mario_tele_speed;
 		ay = 0;
+		isBlockingKeyboard = true;
 		break;
 	case MARIO_STATE_GO_UP:
-		isBlockingKeyboard = true;
 		vx = 0;
+		ax = 0;
 		vy = -setting->mario_tele_speed;
 		ay = 0;
+		isBlockingKeyboard = true;
+		break;
+	case MARIO_STATE_NORMAL:
+		isBlockingKeyboard = false;
+		isSitting = false;
+		ay = setting->mario_gravity;
+		isGoThroughPipe = false;
 		break;
 	}
+	
 	CGameObject::SetState(state);
 }
 
@@ -516,13 +543,22 @@ void CMario::SetLevel(int l)
 		y -= MARIO_CHANGE_LEVEL_HEIGHT_ADJUST;
 		break;
 	case MARIO_LEVEL_BIG:
+		break;
 	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
 	case MARIO_LEVEL_FOX: //need create FOX MARIO
 	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
 	case MARIO_LEVEL_FROG: //need create FROG MARIO
 	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
 		break;
-	
+	}
+	switch (l)
+	{
+	case MARIO_LEVEL_SMALL:
+		height = 16;
+		break;
+	case MARIO_LEVEL_BIG:
+		height = 27;
+		break;
 	}
 	level = l;
 }

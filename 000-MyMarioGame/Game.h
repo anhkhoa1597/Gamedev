@@ -59,11 +59,14 @@ class CGame
 	bool isReload_scene = false;
 
 	//data mario
+	float initialX = 0;
+	float initialY = 0;
+	int state = -1;
 	int current_map = -1;
 	int mario_life = 0;
 	int mario_coin = 0;
 	int mario_point = 0;
-
+	int level = 0;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -121,7 +124,11 @@ public:
 	void IncreaseCoin() { mario_coin++; }
 	void LifeUp(int life) { mario_life += life; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
 	void LifeDown() { mario_life--; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
-
+	void GetInitialPos(float& x, float& y) { x = initialX; y = initialY; }
+	int GetState() { return state; }
+	void SetLevel(int level) { this->level = level; }
+	int GetLevel() { return level; }
+	void SetMario(float initialX, float initialY, int state) { this->initialX = initialX; this->initialY = initialY; this->state = state; }
 	~CGame();
 };
 typedef CGame* LPGAME;

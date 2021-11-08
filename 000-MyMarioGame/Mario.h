@@ -31,6 +31,7 @@ enum MarioLevels
 
 enum MarioStates
 {
+	MARIO_STATE_NORMAL,
 	MARIO_STATE_DIE,
 	MARIO_STATE_IDLE,
 	MARIO_STATE_WALKING_RIGHT,
@@ -62,6 +63,7 @@ enum MarioStates
 #define MARIO_SIT_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_BIG_SITTING_BBOX_HEIGHT)
 #define MARIO_CHANGE_LEVEL_HEIGHT_ADJUST (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT)
 
+#define PIPE_HEIGHT 32
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
@@ -75,6 +77,8 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 
 	BOOLEAN isOnPlatform;
+	int height;
+	bool isGoThroughPipe;
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -103,6 +107,7 @@ public:
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	bool IsBlockingKeyboard() { return isBlockingKeyboard; }
+	bool IsGoThroughOutOfPipe();
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 

@@ -28,6 +28,7 @@
 		0.20: create Koopa, red koopa, fix goomba
 		0.21: create state koopa shield and handling collide with koopa
 		0.22: update handle collision of koopa, goomba, brick.
+		0.23: add pipe and feature go through it to change map.
 ================================================================ */
 
 #include <windows.h>
