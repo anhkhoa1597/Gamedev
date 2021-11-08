@@ -11,6 +11,7 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 	ax = 0.0f;
 	ay = setting->mario_gravity;
 	level = MARIO_LEVEL_SMALL;
+	height = 16;
 	untouchable = 0;
 	untouchable_start = -1;
 	isBlockingKeyboard = false;
@@ -168,7 +169,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				SetState(MARIO_STATE_KICK);
 				float x_koopa, y_koopa;
 				koopa->GetPosition(x_koopa, y_koopa);
-				if (x > x_koopa + KOOPA_WIDTH / 2) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+				if (x > x_koopa) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
 				else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
 			}
 			else if (koopa->GetTypeShield() == NO_SHIELD)
@@ -245,13 +246,15 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 {
 	CPipe* pipe = dynamic_cast<CPipe*>(e->obj);
 	LPGAME game = CGame::GetInstance();
-	if (e->ny < 0 && game->IsKeyDown(DIK_DOWN))
+	float left, right;
+	pipe->GetZoneToGoThrough(left, right);
+	if (e->ny < 0 && game->IsKeyDown(DIK_DOWN) && x >= left && x + setting->mario_width <= right)
 	{
 		isGoThroughPipe = true;
 		SetState(MARIO_STATE_GO_DOWN);
 		pipe->SetNoBlocking();
 	}
-	else if (e->ny > 0 && game->IsKeyDown(DIK_UP))
+	else if (e->ny > 0 && game->IsKeyDown(DIK_UP) && x >= left && x + setting->mario_width <= right)
 	{
 		isGoThroughPipe = true;
 		SetState(MARIO_STATE_GO_UP); 
@@ -269,7 +272,7 @@ bool CMario::IsGoThroughOutOfPipe()
 {
 	float x_mario, y_mario;
 	CGame::GetInstance()->GetInitialPos(x_mario, y_mario);
-	if ((state == MARIO_STATE_GO_DOWN && y >= y_mario + PIPE_HEIGHT) || (state == MARIO_STATE_GO_UP && y < y_mario - height))
+	if ((state == MARIO_STATE_GO_DOWN && y >= y_mario + setting->pipe_height) || (state == MARIO_STATE_GO_UP && y < y_mario - height))
 	{
 		DebugOut(L"y %.2f, y_mario %.2f, height %d\n", y, y_mario, height);
 		return true;
@@ -461,7 +464,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y += MARIO_SIT_HEIGHT_ADJUST;
+			y += (setting->mario_big_height - setting->mario_sitting_height);
 		}
 		break;
 
@@ -470,7 +473,7 @@ void CMario::SetState(int state)
 		{
 			isSitting = false;
 			state = MARIO_STATE_IDLE;
-			y -= MARIO_SIT_HEIGHT_ADJUST;
+			y -= (setting->mario_big_height - setting->mario_sitting_height);
 		}
 		break;
 
@@ -519,19 +522,19 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	{
 		if (isSitting)
 		{
-			right = left + MARIO_BIG_SITTING_BBOX_WIDTH - 1;
-			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT - 1;
+			right = left + setting->mario_width - 1;
+			bottom = top + setting->mario_sitting_height - 1;
 		}
 		else
 		{
-			right = left + MARIO_BIG_BBOX_WIDTH - 1;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT - 1;
+			right = left + setting->mario_width - 1;
+			bottom = top + setting->mario_big_height - 1;
 		}
 	}
 	else
 	{
-		right = left + MARIO_SMALL_BBOX_WIDTH - 1;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT - 1;
+		right = left + setting->mario_width - 1;
+		bottom = top + setting->mario_small_height - 1;
 	}
 }
 
@@ -540,7 +543,7 @@ void CMario::SetLevel(int l)
 	switch (level)
 	{
 	case MARIO_LEVEL_SMALL:
-		y -= MARIO_CHANGE_LEVEL_HEIGHT_ADJUST;
+		y -= (setting->mario_big_height - setting->mario_small_height);
 		break;
 	case MARIO_LEVEL_BIG:
 		break;

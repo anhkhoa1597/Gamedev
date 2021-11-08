@@ -19,6 +19,11 @@ void CGameSetting::Load(string settingFile)
 	{
 		string name = pSetting->Attribute("name");
 		if (name == "mario-walking-speed") pSetting->QueryFloatAttribute("value", &mario_walking_speed);
+		else if (name == "mario-width") pSetting->QueryIntAttribute("value", &mario_width);
+		else if (name == "mario-big-height") pSetting->QueryIntAttribute("value", &mario_big_height);
+		else if (name == "mario-small-height") pSetting->QueryIntAttribute("value", &mario_small_height);
+		else if (name == "mario-sitting-height") pSetting->QueryIntAttribute("value", &mario_sitting_height);
+
 		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &mario_running_speed);
 		else if (name == "mario-tele-speed") pSetting->QueryFloatAttribute("value", &mario_tele_speed);
 		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &mario_accel_walk_x);
@@ -39,7 +44,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "goomba-die-timeout") pSetting->QueryIntAttribute("value", &goomba_die_timeout);
 		else if (name == "goomba-bounce-die-timeout") pSetting->QueryIntAttribute("value", &goomba_bounce_die_timeout);
 		else if (name == "wing-goomba-walk-timeout") pSetting->QueryIntAttribute("value", &wing_goomba_walk_timeout);
-		
+
 		else if (name == "koopa-gravity") pSetting->QueryFloatAttribute("value", &koopa_gravity);
 		else if (name == "koopa-walking-speed") pSetting->QueryFloatAttribute("value", &koopa_walking_speed);
 		else if (name == "wing-koopa-gravity") pSetting->QueryFloatAttribute("value", &wing_koopa_gravity);
@@ -62,6 +67,9 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mushroom-speed") pSetting->QueryFloatAttribute("value", &mushroom_speed);
 		else if (name == "mushroom-bouncing-speed") pSetting->QueryFloatAttribute("value", &mushroom_bouncing_speed);
 		else if (name == "mushroom-life-up") pSetting->QueryIntAttribute("value", &mushroom_life_up);
+
+		else if (name == "pipe-height") pSetting->QueryIntAttribute("value", &pipe_height);
+		else if (name == "pipe-adjust-width-can-go-through") pSetting->QueryFloatAttribute("value", &pipe_adjust_width_can_go_through);
 		//unknow setting
 		else
 		{

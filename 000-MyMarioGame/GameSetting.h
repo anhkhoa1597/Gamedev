@@ -15,6 +15,11 @@ class CGameSetting
 public:
 #pragma region MARIO_SETTING
 	//constant
+	int mario_width = 0;
+	int mario_big_height = 0;
+	int mario_small_height = 0;
+	int mario_sitting_height = 0;
+
 	float mario_tele_speed = 0;
 	float mario_walking_speed = 0;
 	float mario_running_speed = 0;
@@ -26,6 +31,7 @@ public:
 	float mario_jump_deflect_speed = 0;
 	float mario_untouchable_time = 0;
 	int	mario_life = 0;
+
 	//id animation
 	int id_ani_mario_idle_left = -1;
 	int id_ani_mario_idle_right = -1;
@@ -151,6 +157,11 @@ public:
 	//id animation
 	int id_ani_red_mushroom = -1;
 	int id_ani_green_mushroom = -1;
+#pragma endregion
+
+#pragma region OTHER
+	int pipe_height = 0;
+	float pipe_adjust_width_can_go_through = 0;
 #pragma endregion
 	//CGameSetting() {};
 	//~CGameSetting() {}

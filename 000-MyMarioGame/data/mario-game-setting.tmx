@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
+  <setting name="mario-width" value="16"/>
+  <setting name="mario-big-height" value="27"/>
+  <setting name="mario-small-height" value="16"/>
+  <setting name="mario-sitting-height" value="18"/>
+
   <setting name="mario-walking-speed" value="0.1"/>
   <setting name="mario-tele-speed" value="0.02"/>
   <setting name="mario-running-speed" value="0.2"/>
@@ -48,4 +53,6 @@
   <setting name="mushroom-bouncing-speed" value="0.4"/>
   <setting name="mushroom-life-up" value="1"/>
 
+  <setting name="pipe-height" value="32"/>
+  <setting name="pipe-adjust-width-can-go-through" value="4"/>
 </settings>

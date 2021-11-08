@@ -134,7 +134,7 @@
   <object id="41" name="s_platform" x="1312" y="144" width="64" height="1"/>
   <object id="42" name="s_platform" x="2144" y="368" width="48" height="1"/>
   <object id="43" name="s_platform" x="2176" y="272" width="48" height="1"/>
-  <object id="44" name="pipe" x="367" y="368" width="2" height="48"/>
+  <object id="44" name="pipe" x="352" y="368" width="32" height="48"/>
   <object id="45" name="ground" x="1792" y="384" width="32" height="32"/>
   <object id="46" name="ground" x="1856" y="368" width="32" height="48"/>
   <object id="47" name="ground" x="2320" y="384" width="32" height="32"/>
@@ -333,8 +333,6 @@
     <property name="y" value="0"/>
    </properties>
   </object>
-  <object id="165" name="ground" x="352" y="368" width="3" height="48"/>
-  <object id="166" name="ground" x="380.667" y="368" width="3" height="48"/>
  </objectgroup>
  <layer id="5" name="graphics" width="176" height="27">
   <data encoding="csv">
