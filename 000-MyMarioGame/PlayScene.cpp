@@ -17,7 +17,7 @@ CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
 	LPGAMESETTING setting = CGameSetting::GetInstance();
-	hud = new CHud(0, 0, setting->hud_width, setting->hud_height);
+	hud = new CHud(0, 0, setting->hud_width, setting->hud_height); //need constant
 	map = NULL;
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
@@ -312,7 +312,7 @@ void CPlayScene::Load()
 
 	//Load mario from CGame when switchScene
 	LPGAME game = CGame::GetInstance();
-	if (player == NULL || game->GetState() >= 0)
+	if (player == NULL || game->GetState() >= 0) //keep time to next secret map
 	{
 		float x_mario, y_mario;
 		game->GetInitialPos(x_mario, y_mario);
@@ -323,11 +323,18 @@ void CPlayScene::Load()
 		player = (CMario*)obj;
 		objects.push_back(obj);
 	}
+	else //init time new map
+	{
+		game->StartTime();
+	}
+
 	DebugOut(L"[INFO] Done loading scene : %s\n", ToLPCWSTR(sceneFilePath));
 }
 
 void CPlayScene::Update(DWORD dt)
 {
+	CGame* game = CGame::GetInstance();
+
 	vector<LPGAMEOBJECT> coObjects;
 	size_t i = 0;
 	for (i; i < objects.size(); i++)
@@ -350,7 +357,6 @@ void CPlayScene::Update(DWORD dt)
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame* game = CGame::GetInstance();
 	cx -= (float)game->GetBackBufferWidth() / 2;
 	cy -= (float)game->GetBackBufferHeight() / 4;
 
@@ -367,6 +373,9 @@ void CPlayScene::Update(DWORD dt)
 	if (cy < t) cy = (float)t;
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
+
+	//update other
+	game->UpdateTime();
 	hud->Update();
 	PurgeDeletedObjects();
 }

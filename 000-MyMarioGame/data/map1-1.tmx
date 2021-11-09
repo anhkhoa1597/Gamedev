@@ -275,22 +275,7 @@
   <object id="139" name="red_goomba" x="256" y="352">
    <point/>
   </object>
-  <object id="140" name="red_goomba" x="224" y="400">
-   <point/>
-  </object>
   <object id="142" name="red_goomba" x="88" y="336">
-   <point/>
-  </object>
-  <object id="144" name="koopa" x="192" y="384">
-   <point/>
-  </object>
-  <object id="146" name="red_wing_koopa" x="128" y="384">
-   <point/>
-  </object>
-  <object id="147" name="wing_koopa" x="96" y="384">
-   <point/>
-  </object>
-  <object id="148" name="wing_goomba" x="296" y="320">
    <point/>
   </object>
   <object id="150" name="red_koopa" x="120" y="320">

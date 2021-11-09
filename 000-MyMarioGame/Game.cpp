@@ -513,7 +513,7 @@ void CGame::SwitchScene()
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
 
 	scenes[current_scene]->Unload();
-
+	Clear();
 	CSprites::GetInstance()->Clear();
 	CAnimations::GetInstance()->Clear();
 
@@ -526,6 +526,18 @@ void CGame::SwitchScene()
 void CGame::InitiateSwitchScene(int scene_id)
 {
 	next_scene = scene_id;
+}
+
+void CGame::ReloadScene()
+{
+	if (current_scene % 2 == 0)
+		InitiateSwitchScene(current_scene - 1);
+	else isReload_scene = true;
+}
+
+void CGame::Clear()
+{
+
 }
 
 CGame::~CGame()

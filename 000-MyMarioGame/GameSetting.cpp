@@ -75,6 +75,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "hud-height") pSetting->QueryIntAttribute("value", &hud_height);
 		else if (name == "tex-bbox") pSetting->QueryIntAttribute("value", &id_tex_bbox);
 		else if (name == "tex-hud-background") pSetting->QueryIntAttribute("value", &id_tex_hud_background);
+		else if (name == "game-time") pSetting->QueryIntAttribute("value", &game_time);
 
 		//unknow setting
 		else

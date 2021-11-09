@@ -23,7 +23,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
+	LPGAME game = CGame::GetInstance();
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	 //reset untouchable timer if untouchable time has passed
@@ -40,10 +40,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else if (state == MARIO_STATE_DIE)
 	{
 		float cx, cy;
-		CGame::GetInstance()->GetCamPos(cx, cy);
-		if (y > cy + CGame::GetInstance()->GetBackBufferHeight())
+		game->GetCamPos(cx, cy);
+		if (y > cy + game->GetBackBufferHeight())
 			Dead();
 	}
+	if (game->GetTime() <= 0) 
+		Dead();
 
 	isOnPlatform = false;
 
@@ -265,7 +267,7 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 void CMario::Dead()
 {
 	CGame::GetInstance()->LifeDown();
-	//CGame::GetInstance()->ReloadScene();
+	CGame::GetInstance()->ReloadScene();
 }
 
 bool CMario::IsGoThroughOutOfPipe()

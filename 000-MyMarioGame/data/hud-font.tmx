@@ -14,12 +14,6 @@
     <sprite name="9" id="90009" left="167" top="31" right="174" bottom="38" texid="40"/>
   </spritegroup>
   <animationgroup>
-    <animation name="time" id="90001">
-      <sprite id="20001" time="300"/>
-      <sprite id="20002" time="200"/>
-      <sprite id="20003" time="200"/>
-      <sprite id="20004" time="200"/>
-    </animation>
     <animation name="hud" id="99000">
       <sprite id="99999" time="100"/>
     </animation>
