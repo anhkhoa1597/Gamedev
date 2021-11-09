@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -140,6 +140,7 @@
     <ClInclude Include="GameSetting.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HeadUpDisplay.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="Map.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="GameSetting.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HeadUpDisplay.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />

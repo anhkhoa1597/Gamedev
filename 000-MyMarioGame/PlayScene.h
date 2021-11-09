@@ -13,6 +13,7 @@
 #include "Tilesets.h"
 #include "Maps.h"
 #include "Ground.h"
+#include "HeadUpDisplay.h"
 //#include "Koopas.h"
 
 class CPlayScene : public CScene
@@ -24,6 +25,7 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	int layerObject = -1; // layer of object to render
 	LPMAP map;
+	LPHUD hud;
 
 	void LoadAssets(string assetFile);
 	void LoadMap(string mapFile);

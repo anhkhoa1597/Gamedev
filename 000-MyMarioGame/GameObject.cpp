@@ -23,7 +23,7 @@ void CGameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect{};
 
-	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(setting->id_tex_bbox);
 
 	float l,t,r,b; 
 

@@ -67,9 +67,15 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mushroom-speed") pSetting->QueryFloatAttribute("value", &mushroom_speed);
 		else if (name == "mushroom-bouncing-speed") pSetting->QueryFloatAttribute("value", &mushroom_bouncing_speed);
 		else if (name == "mushroom-life-up") pSetting->QueryIntAttribute("value", &mushroom_life_up);
-
 		else if (name == "pipe-height") pSetting->QueryIntAttribute("value", &pipe_height);
 		else if (name == "pipe-adjust-width-can-go-through") pSetting->QueryFloatAttribute("value", &pipe_adjust_width_can_go_through);
+		else if (name == "hud-x") pSetting->QueryFloatAttribute("value", &hud_x);
+		else if (name == "hud-y") pSetting->QueryFloatAttribute("value", &hud_y);
+		else if (name == "hud-width") pSetting->QueryIntAttribute("value", &hud_width);
+		else if (name == "hud-height") pSetting->QueryIntAttribute("value", &hud_height);
+		else if (name == "tex-bbox") pSetting->QueryIntAttribute("value", &id_tex_bbox);
+		else if (name == "tex-hud-background") pSetting->QueryIntAttribute("value", &id_tex_hud_background);
+
 		//unknow setting
 		else
 		{
@@ -158,6 +164,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "red-mushroom") id_ani_red_mushroom = id;
 	else if (name == "green-mushroom") id_ani_green_mushroom = id;
 
+	else if (name == "hud") id_ani_hud = id;
 }
 
 

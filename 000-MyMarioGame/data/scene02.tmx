@@ -6,6 +6,8 @@
   <assetgroup>
     <asset source="data\mario.tmx"/>
     <asset source="data\coin.tmx"/>
+    <asset source="data\hud-font.tmx"/>
+
   </assetgroup>
   <map source="data\map1-1a.tmx"/>
 </scene>

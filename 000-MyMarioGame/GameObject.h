@@ -13,8 +13,6 @@
 
 using namespace std;
 
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
-
 enum TypeObject
 {
 	MARIO,
@@ -38,6 +36,7 @@ enum TypeObject
 	DEADZONE,
 	BBRICK, //block brick
 	PLATFORM, //not need to use yet:)
+	HUD,
 };
 
 class CGameObject

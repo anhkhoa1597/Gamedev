@@ -16,6 +16,8 @@ using namespace std;
 CPlayScene::CPlayScene(int id, string filePath) :
 	CScene(id, filePath)
 {
+	LPGAMESETTING setting = CGameSetting::GetInstance();
+	hud = new CHud(0, 0, setting->hud_width, setting->hud_height);
 	map = NULL;
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
@@ -357,7 +359,7 @@ void CPlayScene::Update(DWORD dt)
 	l = 0;
 	t = 0;
 	r = w - game->GetBackBufferWidth();
-	b = h - game->GetBackBufferHeight();
+	b = h - game->GetBackBufferHeight() + hud->GetHeight();
 	
 	if (cx < l) cx = (float)l;
 	if (cx > r) cx = (float)r;
@@ -365,7 +367,7 @@ void CPlayScene::Update(DWORD dt)
 	if (cy < t) cy = (float)t;
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
-
+	hud->Update();
 	PurgeDeletedObjects();
 }
 
@@ -397,6 +399,7 @@ void CPlayScene::Render()
 		}
 		else map->Render(left, top, right, bottom, id); //render tiled-map
 	}
+	hud->Render();
 }
 
 void CPlayScene::AddObject(LPGAMEOBJECT o)

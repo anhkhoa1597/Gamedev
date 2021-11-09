@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!-- test -->
 <asset>
   <spritegroup>
+    <sprite name="hud" id="99999" left="12" top="128" right="243" bottom="155" texid="40"/>
     <sprite name="0" id="90000" left="77" top="31" right="84" bottom="38" texid="40"/>
     <sprite name="1" id="90001" left="87" top="31" right="94" bottom="38" texid="40"/>
     <sprite name="2" id="90002" left="97" top="31" right="104" bottom="38" texid="40"/>
@@ -18,6 +19,9 @@
       <sprite id="20002" time="200"/>
       <sprite id="20003" time="200"/>
       <sprite id="20004" time="200"/>
+    </animation>
+    <animation name="hud" id="99000">
+      <sprite id="99999" time="100"/>
     </animation>
   </animationgroup>
 </asset>

@@ -55,4 +55,13 @@
 
   <setting name="pipe-height" value="32"/>
   <setting name="pipe-adjust-width-can-go-through" value="4"/>
+
+  <setting name="hud-x" value="6"/>
+  <setting name="hud-y" value="28"/>
+  <setting name="hud-width" value="232"/>
+  <setting name="hud-height" value="28"/>
+
+  <setting name="tex-bbox" value="-100"/>
+  <setting name="tex-hud-background" value="-200"/>
+
 </settings>

@@ -30,6 +30,7 @@
 		0.22: update handle collision of koopa, goomba, brick.
 		0.23: add pipe and feature go through it to change map.
 		0.24: updade and fixed mario go through pipe to change map.
+		0.25: update pipe more flexible.
 ================================================================ */
 
 #include <windows.h>
@@ -44,8 +45,8 @@
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 270
-#define SCREEN_HEIGHT 224
+#define SCREEN_WIDTH 300
+#define SCREEN_HEIGHT 270
 //#define SCREEN_WIDTH 2560
 //#define SCREEN_HEIGHT 1600
 

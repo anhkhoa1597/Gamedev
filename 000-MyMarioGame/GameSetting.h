@@ -162,6 +162,16 @@ public:
 #pragma region OTHER
 	int pipe_height = 0;
 	float pipe_adjust_width_can_go_through = 0;
+
+	float hud_x = 0;
+	float hud_y = 0;
+	int hud_width = 0;
+	int hud_height = 0;
+
+	int id_ani_hud = -1;
+
+	int id_tex_bbox = -1;
+	int id_tex_hud_background = -1;
 #pragma endregion
 	//CGameSetting() {};
 	//~CGameSetting() {}
