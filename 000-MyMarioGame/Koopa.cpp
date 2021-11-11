@@ -18,15 +18,15 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	{
 		left = x;
 		top = y;
-		right = left + KOOPA_BBOX_WIDTH - 1;
-		bottom = top + KOOPA_BBOX_HEIGHT - 1;
+		right = left + setting->koopa_width - 1;
+		bottom = top + setting->koopa_height - 1;
 	}
 	else
 	{
 		left = x;
 		top = y;
-		right = left + KOOPA_SHIELD_BBOX_WIDTH - 1;
-		bottom = top + KOOPA_SHIELD_BBOX_HEIGHT - 1;
+		right = left + setting->koopa_width - 1;
+		bottom = top + setting->koopa_shield_height - 1;
 	}
 }
 
@@ -56,8 +56,8 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				{
 					float l, t, r, b;
 					e->obj->GetBoundingBox(l, t, r, b);
-					if (vx < 0 && x + (float)KOOPA_WIDTH / 2 < l) SetState(KOOPA_STATE_WALKING_RIGHT);
-					else if (vx > 0 && x + (float)KOOPA_WIDTH / 2 > r) SetState(KOOPA_STATE_WALKING_LEFT);
+					if (vx < 0 && x + (float)setting->koopa_width / 2 < l) SetState(KOOPA_STATE_WALKING_RIGHT);
+					else if (vx > 0 && x + (float)setting->koopa_width / 2 > r) SetState(KOOPA_STATE_WALKING_LEFT);
 				}
 			}
 		}
@@ -176,7 +176,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float x_mario, y_mario;
 		mario->GetPosition(x_mario, y_mario);
-		y -= KOOPA_STANDING_ADJUST;
+		y -= setting->koopa_height - setting->koopa_shield_height;
 		if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
 		else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
 	}

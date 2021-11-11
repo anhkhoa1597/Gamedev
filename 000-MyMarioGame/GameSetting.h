@@ -70,6 +70,9 @@ public:
 
 #pragma region GOOMBA
 	//constant
+	int goomba_width = 0;
+	int goomba_height = 0;
+	int goomba_height_die = 0;
 	float goomba_gravity = 0;
 	float goomba_walking_speed = 0;
 	float wing_goomba_gravity = 0;
@@ -105,6 +108,9 @@ public:
 	int koopa_shield_standing_timeout = 0;
 	int koopa_die_timeout = 0;
 	int koopa_bounce_die_timeout = 0;
+	int koopa_width = 0;
+	int koopa_height = 0;
+	int koopa_shield_height = 0;
 	//id animation
 	int id_ani_koopa_walking_left = -1;
 	int id_ani_koopa_walking_right = -1;

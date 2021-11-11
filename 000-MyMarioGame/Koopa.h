@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "GameObject.h"
 #include "Mushroom.h"
 #include "Goomba.h"
@@ -27,16 +27,6 @@ enum ShieldTypes
 	SHIELD_DOWN,
 	SHIELD_UP,
 };
-
-#define KOOPA_WIDTH 16
-
-#define KOOPA_BBOX_WIDTH 16
-#define KOOPA_BBOX_HEIGHT 26
-
-#define KOOPA_SHIELD_BBOX_WIDTH 16
-#define KOOPA_SHIELD_BBOX_HEIGHT 16
-
-#define KOOPA_STANDING_ADJUST (KOOPA_BBOX_HEIGHT - KOOPA_SHIELD_BBOX_HEIGHT)
 
 class CKoopa : public CGameObject
 {

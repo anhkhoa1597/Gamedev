@@ -31,6 +31,8 @@
 		0.23: add pipe and feature go through it to change map.
 		0.24: updade and fixed mario go through pipe to change map.
 		0.25: update pipe more flexible.
+		0.26: add hud and font
+		0.27: add feature time out, update dead.
 ================================================================ */
 
 #include <windows.h>

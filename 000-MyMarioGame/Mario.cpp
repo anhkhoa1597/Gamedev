@@ -57,7 +57,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
-		if (e->ny < 0) isOnPlatform = true;
+		if (e->ny < 0)
+		{
+			isOnPlatform = true;
+			current_point = 0;
+		}
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
@@ -123,6 +127,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			vy = -setting->mario_jump_deflect_speed;
 			if (goomba->HasWing()) goomba->LostWing();
 			else goomba->SetState(GOOMBA_STATE_DIE);
+			IncreaseMultiPoint();
 		}
 	}
 	else // hit by Goomba
@@ -155,7 +160,11 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 		{
 			vy = -setting->mario_jump_deflect_speed;
-			if (koopa->HasWing()) koopa->LostWing(); //lost wing if koopa has wing
+			IncreaseMultiPoint();
+			if (koopa->HasWing())
+			{
+				koopa->LostWing(); //lost wing if koopa has wing
+			}
 			else if (koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_LEFT ||
 				koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_RIGHT) //if shield koopa is rolling, it will stop
 			{
@@ -206,12 +215,18 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	CGame::GetInstance()->IncreaseCoin();
+	CGame::GetInstance()->IncreasePoint(50);
+
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-	if (mushroom->GetType() == RMUSHROOM) SetLevel(MARIO_LEVEL_BIG);
+	if (mushroom->GetType() == RMUSHROOM)
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+		CGame::GetInstance()->IncreasePoint(1000);
+	}
 	else if (mushroom->GetType() == GMUSHROOM) 
 	{
 		CGame::GetInstance()->LifeUp(setting->mushroom_life_up);
@@ -568,5 +583,12 @@ void CMario::SetLevel(int level)
 	}
 	this->level = level;
 	CGame::GetInstance()->SetLevel(level);
+}
+
+void CMario::IncreaseMultiPoint()
+{
+	if (current_point <= 7) CGame::GetInstance()->IncreasePoint(points_in_level[current_point]);
+	else CGame::GetInstance()->LifeUp(1);
+	current_point++;
 }
 

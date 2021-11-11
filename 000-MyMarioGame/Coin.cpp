@@ -35,6 +35,7 @@ void CDropCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isDeleted = true;
 			CGame::GetInstance()->IncreaseCoin();
+			CGame::GetInstance()->IncreasePoint(100);
 			return;
 		}
 	}

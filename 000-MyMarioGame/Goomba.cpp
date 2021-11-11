@@ -17,15 +17,15 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 	{
 		left = x;
 		top = y;
-		right = left + GOOMBA_BBOX_WIDTH - 1;
-		bottom = top + GOOMBA_BBOX_HEIGHT - 1;
+		right = left + setting->goomba_width - 1;
+		bottom = top + setting->goomba_height_die - 1;
 	}
 	else
 	{ 
 		left = x;
 		top = y;
-		right = left + GOOMBA_BBOX_WIDTH - 1;
-		bottom = top + GOOMBA_BBOX_HEIGHT - 1;
+		right = left + setting->goomba_width - 1;
+		bottom = top + setting->goomba_height - 1;
 	}
 }
 
@@ -75,8 +75,8 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				float l, t, r, b;
 				e->obj->GetBoundingBox(l, t, r, b);
-				if (vx < 0 && x + (float)GOOMBA_WIDTH / 2 < l) SetState(GOOMBA_STATE_WALKING_RIGHT);
-				else if (vx > 0 && x + (float)GOOMBA_WIDTH / 2 > r) SetState(GOOMBA_STATE_WALKING_LEFT);
+				if (vx < 0 && x + (float)setting->goomba_width / 2 < l) SetState(GOOMBA_STATE_WALKING_RIGHT);
+				else if (vx > 0 && x + (float)setting->goomba_width / 2 > r) SetState(GOOMBA_STATE_WALKING_LEFT);
 			}
 		}
 	}

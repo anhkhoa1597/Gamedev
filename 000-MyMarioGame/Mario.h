@@ -66,6 +66,9 @@ class CMario : public CGameObject
 	float initial_y;
 	int height;
 
+	int current_point = 0;
+	vector<int> points_in_level = { 100, 200, 400, 800, 1000, 2000, 4000, 8000 };
+
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -89,6 +92,7 @@ public:
 	bool IsGoOutOfPipe();
 	void SetState(int state);
 	void SetLevel(int l);
+	void IncreaseMultiPoint();
 	void Dead();
 	void DeadImmediately();
 	bool IsBlockingKeyboard() { return isBlockingKeyboard; }

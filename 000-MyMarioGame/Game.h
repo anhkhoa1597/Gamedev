@@ -129,10 +129,17 @@ public:
 	//mario
 	bool IsMarioGoThroughPipe() { return isMarioGoThroughPipe; }
 	void SetMarioGoThroughPipe(bool isMarioGoThroughPipe) { this->isMarioGoThroughPipe = isMarioGoThroughPipe; }
-	void IncreaseCoin() { mario_coin++; }
+	void IncreaseCoin() 
+	{ mario_coin++; 
+		if (mario_coin == 100)
+		{
+			mario_coin = 0;
+			LifeUp(1);
+		}
+	}
 	int GetCoin() { return mario_coin; }
-	void SetPoint(int point) { mario_point = point; }
 	int GetPoint() { return mario_point; }
+	void IncreasePoint(int point) { mario_point += point; }
 	int GetLife() { return mario_life; }
 	void LifeUp(int life) { mario_life += life; }
 	void LifeDown() { mario_life--; }

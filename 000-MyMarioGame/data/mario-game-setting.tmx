@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
+  <setting name="game-time" value="10"/> 
+  <setting name="tex-bbox" value="-100"/>
+  <setting name="tex-hud-background" value="-200"/>
+  <setting name="sprite-id-hud-and-font" value="90000"/>
+
   <setting name="mario-width" value="15"/>
   <setting name="mario-big-height" value="27"/>
   <setting name="mario-small-height" value="16"/>
@@ -16,6 +21,9 @@
   <setting name="mario-untouchabletime" value="2500"/>
   <setting name="mario-life" value="99"/>
 
+  <setting name="goomba-width" value="16"/>
+  <setting name="goomba-height" value="15"/>
+  <setting name="goomba-height-die" value="7"/>
   <setting name="goomba-gravity" value="0.002"/>
   <setting name="goomba-walking-speed" value="0.05"/>
   <setting name="wing-goomba-gravity" value="0.0005"/>
@@ -38,6 +46,9 @@
   <setting name="koopa-shield-rolling-speed" value="0.2"/>
   <setting name="koopa-shield-timeout" value="4000"/>
   <setting name="koopa-shield-standing-timeout" value="1000"/>
+  <setting name="koopa-width" value="16"/>
+  <setting name="koopa-height" value="26"/>
+  <setting name="koopa-shield-height" value="16"/>
 
   <setting name="brick-bouncing-speed" value="0.2"/>
   <setting name="brick-bounce-height" value="8"/>
@@ -55,17 +66,10 @@
   <setting name="pipe-height" value="32"/>
   <setting name="pipe-adjust-width-can-go-through" value="4"/>
 
-  <!-- time (milisecon) --> 
-  <setting name="game-time" value="10"/> 
-
   <setting name="hud-x" value="6"/>
   <setting name="hud-y" value="28"/>
   <setting name="hud-width" value="232"/>
   <setting name="hud-height" value="28"/>
-
-  <setting name="tex-bbox" value="-100"/>
-  <setting name="tex-hud-background" value="-200"/>
-  <setting name="sprite-id-hud-and-font" value="90000"/>
   <setting name="font-width" value="8"/>
   <setting name="font-time-x" value="124"/>
   <setting name="font-time-y" value="15"/>

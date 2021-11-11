@@ -12,12 +12,6 @@ enum GoombaStates
 	GOOMBA_STATE_DIE,
 };
 
-#define GOOMBA_WIDTH 16
-
-#define GOOMBA_BBOX_WIDTH 16
-#define GOOMBA_BBOX_HEIGHT 15
-#define GOOMBA_BBOX_HEIGHT_DIE 7
-
 class CGoomba : public CGameObject
 {
 protected:

@@ -23,7 +23,6 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-big-height") pSetting->QueryIntAttribute("value", &mario_big_height);
 		else if (name == "mario-small-height") pSetting->QueryIntAttribute("value", &mario_small_height);
 		else if (name == "mario-sitting-height") pSetting->QueryIntAttribute("value", &mario_sitting_height);
-
 		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &mario_running_speed);
 		else if (name == "mario-tele-speed") pSetting->QueryFloatAttribute("value", &mario_tele_speed);
 		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &mario_accel_walk_x);
@@ -34,6 +33,10 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &mario_jump_deflect_speed);
 		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &mario_untouchable_time);
 		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &mario_life);
+		
+		else if (name == "goomba-width") pSetting->QueryIntAttribute("value", &goomba_width);
+		else if (name == "goomba-height") pSetting->QueryIntAttribute("value", &goomba_height);
+		else if (name == "goomba-height-die") pSetting->QueryIntAttribute("value", &goomba_height_die);
 		else if (name == "goomba-gravity") pSetting->QueryFloatAttribute("value", &goomba_gravity);
 		else if (name == "goomba-walking-speed") pSetting->QueryFloatAttribute("value", &goomba_walking_speed);
 		else if (name == "wing-goomba-gravity") pSetting->QueryFloatAttribute("value", &wing_goomba_gravity);
@@ -57,18 +60,26 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "koopa-shield-standing-timeout") pSetting->QueryIntAttribute("value", &koopa_shield_standing_timeout);
 		else if (name == "koopa-die-timeout") pSetting->QueryIntAttribute("value", &koopa_die_timeout);
 		else if (name == "koopa-bounce-die-timeout") pSetting->QueryIntAttribute("value", &koopa_bounce_die_timeout);
+		else if (name == "koopa-width") pSetting->QueryIntAttribute("value", &koopa_width);
+		else if (name == "koopa-height") pSetting->QueryIntAttribute("value", &koopa_height);
+		else if (name == "koopa-shield-height") pSetting->QueryIntAttribute("value", &koopa_shield_height);
+
 		else if (name == "brick-bouncing-speed") pSetting->QueryFloatAttribute("value", &brick_bouncing_speed);
 		else if (name == "brick-bounce-height") pSetting->QueryIntAttribute("value", &brick_bounce_height);
 		else if (name == "brick-number-bounce-of-multi-coin") pSetting->QueryIntAttribute("value", &brick_number_bounce_of_multi_coin);
+		
 		else if (name == "coin-bouncing-speed") pSetting->QueryFloatAttribute("value", &coin_bouncing_speed);
 		else if (name == "coin-bounce-height") pSetting->QueryIntAttribute("value", &coin_bounce_height);
 		else if (name == "coin-drop-height") pSetting->QueryIntAttribute("value", &coin_drop_height);
+		
 		else if (name == "mushroom-gravity") pSetting->QueryFloatAttribute("value", &mushroom_gravity);
 		else if (name == "mushroom-speed") pSetting->QueryFloatAttribute("value", &mushroom_speed);
 		else if (name == "mushroom-bouncing-speed") pSetting->QueryFloatAttribute("value", &mushroom_bouncing_speed);
 		else if (name == "mushroom-life-up") pSetting->QueryIntAttribute("value", &mushroom_life_up);
+		
 		else if (name == "pipe-height") pSetting->QueryIntAttribute("value", &pipe_height);
 		else if (name == "pipe-adjust-width-can-go-through") pSetting->QueryFloatAttribute("value", &pipe_adjust_width_can_go_through);
+		
 		else if (name == "hud-x") pSetting->QueryFloatAttribute("value", &hud_x);
 		else if (name == "hud-y") pSetting->QueryFloatAttribute("value", &hud_y);
 		else if (name == "hud-width") pSetting->QueryIntAttribute("value", &hud_width);
@@ -92,7 +103,6 @@ void CGameSetting::Load(string settingFile)
 		else
 		{
 			DebugOut(L"[ERROR] Unknow setting: %s \n", ToLPCWSTR(name));
-			return;
 		}
 		pSetting = pSetting->NextSiblingElement("setting");
 	}

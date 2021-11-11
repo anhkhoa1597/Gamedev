@@ -378,6 +378,7 @@ void CPlayScene::Update(DWORD dt)
 		DebugOut(L"Time Out, mario die.\n");
 		CMario* mario = (CMario*)player;
 		mario->Dead();
+		game->StartTime();
 	}
 	hud->Update();
 	PurgeDeletedObjects();
