@@ -506,16 +506,14 @@ void CGame::Load(string gameFile)
 
 void CGame::SwitchScene()
 {
-	DebugOutTitle(L"Coins: %d	Life: %d", mario_coin, mario_life);
-
 	if (next_scene < 0 || (next_scene == current_scene && !isReload_scene)) return;
 	isReload_scene = false;
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
 
 	scenes[current_scene]->Unload();
-	Clear();
 	CSprites::GetInstance()->Clear();
 	CAnimations::GetInstance()->Clear();
+	CMaps::GetInstance()->Clear();
 
 	current_scene = next_scene;
 	LPSCENE s = scenes[next_scene];
@@ -533,11 +531,6 @@ void CGame::ReloadScene()
 	if (current_scene % 2 == 0)
 		InitiateSwitchScene(current_scene - 1);
 	else isReload_scene = true;
-}
-
-void CGame::Clear()
-{
-
 }
 
 CGame::~CGame()

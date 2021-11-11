@@ -6,17 +6,17 @@
 
 CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
 {
+	initial_y = y;
 	isSitting = false;
 	maxVx = 0.0f;
 	ax = 0.0f;
 	ay = setting->mario_gravity;
 	level = MARIO_LEVEL_SMALL;
-	height = 16;
+	height = setting->mario_small_height;
 	untouchable = 0;
 	untouchable_start = -1;
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
-	isGoThroughPipe = false;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -32,12 +32,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
-	{
-		if (!isGoThroughPipe && IsGoThroughOutOfPipe()) 
-			SetState(MARIO_STATE_NORMAL);
-	}
-	else if (state == MARIO_STATE_DIE)
+	if (IsGoOutOfPipe()) SetState(MARIO_STATE_NORMAL);
+	if (state == MARIO_STATE_DIE)
 	{
 		float cx, cy;
 		game->GetCamPos(cx, cy);
@@ -145,9 +141,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					//SetState(MARIO_STATE_DIE);
-					StartUntouchable();
-					CGame::GetInstance()->LifeDown();
+					Dead();
 				}
 			}
 		}
@@ -158,38 +152,40 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
 
-	if (e->ny < 0)
+	if (e->ny < 0) //jump on top koopa
 	{
 		if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 		{
 			vy = -setting->mario_jump_deflect_speed;
-			if (koopa->HasWing()) koopa->LostWing();
-			else if (koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_LEFT || koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_RIGHT)
-				koopa->SetState(KOOPA_STATE_SHIELD_IDLE);
-			else if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE)
+			if (koopa->HasWing()) koopa->LostWing(); //lost wing if koopa has wing
+			else if (koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_LEFT ||
+				koopa->GetState() == KOOPA_STATE_SHIELD_ROLLING_RIGHT) //if shield koopa is rolling, it will stop
 			{
-				SetState(MARIO_STATE_KICK);
+				koopa->SetState(KOOPA_STATE_SHIELD_IDLE);
+			}
+			else if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE) //kick shield koopa to roll
+			{
 				float x_koopa, y_koopa;
 				koopa->GetPosition(x_koopa, y_koopa);
 				if (x > x_koopa) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
 				else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
 			}
-			else if (koopa->GetTypeShield() == NO_SHIELD)
+			else if (koopa->GetTypeShield() == NO_SHIELD)// normal koopa will change state to shield
 			{
 				koopa->SetTypeShield(SHIELD_DOWN);
 				koopa->SetState(KOOPA_STATE_SHIELD_IDLE);
 			}
 		}
 	}
-	else
+	else //hit koopa from left, right, bottom
 	{
-		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE)
+		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE) //idle shield will roll
 		{
 			SetState(MARIO_STATE_KICK);
 			if (e->nx < 0) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
 			else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
 		}
-		else if (untouchable == 0)
+		else if (untouchable == 0) //hit by koopa
 		{
 			if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 			{
@@ -201,10 +197,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					//SetState(MARIO_STATE_DIE);
-					StartUntouchable();
-					CGame::GetInstance()->LifeDown();
-
+					Dead();
 				}
 			}
 		}
@@ -230,18 +223,16 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
-	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP)
+	if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP) //only switch scene when mario go through pipe
 	{
-		CGame::GetInstance()->SetLevel(level);
 		CPortal* p = (CPortal*)e->obj;
-		p->SetMarioInNextScene();
 		CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 	}
 }
 
 void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
 {
-	Dead();
+	DeadImmediately();
 }
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
@@ -252,13 +243,13 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 	pipe->GetZoneToGoThrough(left, right);
 	if (e->ny < 0 && game->IsKeyDown(DIK_DOWN) && x >= left && x + setting->mario_width <= right)
 	{
-		isGoThroughPipe = true;
+		game->SetMarioGoThroughPipe(true);
 		SetState(MARIO_STATE_GO_DOWN);
 		pipe->SetNoBlocking();
 	}
 	else if (e->ny > 0 && game->IsKeyDown(DIK_UP) && x >= left && x + setting->mario_width <= right)
 	{
-		isGoThroughPipe = true;
+		game->SetMarioGoThroughPipe(true);
 		SetState(MARIO_STATE_GO_UP); 
 		pipe->SetNoBlocking();
 	}
@@ -266,17 +257,20 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 
 void CMario::Dead()
 {
-	CGame::GetInstance()->LifeDown();
-	CGame::GetInstance()->ReloadScene();
+	//SetState(MARIO_STATE_DIE);
+	DeadImmediately();
 }
 
-bool CMario::IsGoThroughOutOfPipe()
+void CMario::DeadImmediately()
 {
-	float x_mario, y_mario;
-	CGame::GetInstance()->GetInitialPos(x_mario, y_mario);
-	if ((state == MARIO_STATE_GO_DOWN && y >= y_mario + setting->pipe_height) || (state == MARIO_STATE_GO_UP && y < y_mario - height))
+	CGame::GetInstance()->LifeDown();
+	//CGame::GetInstance()->ReloadScene();
+}
+
+bool CMario::IsGoOutOfPipe()
+{
+	if ((state == MARIO_STATE_GO_DOWN && y >= initial_y + setting->pipe_height) || (state == MARIO_STATE_GO_UP && y < initial_y - height))
 	{
-		DebugOut(L"y %.2f, y_mario %.2f, height %d\n", y, y_mario, height);
 		return true;
 	}
 	return false;
@@ -508,7 +502,7 @@ void CMario::SetState(int state)
 		isBlockingKeyboard = false;
 		isSitting = false;
 		ay = setting->mario_gravity;
-		isGoThroughPipe = false;
+		CGame::GetInstance()->SetMarioGoThroughPipe(false);
 		break;
 	}
 	
@@ -540,9 +534,10 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	}
 }
 
-void CMario::SetLevel(int l)
+void CMario::SetLevel(int level)
 {
-	switch (level)
+	//current level
+	switch (this->level)
 	{
 	case MARIO_LEVEL_SMALL:
 		y -= (setting->mario_big_height - setting->mario_small_height);
@@ -556,15 +551,24 @@ void CMario::SetLevel(int l)
 	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
 		break;
 	}
-	switch (l)
+
+	//next level
+	switch (level)
 	{
 	case MARIO_LEVEL_SMALL:
-		height = 16;
+		height = setting->mario_small_height;
 		break;
 	case MARIO_LEVEL_BIG:
-		height = 27;
+		height = setting->mario_big_height;
+		break;
+	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
+	case MARIO_LEVEL_FOX: //need create FOX MARIO
+	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
+	case MARIO_LEVEL_FROG: //need create FROG MARIO
+	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
 		break;
 	}
-	level = l;
+	this->level = level;
+	CGame::GetInstance()->SetLevel(level);
 }
 

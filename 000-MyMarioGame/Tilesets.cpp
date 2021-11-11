@@ -17,8 +17,6 @@ void Tilesets::Add(int tex_id, int tile_width, int tile_height, int spacing, int
 		DebugOut(L"[ERROR] Texture ID %d not found!\n", tex_id);
 		return;
 	}
-	if (tilesets[tex_id] != NULL)
-		DebugOut(L"[WARNING] Tileset %d already exists\n", tex_id);
 
 	LPTileset tileset = new Tileset(tex, tile_width, tile_height, spacing, tile_count, column);
 	tilesets[tex_id] = tileset;

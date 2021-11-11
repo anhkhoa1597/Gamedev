@@ -62,10 +62,10 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable;
 	ULONGLONG untouchable_start;
-
 	BOOLEAN isOnPlatform;
+	float initial_y;
 	int height;
-	bool isGoThroughPipe;
+
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -80,24 +80,20 @@ class CMario : public CGameObject
 
 public:
 	CMario(float x, float y);
-
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	int IsCollidable() { return (state != MARIO_STATE_DIE); }
+	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+
+	bool IsGoOutOfPipe();
 	void SetState(int state);
 	void SetLevel(int l);
-	
 	void Dead();
-	int IsCollidable()
-	{ 
-		return (state != MARIO_STATE_DIE); 
-	}
-
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	void DeadImmediately();
 	bool IsBlockingKeyboard() { return isBlockingKeyboard; }
-	bool IsGoThroughOutOfPipe();
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

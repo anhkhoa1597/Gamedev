@@ -44,7 +44,7 @@ void CHud::Render()
 	int time_hundreds = time / 100;
 	int time_dozens = (time / 10) % 10;
 	int time_unit = time % 10;
-	DebugOut(L"time %d\n", time);
+	//DebugOut(L"time %d\n", time);
 	sprites->Get(90000 + time_hundreds)->Draw(x + 124, y + 15); //need constant
 	sprites->Get(90000 + time_dozens)->Draw(x + 132, y + 15); //need constant
 	sprites->Get(90000 + time_unit)->Draw(x + 140, y + 15); //need constant

@@ -59,14 +59,15 @@ class CGame
 	bool isReload_scene = false;
 
 	//data mario
-	float initialX = 0;
-	float initialY = 0;
-	int state = -1;
+	//float initialX = 0;
+	//float initialY = 0;
+
+	bool isMarioGoThroughPipe = false;
 	int current_map = -1; //need this feature
 	int mario_life = 0;
 	int mario_coin = 0;
 	int mario_point = 0;
-	int level = 0;
+	int mario_level = 0;
 	ULONGLONG time = 0; // need constant
 	ULONGLONG start_time = 0;
 	ULONGLONG max_time = 0;
@@ -124,14 +125,19 @@ public:
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
 	void ReloadScene();
+
+	//mario
+	bool IsMarioGoThroughPipe() { return isMarioGoThroughPipe; }
+	void SetMarioGoThroughPipe(bool isMarioGoThroughPipe) { this->isMarioGoThroughPipe = isMarioGoThroughPipe; }
 	void IncreaseCoin() { mario_coin++; }
-	void LifeUp(int life) { mario_life += life; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
-	void LifeDown() { mario_life--; DebugOut(L">>> Mario Life Left: %d >>> \n", mario_life); }
-	void GetInitialPos(float& x, float& y) { x = initialX; y = initialY; }
-	int GetState() { return state; }
-	void SetLevel(int level) { this->level = level; }
-	int GetLevel() { return level; }
 	int GetCoin() { return mario_coin; }
+	void SetPoint(int point) { mario_point = point; }
+	int GetPoint() { return mario_point; }
+	int GetLife() { return mario_life; }
+	void LifeUp(int life) { mario_life += life; }
+	void LifeDown() { mario_life--; }
+	int GetLevel() { return mario_level; }
+	void SetLevel(int level) { mario_level = level; }
 	void StartTime() { start_time = GetTickCount64(); max_time = CGameSetting::GetInstance()->game_time; }
 	void UpdateTime() {
 		if (max_time - (GetTickCount64() - start_time) >= 0)
@@ -139,8 +145,7 @@ public:
 		else time = 0;
 	}
 	ULONGLONG GetTime() { return time; }
-	void Clear();
-	void SetMario(float initialX, float initialY, int state) { this->initialX = initialX; this->initialY = initialY; this->state = state; }
+
 	~CGame();
 };
 typedef CGame* LPGAME;

@@ -11,15 +11,10 @@ class CPortal : public CGameObject
 
 	int width;
 	int height;
-
-	float x_mario;
-	float y_mario;
-	int state_mario;
 public:
-	CPortal(float x, float y, int width, int height, int scene_id, float x_mario, float y_mario, int state_mario);
+	CPortal(float x, float y, int width, int height, int scene_id);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	void SetMarioInNextScene();
-	int GetSceneId() { return scene_id; }
+	int GetSceneId();
 	int IsBlocking() { return 0; }
 };

@@ -4,7 +4,6 @@
   <setting name="mario-big-height" value="27"/>
   <setting name="mario-small-height" value="16"/>
   <setting name="mario-sitting-height" value="18"/>
-
   <setting name="mario-walking-speed" value="0.1"/>
   <setting name="mario-tele-speed" value="0.02"/>
   <setting name="mario-running-speed" value="0.2"/>
@@ -57,7 +56,7 @@
   <setting name="pipe-adjust-width-can-go-through" value="4"/>
 
   <!-- time (milisecon) --> 
-  <setting name="game-time" value="10000"/> 
+  <setting name="game-time" value="100000"/> 
 
   <setting name="hud-x" value="6"/>
   <setting name="hud-y" value="28"/>

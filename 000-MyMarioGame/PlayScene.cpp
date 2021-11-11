@@ -137,6 +137,7 @@ void CPlayScene::LoadMap(string mapFile)
 	}
 	LPMAP map = new CMap(width, height, tileWidth, tileHeight, nextLayerId);
 	
+	LPGAME game = CGame::GetInstance();
 	//Load extra properties
 	tinyxml2::XMLElement* pProperty = pMap->FirstChildElement("properties")->FirstChildElement("property");
 	while (pProperty != nullptr)
@@ -188,15 +189,35 @@ void CPlayScene::LoadMap(string mapFile)
 		CGameObject* obj = NULL;
 		if (name == "mario")
 		{
-			if (CGame::GetInstance()->GetState() >= 0 || player != NULL)
+			string type = pObject->Attribute("type");
+			if (game->IsMarioGoThroughPipe()) //specific mario go through pipe
+			{
+				int state = -1;
+				if (type == "start")
+				{
+					pObject = pObject->NextSiblingElement("object");
+					continue;
+				}
+				else if (type == "go_up") state = MARIO_STATE_GO_UP;
+				else if (type == "go_down") state = MARIO_STATE_GO_DOWN;
+				else DebugOut(L"[ERROR] Invalid Type of mario: %s\n", ToLPCWSTR(type));
+				obj = new CMario(x, y);
+				obj->SetState(state);
+				obj->SetLevel(game->GetLevel());
+				player = (CMario*)obj;
+				DebugOut(L"[INFO] Player object has been created!\n");
+			}
+			else if (!game->IsMarioGoThroughPipe() && player == NULL) //normal mario starting map
+			{
+				obj = new CMario(x, y);
+				player = (CMario*)obj;
+				DebugOut(L"[INFO] Player object has been created!\n");
+			}
+			else
 			{
 				pObject = pObject->NextSiblingElement("object");
 				continue;
 			}
-			obj = new CMario(x, y);
-			player = (CMario*)obj;
-
-			DebugOut(L"[INFO] Player object has been created!\n");
 		}
 		else if (name == "goomba") obj = new CGoomba(x, y, GOOMBA);
 		else if (name == "wing_goomba") obj = new CGoomba(x, y, GOOMBA, true);
@@ -237,27 +258,15 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "position") {}
 		else if (name == "portal")
 		{
-			int sceneId = 0;
-			int state_mario = -1;
-			float x_mario = 0;
-			float y_mario = 0;
+			int sceneId = -1;
 			tinyxml2::XMLElement* pProperty = pObject->FirstChildElement("properties")->FirstChildElement("property");
-			while (pProperty != nullptr)
+			if (pProperty != nullptr)
 			{
 				string name = pProperty->Attribute("name");
-				if (name == "state")
-				{
-					string value = pProperty->Attribute("value");
-					if (value == "go_down") state_mario = MARIO_STATE_GO_DOWN;
-					else if (value == "go_up") state_mario = MARIO_STATE_GO_UP;
-				}
-				else if (name == "x") pProperty->QueryFloatAttribute("value", &x_mario);
-				else if (name == "y") pProperty->QueryFloatAttribute("value", &y_mario);
-				else if (name == "scene") pProperty->QueryIntAttribute("value", &sceneId);
-
-				pProperty = pProperty->NextSiblingElement("property");
+				if (name == "scene") pProperty->QueryIntAttribute("value", &sceneId);
+				else DebugOut(L"[ERROR] Invalid property: %s\n", ToLPCWSTR(name));
 			}
-			obj = new CPortal(x, y, width, height, sceneId, x_mario, y_mario, state_mario);
+			obj = new CPortal(x, y, width, height, sceneId);
 		}
 		else if (name == "dead_zone") obj = new CGround(x, y, width, height);
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
@@ -310,20 +319,8 @@ void CPlayScene::Load()
 		LoadMap(path);
 	}
 
-	//Load mario from CGame when switchScene
 	LPGAME game = CGame::GetInstance();
-	if (player == NULL || game->GetState() >= 0) //keep time to next secret map
-	{
-		float x_mario, y_mario;
-		game->GetInitialPos(x_mario, y_mario);
-		CGameObject* obj = new CMario(x_mario, y_mario);
-		obj->SetState(game->GetState());
-		obj->SetLevel(game->GetLevel());
-		obj->SetPosition(x_mario, y_mario);
-		player = (CMario*)obj;
-		objects.push_back(obj);
-	}
-	else //init time new map
+	if (!game->IsMarioGoThroughPipe()) //start time when new map,
 	{
 		game->StartTime();
 	}

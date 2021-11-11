@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data>
-  <setting/>
-  <assetgroup>
-    <scene id="0" type="0" source="intro.tmx"/>
-    <scene id="1" type="1" source="scene01.tmx"/>
-    <scene id="2" type="1" source="scene02.tmx"/>
-  </assetgroup>
-  <objectgroup>
-     
-  </objectgroup>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="7">
+ <layer id="1" name="Tile Layer 1" width="16" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
+ </layer>
+ <objectgroup id="3" name="objects">
+  <object id="1" name="ground" x="0" y="184" width="256" height="40"/>
+  <object id="3" name="wall" x="-16" y="0" width="16" height="192"/>
+  <object id="5" name="wall" x="0" y="-16" width="256" height="16"/>
+  <object id="6" name="wall" x="256" y="0" width="16" height="192"/>
+ </objectgroup>
+</map>
