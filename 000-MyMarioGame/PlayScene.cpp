@@ -247,6 +247,7 @@ void CPlayScene::LoadMap(string mapFile)
 					else if (drop == "multi_coin") item = MCOIN;
 					else if (drop == "red_mushroom") item = RMUSHROOM;
 					else if (drop == "green_mushroom") item = GMUSHROOM;
+					else if (drop == "pause") item = PAUSE;
 					else DebugOut(L"[ERROR] Invalid item: %s\n", ToLPCWSTR(drop));
 				}
 			}

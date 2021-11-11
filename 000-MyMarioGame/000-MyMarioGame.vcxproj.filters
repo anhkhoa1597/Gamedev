@@ -117,6 +117,12 @@
     <ClInclude Include="Deadzone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeadUpDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -207,6 +213,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Deadzone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadUpDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pause.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

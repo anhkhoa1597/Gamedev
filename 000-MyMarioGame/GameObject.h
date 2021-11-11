@@ -37,6 +37,7 @@ enum TypeObject
 	BBRICK, //block brick
 	PLATFORM, //not need to use yet:)
 	HUD,
+	PAUSE,
 };
 
 class CGameObject

@@ -183,7 +183,7 @@
   <object id="89" name="brick" x="2016" y="400" width="16" height="16"/>
   <object id="90" name="s_brick" x="2032" y="368" width="16" height="16">
    <properties>
-    <property name="drop" value="green_mushroom"/>
+    <property name="drop" value="pause"/>
    </properties>
   </object>
   <object id="91" name="brick" x="2032" y="384" width="16" height="16"/>

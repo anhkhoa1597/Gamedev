@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animations.h"
 #include "Coin.h"
+#include "Pause.h"
 #include "Utils.h"
 
 enum BrickStates

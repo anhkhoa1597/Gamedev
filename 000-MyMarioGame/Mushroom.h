@@ -20,13 +20,12 @@ protected:
 	int width;
 	int height;
 	float initialPositionY;
-	bool isColliable;
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 
-	int IsCollidable() { return isColliable; };
+	int IsCollidable() { return true; };
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);

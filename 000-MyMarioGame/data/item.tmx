@@ -2,15 +2,25 @@
 <asset>
   <properties/>
   <spritegroup>
-    <sprite name="red-mushroom" id="81000" left="156" top="121" right="171" bottom="136" texid="20"/>
-    <sprite name="green-mushroom" id="82000" left="286" top="121" right="301" bottom="136" texid="20"/>
+    <sprite name="red-mushroom" id="81001" left="156" top="121" right="171" bottom="136" texid="20"/>
+    <sprite name="green-mushroom" id="82001" left="286" top="121" right="301" bottom="136" texid="20"/>
+    <sprite name="pause" id="83001" left="156" top="144" right="171" bottom="159" texid="20"/>
+    <sprite name="pause" id="83002" left="178" top="144" right="193" bottom="159" texid="20"/>
+    <sprite name="pause-be-hitted" id="83101" left="200" top="144" right="215" bottom="159" texid="20"/>
   </spritegroup>
   <animationgroup>
     <animation name="red-mushroom" id="8100">
-      <sprite id="81000" time="300"/>
+      <sprite id="81001" time="300"/>
     </animation>
     <animation name="green-mushroom" id="8200">
-      <sprite id="82000" time="300"/>
+      <sprite id="82001" time="300"/>
+    </animation>
+    <animation name="pause" id="8300">
+      <sprite id="83001" time="100"/>
+      <sprite id="83002" time="100"/>
+    </animation>
+    <animation name="pause-be-hitted" id="8400">
+      <sprite id="83101" time="300"/>
     </animation>
   </animationgroup>
 </asset>

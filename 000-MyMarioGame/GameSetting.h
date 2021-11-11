@@ -187,9 +187,19 @@ public:
 	float font_world_y = 0;
 #pragma endregion
 
-#pragma region OTHER
+#pragma region PIPE
 	int pipe_height = 0;
 	float pipe_adjust_width_can_go_through = 0;
+#pragma endregion
+
+#pragma region PAUSE
+	int pause_timeout = 0;
+
+	int id_ani_pause = -1;
+	int id_ani_pause_be_hitted = -1;
+#pragma endregion
+
+#pragma region OTHER
 	int game_time = 0;
 #pragma endregion
 	//CGameSetting() {};

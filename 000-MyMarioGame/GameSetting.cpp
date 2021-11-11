@@ -99,6 +99,7 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "font-life-y") pSetting->QueryFloatAttribute("value", &font_life_y);
 		else if (name == "font-world-x") pSetting->QueryFloatAttribute("value", &font_world_x);
 		else if (name == "font-world-y") pSetting->QueryFloatAttribute("value", &font_world_y);
+		else if (name == "pause-timeout")  pSetting->QueryIntAttribute("value", &pause_timeout);
 		//unknow setting
 		else
 		{
@@ -185,8 +186,11 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	//mushroom
 	else if (name == "red-mushroom") id_ani_red_mushroom = id;
 	else if (name == "green-mushroom") id_ani_green_mushroom = id;
-
+	//hud
 	else if (name == "hud") id_ani_hud = id;
+	//pause
+	else if (name == "pause") id_ani_pause = id;
+	else if (name == "pause-be-hitted") id_ani_pause_be_hitted = id;
 }
 
 

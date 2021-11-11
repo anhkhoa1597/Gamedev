@@ -51,6 +51,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else if (item == RMUSHROOM) { object = new CMushroom(x, y, width, height, RMUSHROOM); }
 		else if (item == GMUSHROOM) { object = new CMushroom(x, y, width, height, GMUSHROOM); }
 		else if (item == MCOIN) { object = new CDropCoin(x, y, width, height); }
+		else if (item == PAUSE) { object = new CPause(x, y - 16, width, height); }
 		else if (item == -1) { return; }
 		else
 		{
@@ -99,6 +100,7 @@ void CBrick::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			if (x_goomba < x) goomba->SetSpeed(-setting->brick_bouncing_speed, 0);
 			else  goomba->SetSpeed(setting->brick_bouncing_speed, 0);
 			goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
+			CGame::GetInstance()->IncreasePoint(200);
 		}
 	}
 }
@@ -120,7 +122,7 @@ void CBrick::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				if (x_koopa > x) koopa->SetState(KOOPA_STATE_BOUNCE_RIGHT);
 				else koopa->SetState(KOOPA_STATE_BOUNCE_LEFT);
 			}
-				
+			CGame::GetInstance()->IncreasePoint(200);
 		}
 	}
 }

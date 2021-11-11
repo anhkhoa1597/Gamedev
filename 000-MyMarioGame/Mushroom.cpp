@@ -10,7 +10,6 @@ CMushroom::CMushroom(float x, float y, int width, int height, int type) : CGameO
 	this->width = width;
 	this->height = height;
 	this->initialPositionY = y;
-	isColliable = true;
 	SetState(MUSHROOM_STATE_DROP);
 }
 

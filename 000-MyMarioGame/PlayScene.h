@@ -9,6 +9,7 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "Pipe.h"
+#include "Pause.h"
 #include "Mushroom.h"
 #include "Tilesets.h"
 #include "Maps.h"

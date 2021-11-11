@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <setting name="game-time" value="10"/> 
+  <setting name="game-time" value="100"/> 
   <setting name="tex-bbox" value="-100"/>
   <setting name="tex-hud-background" value="-200"/>
   <setting name="sprite-id-hud-and-font" value="90000"/>
@@ -81,4 +81,7 @@
   <setting name="font-life-y" value="15"/>
   <setting name="font-world-x" value="37"/>
   <setting name="font-world-y" value="7"/>
+
+  <setting name="pause-timeout" value="10"/>
+
 </settings>
