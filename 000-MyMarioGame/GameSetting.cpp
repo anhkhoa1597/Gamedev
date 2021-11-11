@@ -76,7 +76,18 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "tex-bbox") pSetting->QueryIntAttribute("value", &id_tex_bbox);
 		else if (name == "tex-hud-background") pSetting->QueryIntAttribute("value", &id_tex_hud_background);
 		else if (name == "game-time") pSetting->QueryIntAttribute("value", &game_time);
-
+		else if (name == "sprite-id-hud-and-font") pSetting->QueryIntAttribute("value", &sprite_id_hud_and_font);
+		else if (name == "font-width") pSetting->QueryIntAttribute("value", &font_width);
+		else if (name == "font-time-x") pSetting->QueryFloatAttribute("value", &font_time_x);
+		else if (name == "font-time-y") pSetting->QueryFloatAttribute("value", &font_time_y);
+		else if (name == "font-coin-x") pSetting->QueryFloatAttribute("value", &font_coin_x);
+		else if (name == "font-coin-y") pSetting->QueryFloatAttribute("value", &font_coin_y);
+		else if (name == "font-point-x") pSetting->QueryFloatAttribute("value", &font_point_x);
+		else if (name == "font-point-y") pSetting->QueryFloatAttribute("value", &font_point_y);
+		else if (name == "font-life-x") pSetting->QueryFloatAttribute("value", &font_life_x);
+		else if (name == "font-life-y") pSetting->QueryFloatAttribute("value", &font_life_y);
+		else if (name == "font-world-x") pSetting->QueryFloatAttribute("value", &font_world_x);
+		else if (name == "font-world-y") pSetting->QueryFloatAttribute("value", &font_world_y);
 		//unknow setting
 		else
 		{

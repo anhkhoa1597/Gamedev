@@ -68,9 +68,9 @@ class CGame
 	int mario_coin = 0;
 	int mario_point = 0;
 	int mario_level = 0;
-	ULONGLONG time = 0; // need constant
+	int time = 0; // need constant
 	ULONGLONG start_time = 0;
-	ULONGLONG max_time = 0;
+	int max_time = 0;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -139,12 +139,8 @@ public:
 	int GetLevel() { return mario_level; }
 	void SetLevel(int level) { mario_level = level; }
 	void StartTime() { start_time = GetTickCount64(); max_time = CGameSetting::GetInstance()->game_time; }
-	void UpdateTime() {
-		if (max_time - (GetTickCount64() - start_time) >= 0)
-			time = max_time - (GetTickCount64() - start_time);
-		else time = 0;
-	}
-	ULONGLONG GetTime() { return time; }
+	void UpdateTime() { time = max_time - (int)(GetTickCount64() - start_time) / 1000; }
+	int GetTime() { return time; }
 
 	~CGame();
 };

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <setting name="mario-width" value="16"/>
+  <setting name="mario-width" value="15"/>
   <setting name="mario-big-height" value="27"/>
   <setting name="mario-small-height" value="16"/>
   <setting name="mario-sitting-height" value="18"/>
@@ -14,7 +14,7 @@
   <setting name="mario-gravity" value="0.002"/> <!--must larger or equal 0.002!!! or try set to smaller 0.002 :))-->
   <setting name="mario-jump-deflect-speed" value="0.4"/>
   <setting name="mario-untouchabletime" value="2500"/>
-  <setting name="mario-life" value="300"/>
+  <setting name="mario-life" value="99"/>
 
   <setting name="goomba-gravity" value="0.002"/>
   <setting name="goomba-walking-speed" value="0.05"/>
@@ -56,7 +56,7 @@
   <setting name="pipe-adjust-width-can-go-through" value="4"/>
 
   <!-- time (milisecon) --> 
-  <setting name="game-time" value="100000"/> 
+  <setting name="game-time" value="10"/> 
 
   <setting name="hud-x" value="6"/>
   <setting name="hud-y" value="28"/>
@@ -65,4 +65,16 @@
 
   <setting name="tex-bbox" value="-100"/>
   <setting name="tex-hud-background" value="-200"/>
+  <setting name="sprite-id-hud-and-font" value="90000"/>
+  <setting name="font-width" value="8"/>
+  <setting name="font-time-x" value="124"/>
+  <setting name="font-time-y" value="15"/>
+  <setting name="font-point-x" value="52"/>
+  <setting name="font-point-y" value="15"/>
+  <setting name="font-coin-x" value="132"/>
+  <setting name="font-coin-y" value="7"/>
+  <setting name="font-life-x" value="29"/>
+  <setting name="font-life-y" value="15"/>
+  <setting name="font-world-x" value="37"/>
+  <setting name="font-world-y" value="7"/>
 </settings>

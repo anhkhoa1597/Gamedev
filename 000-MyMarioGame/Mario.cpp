@@ -38,10 +38,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		float cx, cy;
 		game->GetCamPos(cx, cy);
 		if (y > cy + game->GetBackBufferHeight())
-			Dead();
+			DeadImmediately();
 	}
-	if (game->GetTime() <= 0) 
-		Dead();
 
 	isOnPlatform = false;
 
@@ -140,7 +138,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
+					DebugOut(L">>> Mario DIE by goomba >>> \n");
 					Dead();
 				}
 			}
@@ -196,7 +194,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
+					DebugOut(L">>> Mario DIE by koopa>>> \n");
 					Dead();
 				}
 			}
@@ -257,14 +255,14 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 
 void CMario::Dead()
 {
-	//SetState(MARIO_STATE_DIE);
-	DeadImmediately();
+	SetState(MARIO_STATE_DIE);
+	//DeadImmediately();
 }
 
 void CMario::DeadImmediately()
 {
 	CGame::GetInstance()->LifeDown();
-	//CGame::GetInstance()->ReloadScene();
+	CGame::GetInstance()->ReloadScene();
 }
 
 bool CMario::IsGoOutOfPipe()

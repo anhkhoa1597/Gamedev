@@ -6,7 +6,7 @@ class CGround : public CGameObject {
 	int height;
 public:
 	CGround(float x, float y, int width, int height) : CGameObject(x, y, GROUND) { this->width = width; this->height = height; }
-	virtual void Render() {}
+	virtual void Render() { /*RenderBoundingBox();*/}
 	virtual void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

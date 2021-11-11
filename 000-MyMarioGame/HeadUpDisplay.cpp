@@ -1,11 +1,18 @@
 #include "HeadUpDisplay.h"
 
+using namespace std;
+
 CHud::CHud(float x, float y, int width, int height)
 {
 	this->x = x;
 	this->y = y;
 	this->width = width;
 	this->height = height;
+	world = 1;
+	life = vector<unsigned int>(2, 0);
+	point = vector<unsigned int>(7, 0);
+	coin = vector<unsigned int>(2, 0);
+	time = vector<unsigned int>(3, 0);
 }
 
 void CHud::RenderBackground()
@@ -22,7 +29,7 @@ void CHud::RenderBackground()
 
 	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);
-	float x_adjust = (game->GetBackBufferWidth() - setting->hud_width) / 2;
+	int x_adjust = (game->GetBackBufferWidth() - setting->hud_width) / 2;
 	float translationX = (float)(rect.right + 1) / 2;
 	float translationY = (float)(rect.bottom + 1) / 2;
 	CGame::GetInstance()->Draw(x - cx + translationX - x_adjust, y - cy + translationY, hudBackground, rect.left, rect.top, rect.right, rect.bottom, 1.0f);
@@ -31,31 +38,99 @@ void CHud::RenderBackground()
 void CHud::Render()
 {
 	RenderBackground();
-	CSprites* sprites = CSprites::GetInstance();
-	LPGAME game = CGame::GetInstance();
 	CAnimations::GetInstance()->Get(setting->id_ani_hud)->Render(x, y);
-	//render coin
-	int coin_dozens = game->GetCoin() / 10; //need constant
-	int coin_unit = game->GetCoin() % 10; //need constant
-	sprites->Get(90000 + coin_dozens)->Draw(x + 132, y + 7); //need constant
-	sprites->Get(90000 + coin_unit)->Draw(x + 140, y + 7); //need constant
-	//render time
-	int time = (int)game->GetTime() / 1000;
-	int time_hundreds = time / 100;
-	int time_dozens = (time / 10) % 10;
-	int time_unit = time % 10;
-	//DebugOut(L"time %d\n", time);
-	sprites->Get(90000 + time_hundreds)->Draw(x + 124, y + 15); //need constant
-	sprites->Get(90000 + time_dozens)->Draw(x + 132, y + 15); //need constant
-	sprites->Get(90000 + time_unit)->Draw(x + 140, y + 15); //need constant
+	RenderCoin();
+	RenderPoint();
+	RenderLife();
+	RenderTime();
+	CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + world)->Draw(x + setting->font_world_x, y + setting->font_world_y);
+}
+
+void CHud::RenderTime()
+{
+	for (int i = 0; i < time.size(); i++)
+	{
+		CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + time[i])->Draw(x + setting->font_time_x + i * setting->font_width, y + setting->font_time_y);
+ 	}
+}
+
+void CHud::RenderPoint()
+{
+	for (int i = 0; i < point.size(); i++)
+	{
+		CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + point[i])->Draw(x + setting->font_point_x + i * setting->font_width, y + setting->font_point_y);
+	}
+}
+
+void CHud::RenderCoin()
+{
+	for (int i = 0; i < coin.size(); i++)
+	{
+		CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + coin[i])->Draw(x + setting->font_coin_x + i * setting->font_width, y + setting->font_coin_y);
+	}
+}
+
+void CHud::RenderLife()
+{
+	for (int i = 0; i < life.size(); i++)
+	{
+		CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + life[i])->Draw(x + setting->font_life_x + i * setting->font_width, y + setting->font_life_y);
+	}
 }
 
 void CHud::Update()
 {
 	float x_cam, y_cam;
-	float x_adjust = (CGame::GetInstance()->GetBackBufferWidth() - width) / 2;
-	CGame::GetInstance()->GetCamPos(x_cam, y_cam);
+	int x_adjust = (CGame::GetInstance()->GetBackBufferWidth() - width) / 2;
+	LPGAME game = CGame::GetInstance();
+	UpdateCoin(game->GetCoin());
+	UpdateTime(game->GetTime());
+	UpdatePoint(game->GetPoint());
+	UpdateLife(game->GetLife());
+	game->GetCamPos(x_cam, y_cam);
 	x = x_cam + x_adjust;
 	//x = x_cam;
 	y = y_cam + CGame::GetInstance()->GetBackBufferHeight() - height;
 }
+
+void CHud::UpdateCoin(unsigned int coin)
+{
+	int size_coin = (int)this->coin.size();
+	for (int i = 0; i < size_coin; i++)
+	{
+		int m = (int)pow(10, size_coin - i - 1);
+		this->coin[i] = (coin / m) % 10;
+	}
+}
+
+void CHud::UpdateTime(int time)
+{
+	int size_time = (int)this->time.size();
+	for (int i = 0; i < size_time; i++)
+	{
+		int m = (int)pow(10, size_time - i - 1);
+		this->time[i] = (time / m) % 10;
+	}
+}
+
+void CHud::UpdatePoint(unsigned int point)
+{
+	int size_point = (int)this->point.size();
+	for (int i = 0; i < size_point; i++)
+	{
+		int m = (int)pow(10, size_point - i - 1);
+		this->point[i] = (point / m) % 10;
+	}
+}
+
+void CHud::UpdateLife(unsigned int life)
+{
+	int size_life = (int)this->life.size();
+	for (int i = 0; i < size_life; i++)
+	{
+		int m = (int)pow(10, size_life - i - 1);
+		this->life[i] = (life / m) % 10;
+	}
+}
+
+
