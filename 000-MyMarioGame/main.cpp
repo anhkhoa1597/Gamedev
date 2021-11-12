@@ -33,6 +33,7 @@
 		0.25: update pipe more flexible.
 		0.26: add hud and font
 		0.27: add feature time out, update dead.
+		0.28: add item pause and feature switch normal brick and coin when mario hit item pause
 ================================================================ */
 
 #include <windows.h>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="175">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="182">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -183,7 +183,7 @@
   <object id="89" name="brick" x="2016" y="400" width="16" height="16"/>
   <object id="90" name="s_brick" x="2032" y="368" width="16" height="16">
    <properties>
-    <property name="drop" value="green_mushroom"/>
+    <property name="drop" value="pause"/>
    </properties>
   </object>
   <object id="91" name="brick" x="2032" y="384" width="16" height="16"/>
@@ -315,11 +315,17 @@
     <property name="scene" value="2"/>
    </properties>
   </object>
-  <object id="167" name="mario" type="go_through" x="2328" y="384">
-   <properties>
-    <property name="state" value="go_up"/>
-   </properties>
+  <object id="167" name="mario" type="go_up" x="2328" y="384">
    <point/>
+  </object>
+  <object id="175" name="coin" x="416" y="272" width="16" height="16"/>
+  <object id="176" name="coin" x="432" y="272" width="16" height="16"/>
+  <object id="177" name="brick" x="464" y="272" width="16" height="16"/>
+  <object id="178" name="brick" x="480" y="272" width="16" height="16"/>
+  <object id="179" name="s_brick" x="368" y="320" width="16" height="16">
+   <properties>
+    <property name="drop" value="pause"/>
+   </properties>
   </object>
  </objectgroup>
  <layer id="5" name="graphics" width="176" height="27">

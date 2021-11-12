@@ -53,6 +53,7 @@ protected:
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 
 public:
 	CKoopa(float x, float y, int type, bool has_wing = false);

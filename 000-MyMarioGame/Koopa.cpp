@@ -39,6 +39,9 @@ void CKoopa::OnNoCollision(DWORD dt)
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMushroom*>(e->obj)) return;
+	if (dynamic_cast<CDeadzone*>(e->obj))
+		OnCollisionWithDeadzone(e);
+
 	if (type_shield == NO_SHIELD)
 	{
 		if (!e->obj->IsBlocking()) return;
@@ -151,6 +154,11 @@ void CKoopa::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 			else brick->SetState(BRICK_STATE_BOUNCE);
 		}
 	}
+}
+
+void CKoopa::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
+{
+	isDeleted = true;
 }
 
 

@@ -58,10 +58,6 @@ class CGame
 	int next_scene = -1;
 	bool isReload_scene = false;
 
-	//data mario
-	//float initialX = 0;
-	//float initialY = 0;
-
 	bool isMarioGoThroughPipe = false;
 	int current_map = -1; //need this feature
 	int mario_life = 0;
@@ -71,6 +67,8 @@ class CGame
 	int time = 0; // need constant
 	ULONGLONG start_time = 0;
 	int max_time = 0;
+	bool isOnPause = false;
+	ULONGLONG start_pause = 0;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -148,6 +146,12 @@ public:
 	void StartTime() { start_time = GetTickCount64(); max_time = CGameSetting::GetInstance()->game_time; }
 	void UpdateTime() { time = max_time - (int)(GetTickCount64() - start_time) / 1000; }
 	int GetTime() { return time; }
+
+	void StartItemPause() { start_pause = GetTickCount64(); }
+	ULONGLONG GetStartPause() { return start_pause; }
+	void StopPause() { isOnPause = false; start_pause = 0; }
+	void SetIsOnPause(bool isOnPause) { this->isOnPause = isOnPause; }
+	bool IsOnPause() { return isOnPause; }
 
 	~CGame();
 };

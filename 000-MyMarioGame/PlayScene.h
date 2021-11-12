@@ -43,6 +43,7 @@ public:
 	void AddObject(LPGAMEOBJECT object);
 	void Clear();
 	void PurgeDeletedObjects();
+	void SwitchCoinAndBrick();
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 };

@@ -145,7 +145,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE by goomba >>> \n");
+					DebugOut(L">>> Mario DIE by GOOMBA >>> \n");
 					Dead();
 				}
 			}
@@ -205,7 +205,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE by koopa>>> \n");
+					DebugOut(L">>> Mario DIE by KOOPA>>> \n");
 					Dead();
 				}
 			}
@@ -247,11 +247,8 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
 {
-	//DeadImmediately();
-	if (e->ny < 0)
-	{
-		DebugOut(L">>> Mario DIE by DEADZONE>>>\n");
-	}
+	DebugOut(L">>> Mario DIE by DEADZONE>>>\n");
+	DeadImmediately();
 }
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
@@ -277,12 +274,16 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPause(LPCOLLISIONEVENT e)
 {
 	CPause* pause = dynamic_cast<CPause*>(e->obj);
+	
 	if (e->ny < 0)
+	{
 		pause->SetState(PAUSE_STATE_BE_HITTED);
+	}
 }
 
 void CMario::Dead()
 {
+	CGame::GetInstance()->StopPause();
 	SetState(MARIO_STATE_DIE);
 	//DeadImmediately();
 }
@@ -508,7 +509,6 @@ void CMario::SetState(int state)
 	case MARIO_STATE_DIE:
 		SetState(MARIO_STATE_NORMAL); //we need to set all is normal before die
 		vy = -setting->mario_jump_deflect_speed;
-		//ay = setting->mario_gravity;
 		vx = 0;
 		ax = 0;
 		break;

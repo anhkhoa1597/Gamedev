@@ -18,12 +18,13 @@ protected:
 	int height;
 	ULONGLONG pause_start;
 	bool isCollidable;
+	bool isBlocking;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 
 	int IsCollidable() { return isCollidable; }
-	int IsBlocking() { return 0; }
+	int IsBlocking() { return isBlocking; }
 public:
 	CPause(float x, float y, int width, int height);
 	void SetState(int state);

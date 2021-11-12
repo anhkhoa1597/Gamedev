@@ -320,10 +320,17 @@ void CPlayScene::Load()
 		LoadMap(path);
 	}
 
+	//load other
 	LPGAME game = CGame::GetInstance();
 	if (!game->IsMarioGoThroughPipe()) //start time when new map,
 	{
 		game->StartTime();
+	}
+
+	if (game->IsOnPause() && GetTickCount64() - game->GetStartPause() <= CGameSetting::GetInstance()->pause_timeout)
+	{
+		game->SetIsOnPause(true);
+		SwitchCoinAndBrick();
 	}
 
 	DebugOut(L"[INFO] Done loading scene : %s\n", ToLPCWSTR(sceneFilePath));
@@ -332,10 +339,9 @@ void CPlayScene::Load()
 void CPlayScene::Update(DWORD dt)
 {
 	CGame* game = CGame::GetInstance();
-
+	CGameSetting* setting = CGameSetting::GetInstance();
 	vector<LPGAMEOBJECT> coObjects;
-	size_t i = 0;
-	for (i; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (!objects[i]->IsPlayer()) 
 		{
@@ -373,6 +379,16 @@ void CPlayScene::Update(DWORD dt)
 	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	//update other
+	if (!game->IsOnPause() && GetTickCount64() - game->GetStartPause() <= setting->pause_timeout)
+	{
+		game->SetIsOnPause(true);
+		SwitchCoinAndBrick();
+	}
+	else if (game->IsOnPause() && GetTickCount64() - game->GetStartPause() > setting->pause_timeout)
+	{
+		game->SetIsOnPause(false);
+		SwitchCoinAndBrick();
+	}
 	game->UpdateTime();
 	if (game->GetTime() <= 0)
 	{
@@ -471,4 +487,34 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+
+void CPlayScene::SwitchCoinAndBrick()
+{
+	CGameObject* obj = NULL;
+	float x_obj, y_obj;
+	vector<LPGAMEOBJECT> objects_temp;
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->GetType() == BRICK && ((CBrick*)objects[i])->IsNoItem())
+		{
+			objects[i]->GetPosition(x_obj, y_obj);
+			objects[i]->Delete();
+			obj = new CCoin(x_obj, y_obj, 16, 16);
+			obj->SetPosition(x_obj, y_obj);
+			objects_temp.push_back(obj);
+		}
+		else if (objects[i]->GetType() == COIN)
+		{
+			objects[i]->GetPosition(x_obj, y_obj);
+			objects[i]->Delete();
+			obj = new CBrick(x_obj, y_obj, 16, 16, BRICK_STATE_NORMAL);
+			obj->SetPosition(x_obj, y_obj);
+			objects_temp.push_back(obj);
+		}
+	}
+	for (size_t i = 0; i < objects_temp.size(); i++)
+	{
+		objects.push_back(objects_temp[i]);
+	}
 }

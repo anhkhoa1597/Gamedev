@@ -41,6 +41,8 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<CMushroom*>(e->obj)) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	if (dynamic_cast<CDeadzone*>(e->obj))
+		OnCollisionWithDeadzone(e);
 
 	if (e->ny != 0)
 	{
@@ -81,6 +83,11 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 	}
 	else if (e->nx != 0) vx = -vx;
+}
+
+void CGoomba::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
+{
+	isDeleted = true;
 }
 
 void CGoomba::LostWing()
