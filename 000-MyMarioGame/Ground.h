@@ -32,5 +32,5 @@ public:
 	CWall(float x, float y, int width, int height) : CGround(x, y, width, height) { type = WALL; }
 	void Render() {}
 	void Update(DWORD dt) {}
-	void ObjectNoBlocking(vector<unsigned int>& type) { type = { GMUSHROOM, RMUSHROOM }; }
+	void ObjectNoBlocking(vector<unsigned int>& type) { type = { GMUSHROOM, RMUSHROOM, GOOMBA, RGOOMBA }; }
 };

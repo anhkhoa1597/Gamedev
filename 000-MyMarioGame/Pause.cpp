@@ -6,6 +6,7 @@ CPause::CPause(float x, float y, int width, int height) : CGameObject(x, y, PAUS
 	this->height = height;
 	pause_start = -1;
 	isCollidable = true;
+	SetState(PAUSE_STATE_NORMAL);
 }
 
 void CPause::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -18,7 +19,8 @@ void CPause::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CPause::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (state == PAUSE_STATE_BE_HITTED && GetTickCount64() - pause_start > setting->pause_timeout)
+	if (state == PAUSE_STATE_BE_HITTED && GetTickCount64() - pause_start <= 10000)
+		//if (state == PAUSE_STATE_BE_HITTED && GetTickCount64() - pause_start > setting->pause_timeout)
 	{
 
 	}
@@ -35,6 +37,8 @@ void CPause::SetState(int state)
 {
 	switch (state)
 	{
+	case PAUSE_STATE_NORMAL:
+		break;
 	case PAUSE_STATE_BE_HITTED:
 		pause_start = GetTickCount64();
 		isCollidable = false;

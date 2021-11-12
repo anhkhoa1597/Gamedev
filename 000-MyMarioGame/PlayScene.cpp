@@ -269,7 +269,7 @@ void CPlayScene::LoadMap(string mapFile)
 			}
 			obj = new CPortal(x, y, width, height, sceneId);
 		}
-		else if (name == "dead_zone") obj = new CGround(x, y, width, height);
+		else if (name == "dead_zone") obj = new CDeadzone(x, y, width, height);
 		else DebugOut(L"[ERROR] Invalid object: %s\n", ToLPCWSTR(name));
 
 		// General object setup

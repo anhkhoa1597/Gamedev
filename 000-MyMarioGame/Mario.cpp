@@ -84,6 +84,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithDeadzone(e);
 	else if (dynamic_cast<CPipe*>(e->obj))
 		OnCollisionWithPipe(e);
+	else if (dynamic_cast<CPause*>(e->obj))
+		OnCollisionWithPause(e);
 }
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
@@ -245,7 +247,11 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
 {
-	DeadImmediately();
+	//DeadImmediately();
+	if (e->ny < 0)
+	{
+		DebugOut(L">>> Mario DIE by DEADZONE>>>\n");
+	}
 }
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
@@ -266,6 +272,13 @@ void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 		SetState(MARIO_STATE_GO_UP); 
 		pipe->SetNoBlocking();
 	}
+}
+
+void CMario::OnCollisionWithPause(LPCOLLISIONEVENT e)
+{
+	CPause* pause = dynamic_cast<CPause*>(e->obj);
+	if (e->ny < 0)
+		pause->SetState(PAUSE_STATE_BE_HITTED);
 }
 
 void CMario::Dead()
@@ -493,7 +506,9 @@ void CMario::SetState(int state)
 	case MARIO_STATE_KICK:
 		break;
 	case MARIO_STATE_DIE:
+		SetState(MARIO_STATE_NORMAL); //we need to set all is normal before die
 		vy = -setting->mario_jump_deflect_speed;
+		//ay = setting->mario_gravity;
 		vx = 0;
 		ax = 0;
 		break;
@@ -514,8 +529,8 @@ void CMario::SetState(int state)
 	case MARIO_STATE_NORMAL:
 		isBlockingKeyboard = false;
 		isSitting = false;
-		ay = setting->mario_gravity;
 		CGame::GetInstance()->SetMarioGoThroughPipe(false);
+		ay = setting->mario_gravity;
 		break;
 	}
 	

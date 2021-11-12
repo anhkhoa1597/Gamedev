@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include <math.h>
+
+using namespace std;
 
 enum PauseStates
 {
