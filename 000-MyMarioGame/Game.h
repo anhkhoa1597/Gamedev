@@ -115,7 +115,7 @@ public:
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
-
+	void GetCam(float& l, float& t, float& r, float& b) { l = cam_x; t = cam_y; r = l + (float)backBufferWidth; b = t + (float)backBufferHeight; }
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	int GetCurrentSceneId() { return current_scene; }
 
@@ -124,7 +124,7 @@ public:
 	void InitiateSwitchScene(int scene_id);
 	void ReloadScene();
 
-	//mario
+	//mario and other data can be transferred to another scene
 	bool IsMarioGoThroughPipe() { return isMarioGoThroughPipe; }
 	void SetMarioGoThroughPipe(bool isMarioGoThroughPipe) { this->isMarioGoThroughPipe = isMarioGoThroughPipe; }
 	void IncreaseCoin() 
@@ -146,12 +146,13 @@ public:
 	void StartTime() { start_time = GetTickCount64(); max_time = CGameSetting::GetInstance()->game_time; }
 	void UpdateTime() { time = max_time - (int)(GetTickCount64() - start_time) / 1000; }
 	int GetTime() { return time; }
-
 	void StartItemPause() { start_pause = GetTickCount64(); }
 	ULONGLONG GetStartPause() { return start_pause; }
 	void StopPause() { isOnPause = false; start_pause = 0; }
 	void SetIsOnPause(bool isOnPause) { this->isOnPause = isOnPause; }
 	bool IsOnPause() { return isOnPause; }
+
+
 
 	~CGame();
 };

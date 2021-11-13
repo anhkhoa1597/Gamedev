@@ -1,10 +1,11 @@
 #include "Koopa.h"
 
 
-CKoopa::CKoopa(float x, float y, int type, bool has_wing) : CGameObject(x, y, type)
+CKoopa::CKoopa(float x, float y, int type) : CGameObject(x, y, type)
 {
+	isEnemy = true;
 	this->ax = 0;
-	this->has_wing = has_wing;
+	if (type == WKOOPA || type == RWKOOPA) has_wing = true;
 	die_start = -1;
 	type_shield = NO_SHIELD;
 	if (this->has_wing) ay = setting->wing_koopa_gravity;
@@ -170,6 +171,8 @@ void CKoopa::LostWing()
 	else if (vx > 0) SetState(KOOPA_STATE_WALKING_RIGHT);
 }
 
+
+
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
@@ -201,7 +204,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CKoopa::Render()
 {
 	int aniId = setting->id_ani_coin_idle;
-	if (type == KOOPA)
+	if (type == KOOPA || type == WKOOPA)
 	{
 		switch (type_shield)
 		{
@@ -224,7 +227,7 @@ void CKoopa::Render()
 		}
 		if (state == KOOPA_STATE_BOUNCE_DIE) aniId = setting->id_ani_koopa_shield_idle_up;
 	}
-	else if (type == RKOOPA)
+	else if (type == RKOOPA || type == RWKOOPA)
 	{
 		switch (type_shield)
 		{

@@ -4,9 +4,9 @@
 #include "Mario.h"
 
 
-CMario::CMario(float x, float y) : CGameObject(x, y, MARIO, true)
+CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 {
-	initial_y = y;
+	isPlayer = true;
 	isSitting = false;
 	maxVx = 0.0f;
 	ax = 0.0f;
@@ -296,7 +296,7 @@ void CMario::DeadImmediately()
 
 bool CMario::IsGoOutOfPipe()
 {
-	if ((state == MARIO_STATE_GO_DOWN && y >= initial_y + setting->pipe_height) || (state == MARIO_STATE_GO_UP && y < initial_y - height))
+	if ((state == MARIO_STATE_GO_DOWN && y >= initY + setting->pipe_height) || (state == MARIO_STATE_GO_UP && y < initY - height))
 	{
 		return true;
 	}

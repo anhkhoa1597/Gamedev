@@ -5,7 +5,6 @@ CBrick::CBrick(float x, float y, int width, int height, int state, int item) : C
 	this->width = width; 
 	this->height = height;
 	this->item = item;
-	initial_y = y;
 	if (item == MCOIN) timesLeftToBounce = setting->brick_number_bounce_of_multi_coin;
 	else timesLeftToBounce = 1;
 	SetState(state);
@@ -28,18 +27,18 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	y += vy * dt;
-	if (state != BRICK_STATE_BOUNCE && y <= initial_y) // this if to avoid other object collison with
+	if (state != BRICK_STATE_BOUNCE && y <= initY) // this if to avoid other object collison with
 	{
-		y = initial_y;
+		y = initY;
 	}
-	if (state == BRICK_STATE_BOUNCE && y <= initial_y - setting->brick_bounce_height)
+	if (state == BRICK_STATE_BOUNCE && y <= initY - setting->brick_bounce_height)
 	{
 		//y = initial_y - BRICK_BOUNCE_HEIGHT;
 		vy = setting->brick_bouncing_speed;
 	}
-	if (state == BRICK_STATE_BOUNCE && y > initial_y - 1) // -1 to avoid bounce mario drop out ground
+	if (state == BRICK_STATE_BOUNCE && y > initY - 1) // -1 to avoid bounce mario drop out ground
 	{
-		y = initial_y;
+		y = initY;
 		if (timesLeftToBounce <= 0) SetState(BRICK_STATE_BBRICK);
 		else SetState(BRICK_STATE_NORMAL);
 		vy = 0;

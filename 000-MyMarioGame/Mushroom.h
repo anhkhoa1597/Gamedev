@@ -19,7 +19,6 @@ protected:
 	float ay;
 	int width;
 	int height;
-	float initialPositionY;
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -29,6 +28,7 @@ protected:
 	int IsBlocking() { return 0; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 public:
 	CMushroom(float x, float y, int width, int height, int type);
 	int GetType() { return type; }

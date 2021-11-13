@@ -16,10 +16,14 @@ using namespace std;
 enum TypeObject
 {
 	MARIO,
-	GOOMBA,
-	RGOOMBA,
-	KOOPA,
-	RKOOPA,
+	GOOMBA, //normal goomba
+	WGOOMBA, //wing normal goomba
+	RGOOMBA, //red goomba
+	RWGOOMBA, //red wing goomba
+	KOOPA, //normal koopa
+	WKOOPA, //wing normal koopa
+	RKOOPA, //red koopa
+	RWKOOPA, //red wing koopa
 	RMUSHROOM, //red mushroom
 	GMUSHROOM, //green mushroom
 	COIN, //visible coin
@@ -44,6 +48,8 @@ class CGameObject
 {
 protected:
 	int type;
+	float initX;
+	float initY;
 	float x; 
 	float y;
 
@@ -54,28 +60,53 @@ protected:
 
 	int state;
 
-	bool isDeleted; 
+	bool isDeleted;
+	bool isArchived = false;
+	bool isEnemyCreated = false;
 	
+	bool isEnemy = false;
 	bool isPlayer = false;
 	LPGAMESETTING setting = CGameSetting::GetInstance();
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
+	void GetInitPosition(float& initX, float& initY) { initX = this->initX; initY = this->initY; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+
+	bool IsArchived() { return isArchived; }
+	void Archive() { isArchived = true; }
+	void Unarchive() { isArchived = false; }
 
 	int GetState() { return this->state; }
 	int GetType() { return this->type; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
-
+	bool IsEnemies() { return isEnemy; }
+	bool IsEnemyCreated() { return isEnemyCreated; }
+	void SetEnemyCreate(bool isEnemyCreated) { this->isEnemyCreated = isEnemyCreated; }
+	bool IsSameObject(LPGAMEOBJECT otherObj)
+	{
+		float x, y;
+		int type = otherObj->GetType();
+		otherObj->GetInitPosition(x, y);
+		if (this->x == x && this->y == y && this->type == type) return true;
+		return false;
+	}
+	bool IsInCamera(float l, float t, float r, float b) 
+	{ 
+		if (x >= l - 16 && x <= r + 16 && y >= t - 16 && y <= b + 16) return true;
+		else return false; 
+	}
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y, int type, bool isPlayer = false) :CGameObject() 
+	CGameObject(float x, float y, int type) :CGameObject() 
 	{ 
-		this->x = x; this->y = y; 
-		this->isPlayer = isPlayer; 
+		this->x = x; 
+		this->y = y;
+		initX = x;
+		initY = y;
 		this->type = type; 
 	}
 

@@ -18,7 +18,6 @@ public:
 
 
 class CDropCoin : public CCoin {
-	float initial_y;
 public:
 	CDropCoin(float x, float y, int width, int height);
 	void Render();

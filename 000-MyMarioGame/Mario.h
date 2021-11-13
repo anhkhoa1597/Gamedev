@@ -63,7 +63,6 @@ class CMario : public CGameObject
 	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
-	float initial_y;
 	int height;
 
 	int current_point = 0;

@@ -17,7 +17,7 @@ class CGoomba : public CGameObject
 protected:
 	float ax;				
 	float ay; 
-	bool has_wing;
+	bool has_wing = false;
 
 	ULONGLONG die_start;
 
@@ -35,7 +35,7 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 public: 	
-	CGoomba(float x, float y, int type, bool has_wing = false);
+	CGoomba(float x, float y, int type);
 
 	bool HasWing() { return has_wing; }
 	void LostWing();

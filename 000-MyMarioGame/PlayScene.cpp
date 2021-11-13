@@ -220,13 +220,13 @@ void CPlayScene::LoadMap(string mapFile)
 			}
 		}
 		else if (name == "goomba") obj = new CGoomba(x, y, GOOMBA);
-		else if (name == "wing_goomba") obj = new CGoomba(x, y, GOOMBA, true);
+		else if (name == "wing_goomba") obj = new CGoomba(x, y, WGOOMBA);
 		else if (name == "red_goomba") obj = new CGoomba(x, y, RGOOMBA);
-		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RGOOMBA, true);
+		else if (name == "red_wing_goomba") obj = new CGoomba(x, y, RWGOOMBA);
 		else if (name == "koopa") obj = new CKoopa(x, y, KOOPA);
-		else if (name == "wing_koopa") obj = new CKoopa(x, y, KOOPA, true);
+		else if (name == "wing_koopa") obj = new CKoopa(x, y, WKOOPA);
 		else if (name == "red_koopa") obj = new CKoopa(x, y, RKOOPA);
-		else if (name == "red_wing_koopa") obj = new CKoopa(x, y, RKOOPA, true);
+		else if (name == "red_wing_koopa") obj = new CKoopa(x, y, RWKOOPA);
 		else if (name == "wall") obj = new CWall(x, y, width, height);
 		else if (name == "ground") obj = new CGround(x, y, width, height);
 		else if (name == "s_platform") obj = new CSpecificPlatform(x, y, width, height);
@@ -275,7 +275,15 @@ void CPlayScene::LoadMap(string mapFile)
 		// General object setup
 		DebugOut(L"[INFO] object %s has been created!\n", ToLPCWSTR(name));
 		obj->SetPosition(x, y);
-		objects.push_back(obj);
+		if (obj->IsEnemies())
+		{
+			obj->Archive();
+			enemies.push_back(obj);
+		}
+		else
+		{
+			objects.push_back(obj);
+		}
 		pObject = pObject->NextSiblingElement("object");
 	}
 
@@ -340,6 +348,51 @@ void CPlayScene::Update(DWORD dt)
 {
 	CGame* game = CGame::GetInstance();
 	CGameSetting* setting = CGameSetting::GetInstance();
+	//Handle Spaw Enemies
+	CGameObject* enemy = NULL;
+	float l_screen, t_screen, r_screen, b_screen;
+	game->GetCam(l_screen, t_screen, r_screen, b_screen);
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
+		{
+			if (enemies[i]->IsArchived() && !enemies[i]->IsEnemyCreated())
+			{
+				float x, y;
+				enemies[i]->GetInitPosition(x, y);
+				int type = enemies[i]->GetType();
+				if (type == GOOMBA || type == WGOOMBA || type == RGOOMBA || type == RWGOOMBA)
+				{
+					enemy = new CGoomba(x, y, type);
+				}
+				else if (type == KOOPA || type == WKOOPA || type == RKOOPA || type == RWKOOPA)
+				{
+					enemy = new CKoopa(x, y, type);
+				}
+				DebugOut(L"Add enemy\n");
+				objects.push_back(enemy);
+				enemies[i]->Unarchive();
+				enemies[i]->SetEnemyCreate(true);
+			}
+		}
+		else
+		{
+			enemies[i]->SetEnemyCreate(false);
+			enemies[i]->Archive();
+		}
+	}
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->IsEnemies())
+		{
+			if (!objects[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
+			{
+				objects[i]->Delete();
+				DebugOut(L"Delete enemy\n");
+			}
+		}
+	}
+
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 0; i < objects.size(); i++)
 	{
@@ -364,7 +417,7 @@ void CPlayScene::Update(DWORD dt)
 	cx -= (float)game->GetBackBufferWidth() / 2;
 	cy -= (float)game->GetBackBufferHeight() / 4;
 
-	int w, h, l, t, r, b;
+	int w, h, l, t, r, b; //left, top, right, bottom of map
 	map->GetWidthHeight(w, h);
 	l = 0;
 	t = 0;
@@ -375,7 +428,7 @@ void CPlayScene::Update(DWORD dt)
 	if (cx > r) cx = (float)r;
 	if (cy > b) cy = (float)b;
 	if (cy < t) cy = (float)t;
-
+	
 	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	//update other
@@ -442,12 +495,18 @@ void CPlayScene::AddObject(LPGAMEOBJECT o)
 */
 void CPlayScene::Clear()
 {
-	vector<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
+	vector<LPGAMEOBJECT>::iterator it_obj;
+	for (it_obj = objects.begin(); it_obj != objects.end(); it_obj++)
 	{
-		delete (*it);
+		delete (*it_obj);
 	}
 	objects.clear();
+	vector<LPGAMEOBJECT>::iterator it_enemies;
+	for (it_enemies = enemies.begin(); it_enemies != enemies.end(); it_enemies++)
+	{
+		delete (*it_enemies);
+	}
+	enemies.clear();
 }
 
 /*
@@ -460,8 +519,12 @@ void CPlayScene::Unload()
 {
 	for (int i = 0; i < objects.size(); i++)
 		delete objects[i];
-
 	objects.clear();
+
+	for (int i = 0; i < enemies.size(); i++)
+		delete enemies[i];
+	enemies.clear();
+
 	player = NULL;
 	map = NULL;
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);

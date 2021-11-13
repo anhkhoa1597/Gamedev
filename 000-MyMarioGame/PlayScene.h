@@ -24,6 +24,7 @@ protected:
 	LPGAMEOBJECT player;
 
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> enemies;
 	int layerObject = -1; // layer of object to render
 	LPMAP map;
 	LPHUD hud;

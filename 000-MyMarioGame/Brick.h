@@ -21,7 +21,6 @@ protected:
 	int width;
 	int height; 
 	int item;
-	float initial_y;
 	int timesLeftToBounce;
 public:
 	CBrick(float x, float y, int width, int height, int state, int item = -1);

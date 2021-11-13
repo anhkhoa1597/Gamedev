@@ -1,10 +1,13 @@
 #include "Goomba.h"
 
 
-CGoomba::CGoomba(float x, float y, int type, bool has_wing):CGameObject(x, y, type)
+CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y, type)
 {
+	isEnemy = true;
 	this->ax = 0;
-	this->has_wing = has_wing;
+	if (type == WGOOMBA || type == RWGOOMBA)
+		has_wing = true;
+	else has_wing = false;
 	die_start = -1;
 	if (this->has_wing) ay = setting->wing_goomba_gravity;
 	else ay = setting->goomba_gravity;
@@ -28,6 +31,7 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 		bottom = top + setting->goomba_height - 1;
 	}
 }
+
 
 void CGoomba::OnNoCollision(DWORD dt)
 {
@@ -129,13 +133,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CGoomba::Render()
 {
 	int aniId = -1;
-	if (type == GOOMBA)
+	if (type == GOOMBA || type == WGOOMBA)
 	{
 		aniId = setting->id_ani_goomba_walking;
 		if (state == GOOMBA_STATE_DIE) aniId = setting->id_ani_goomba_die;
 		else if (state == GOOMBA_STATE_BOUNCE_DIE) aniId = setting->id_ani_goomba_bounce_die;
 	}
-	else if (type == RGOOMBA)
+	else if (type == RGOOMBA || type == RWGOOMBA)
 	{
 		aniId = setting->id_ani_red_goomba_walking;
 		if (state == GOOMBA_STATE_DIE) aniId = setting->id_ani_red_goomba_die;

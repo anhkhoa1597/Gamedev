@@ -9,7 +9,6 @@ CMushroom::CMushroom(float x, float y, int width, int height, int type) : CGameO
 	ay = 0;
 	this->width = width;
 	this->height = height;
-	this->initialPositionY = y;
 	SetState(MUSHROOM_STATE_DROP);
 }
 
@@ -33,7 +32,8 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<CMushroom*>(e->obj)) return;
 	if (dynamic_cast<CWall*>(e->obj)) return;
-
+	if (dynamic_cast<CDeadzone*>(e->obj))
+		OnCollisionWithDeadzone(e);
 	if (e->ny != 0)
 	{
 		vy = 0;
@@ -44,6 +44,11 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMushroom::OnCollisionWithDeadzone(LPCOLLISIONEVENT e)
+{
+	isDeleted = true;
+}
+
 void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!isDeleted)
@@ -51,7 +56,7 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += ay * dt;
 		vx += ax * dt;
 
-		if (y <= initialPositionY - height && state == MUSHROOM_STATE_DROP)
+		if (y <= initY - height && state == MUSHROOM_STATE_DROP)
 		{
 			//y = initialPositionY - (height);
 			ay = setting->mushroom_gravity;
