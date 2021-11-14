@@ -61,8 +61,7 @@ protected:
 	int state;
 
 	bool isDeleted;
-	bool isArchived = false;
-	bool isEnemyCreated = false;
+	bool isEnemyOutScreen = false;
 	
 	bool isEnemy = false;
 	bool isPlayer = false;
@@ -74,17 +73,14 @@ public:
 	void GetInitPosition(float& initX, float& initY) { initX = this->initX; initY = this->initY; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
-	bool IsArchived() { return isArchived; }
-	void Archive() { isArchived = true; }
-	void Unarchive() { isArchived = false; }
-
 	int GetState() { return this->state; }
 	int GetType() { return this->type; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
 	bool IsEnemies() { return isEnemy; }
-	bool IsEnemyCreated() { return isEnemyCreated; }
-	void SetEnemyCreate(bool isEnemyCreated) { this->isEnemyCreated = isEnemyCreated; }
+	bool IsEnemiesOutScreen() { return isEnemyOutScreen; }
+	void EnemiesOutScreen() { isEnemyOutScreen = true; }
+
 	bool IsSameObject(LPGAMEOBJECT otherObj)
 	{
 		float x, y;

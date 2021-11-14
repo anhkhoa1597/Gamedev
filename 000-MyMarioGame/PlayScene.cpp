@@ -277,7 +277,7 @@ void CPlayScene::LoadMap(string mapFile)
 		obj->SetPosition(x, y);
 		if (obj->IsEnemies())
 		{
-			obj->Archive();
+			obj->EnemiesOutScreen();
 			enemies.push_back(obj);
 		}
 		else
@@ -356,7 +356,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (enemies[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
 		{
-			if (enemies[i]->IsArchived() && !enemies[i]->IsEnemyCreated())
+			if (enemies[i]->IsEnemiesOutScreen())
 			{
 				float x, y;
 				enemies[i]->GetInitPosition(x, y);
@@ -369,27 +369,14 @@ void CPlayScene::Update(DWORD dt)
 				{
 					enemy = new CKoopa(x, y, type);
 				}
-				DebugOut(L"Add enemy\n");
+				DebugOut(L"Add enemy in list objects\n");
 				objects.push_back(enemy);
-				enemies[i]->Unarchive();
-				enemies[i]->SetEnemyCreate(true);
+				enemies[i]->Delete();
 			}
 		}
 		else
 		{
-			enemies[i]->SetEnemyCreate(false);
-			enemies[i]->Archive();
-		}
-	}
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->IsEnemies())
-		{
-			if (!objects[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
-			{
-				objects[i]->Delete();
-				DebugOut(L"Delete enemy\n");
-			}
+			enemies[i]->EnemiesOutScreen();
 		}
 	}
 
@@ -398,7 +385,12 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (!objects[i]->IsPlayer()) 
 		{
-			coObjects.push_back(objects[i]);
+			if (objects[i]->IsEnemies() && !objects[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
+			{
+				objects[i]->Delete();
+				DebugOut(L"Delete enemy out screen\n");
+			}
+			else coObjects.push_back(objects[i]);
 		}
 	}
 
@@ -534,12 +526,29 @@ bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; 
 
 void CPlayScene::PurgeDeletedObjects()
 {
+	CGameObject* enemy = NULL;
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = objects.begin(); it != objects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
 		if (o->IsDeleted())
 		{
+			if (o->IsEnemies()) // check if enemy is delete will be stored to create 
+			{
+				float x, y;
+				o->GetInitPosition(x, y);
+				int type = o->GetType();
+				if (type == GOOMBA || type == WGOOMBA || type == RGOOMBA || type == RWGOOMBA)
+				{
+					enemy = new CGoomba(x, y, type);
+				}
+				else if (type == KOOPA || type == WKOOPA || type == RKOOPA || type == RWKOOPA)
+				{
+					enemy = new CKoopa(x, y, type);
+				}
+				DebugOut(L"Add enemy in list enemies\n");
+				enemies.push_back(enemy);
+			}
 			delete o;
 			*it = NULL;
 		}
@@ -550,6 +559,21 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+
+	//purge deleted enemies
+	vector<LPGAMEOBJECT>::iterator it_enemy;
+	for (it_enemy = enemies.begin(); it_enemy != enemies.end(); it_enemy++)
+	{
+		LPGAMEOBJECT o = *it_enemy;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it_enemy = NULL;
+		}
+	}
+	enemies.erase(
+		std::remove_if(enemies.begin(), enemies.end(), CPlayScene::IsGameObjectDeleted),
+		enemies.end());
 }
 
 void CPlayScene::SwitchCoinAndBrick()
