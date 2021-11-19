@@ -8,7 +8,7 @@ class CPipe : public CGameObject {
 	bool isBlockingMario;
 public:
 	CPipe(float x, float y, int width, int height);
-	virtual void Render() {} ;
+	virtual void Render() { RenderBoundingBox(); };
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void SetNoBlocking();
 	void SetBlocking();

@@ -127,8 +127,15 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "big-sit-right") id_ani_mario_sit_right = id;
 	else if (name == "big-brace-left") id_ani_mario_brace_left = id;
 	else if (name == "big-brace-right") id_ani_mario_brace_right = id;
+	else if (name == "big-carry-idle-left") id_ani_mario_carry_idle_left = id;
+	else if (name == "big-carry-idle-right") id_ani_mario_carry_idle_right = id;
+	else if (name == "big-carry-jump-left") id_ani_mario_carry_jump_left = id;
+	else if (name == "big-carry-jump-right") id_ani_mario_carry_jump_right = id;
+	else if (name == "big-carry-walking-left") id_ani_mario_carry_walking_left = id;
+	else if (name == "big-carry-walking-right") id_ani_mario_carry_walking_right = id;
 	else if (name == "big-kick-left") id_ani_mario_kick_left = id;
 	else if (name == "big-kick-right") id_ani_mario_kick_right = id;
+	else if (name == "big-carry-change-dir") id_ani_mario_carry_change_dir = id;
 	else if (name == "big-tele") id_ani_mario_tele = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "small-idle-left") id_ani_mario_small_idle_left = id;
@@ -143,8 +150,15 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "small-jump-run-right") id_ani_mario_small_jump_run_right = id;
 	else if (name == "small-brace-left") id_ani_mario_small_brace_left = id;
 	else if (name == "small-brace-right") id_ani_mario_small_brace_right = id;
+	else if (name == "small-carry-idle-left") id_ani_mario_small_carry_idle_left = id;
+	else if (name == "small-carry-idle-right") id_ani_mario_small_carry_idle_right = id;
+	else if (name == "small-carry-jump-left") id_ani_mario_small_carry_jump_left = id;
+	else if (name == "small-carry-jump-right") id_ani_mario_small_carry_jump_right = id;
+	else if (name == "small-carry-walking-left") id_ani_mario_small_carry_walking_left = id;
+	else if (name == "small-carry-walking-right") id_ani_mario_small_carry_walking_right = id;
 	else if (name == "small-kick-left") id_ani_mario_small_kick_left = id;
 	else if (name == "small-kick-right") id_ani_mario_small_kick_right = id;
+	else if (name == "small-carry-change-dir") id_ani_mario_small_carry_change_dir = id;
 	else if (name == "small-tele") id_ani_mario_small_tele = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
 	//goomba

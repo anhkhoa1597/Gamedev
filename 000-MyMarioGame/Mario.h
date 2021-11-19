@@ -49,6 +49,10 @@ enum MarioStates
 	MARIO_STATE_GO_DOWN,
 	MARIO_STATE_GO_UP,
 	MARIO_STATE_KICK,
+
+	MARIO_STATE_BRING_IDLE,
+	MARIO_STATE_BRING_WALKING_LEFT,
+	MARIO_STATE_BRING_WALKING_RIGHT,
 };
 
 class CMario : public CGameObject
@@ -63,6 +67,9 @@ class CMario : public CGameObject
 	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
+	bool isBlockedLeftRight;
+	bool isCarryingKoopa;
+
 	int height;
 
 	int current_point = 0;
@@ -90,6 +97,9 @@ public:
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 
 	bool IsGoOutOfPipe();
+	bool IsCarryingKoopa() { return isCarryingKoopa; }
+	bool IsBlockedLeftRight() { return isBlockedLeftRight; }
+	void KickKoopa() { isCarryingKoopa = false; }
 	void SetState(int state);
 	void SetLevel(int l);
 	void IncreaseMultiPoint();

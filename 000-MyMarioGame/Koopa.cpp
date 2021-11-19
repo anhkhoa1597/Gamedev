@@ -10,6 +10,7 @@ CKoopa::CKoopa(float x, float y, int type) : CGameObject(x, y, type)
 	type_shield = NO_SHIELD;
 	if (this->has_wing) ay = setting->wing_koopa_gravity;
 	else ay = setting->koopa_gravity;
+	isBeingCarried = false;
 	SetState(KOOPA_STATE_WALKING_LEFT);
 }
 
@@ -175,26 +176,46 @@ void CKoopa::LostWing()
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-	if ((state == KOOPA_STATE_SHIELD_IDLE) && (GetTickCount64() - shield_start > setting->koopa_shield_timeout))
+	if (!isBeingCarried)
 	{
-		SetState(KOOPA_STATE_SHIELD_STANDING);
+		vy += ay * dt;
+		vx += ax * dt;
+
+		if ((state == KOOPA_STATE_SHIELD_IDLE) && (GetTickCount64() - shield_start > setting->koopa_shield_timeout))
+		{
+			SetState(KOOPA_STATE_SHIELD_STANDING);
+		}
+		else if ((state == KOOPA_STATE_SHIELD_STANDING) && (GetTickCount64() - standing_start > setting->koopa_shield_standing_timeout))
+		{
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			float x_mario, y_mario;
+			mario->GetPosition(x_mario, y_mario);
+			y -= setting->koopa_height - setting->koopa_shield_height;
+			if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
+			else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
+		}
+		else if ((state == KOOPA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > setting->koopa_bounce_die_timeout))
+		{
+			isDeleted = true;
+			return;
+		}
 	}
-	else if ((state == KOOPA_STATE_SHIELD_STANDING) && (GetTickCount64() - standing_start > setting->koopa_shield_standing_timeout))
+	else
 	{
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float x_mario, y_mario;
+		int state_mario = mario->GetState();
 		mario->GetPosition(x_mario, y_mario);
-		y -= setting->koopa_height - setting->koopa_shield_height;
-		if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
-		else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
-	}
-	else if ((state == KOOPA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > setting->koopa_bounce_die_timeout))
-	{
-		isDeleted = true;
-		return;
+		if (state_mario == MARIO_STATE_RUNNING_LEFT)
+		{
+			x = x_mario - 8;
+			y = y_mario - 8;
+		}
+		else if (state_mario == MARIO_STATE_RUNNING_RIGHT)
+		{
+			x = x_mario + 8;
+			y = y_mario - 8;
+		}
 	}
 		
 	CGameObject::Update(dt, coObjects);

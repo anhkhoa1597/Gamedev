@@ -47,8 +47,15 @@ public:
 	int id_ani_mario_sit_right = -1;
 	int id_ani_mario_brace_left = -1; 
 	int id_ani_mario_brace_right = -1;
+	int id_ani_mario_carry_idle_left = -1;
+	int id_ani_mario_carry_idle_right = -1;
+	int id_ani_mario_carry_jump_left = -1;
+	int id_ani_mario_carry_jump_right = -1;
+	int id_ani_mario_carry_walking_left = -1;
+	int id_ani_mario_carry_walking_right = -1;
 	int id_ani_mario_kick_left = -1;
 	int id_ani_mario_kick_right = -1;
+	int id_ani_mario_carry_change_dir = -1;
 	int id_ani_mario_tele = -1;
 	int id_ani_mario_small_idle_left = -1; 
 	int id_ani_mario_small_idle_right = -1;
@@ -62,8 +69,15 @@ public:
 	int id_ani_mario_small_jump_walk_right = -1;
 	int id_ani_mario_small_brace_left = -1;
 	int id_ani_mario_small_brace_right = -1;
+	int id_ani_mario_small_carry_idle_left = -1;
+	int id_ani_mario_small_carry_idle_right = -1;
+	int id_ani_mario_small_carry_jump_left = -1;
+	int id_ani_mario_small_carry_jump_right = -1;
+	int id_ani_mario_small_carry_walking_left = -1;
+	int id_ani_mario_small_carry_walking_right = -1;
 	int id_ani_mario_small_kick_left = -1;
 	int id_ani_mario_small_kick_right = -1;
+	int id_ani_mario_small_carry_change_dir = -1;
 	int id_ani_mario_small_tele = -1;
 	int id_ani_mario_die = -1;
 #pragma endregion

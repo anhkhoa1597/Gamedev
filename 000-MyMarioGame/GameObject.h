@@ -91,7 +91,7 @@ public:
 	}
 	bool IsInCamera(float l, float t, float r, float b) 
 	{ 
-		if (x >= l - 16 && x <= r + 16 && y >= t - 16 && y <= b + 16) return true;
+		if (x >= l && x <= r && y >= t && y <= b) return true;
 		else return false; 
 	}
 	void RenderBoundingBox();

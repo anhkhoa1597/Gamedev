@@ -354,7 +354,7 @@ void CPlayScene::Update(DWORD dt)
 	game->GetCam(l_screen, t_screen, r_screen, b_screen);
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		if (enemies[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
+		if (enemies[i]->IsInCamera(l_screen - 16, t_screen - 16, r_screen + 16, b_screen + 16))
 		{
 			if (enemies[i]->IsEnemiesOutScreen())
 			{
@@ -385,7 +385,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (!objects[i]->IsPlayer()) 
 		{
-			if (objects[i]->IsEnemies() && !objects[i]->IsInCamera(l_screen, t_screen, r_screen, b_screen))
+			if (objects[i]->IsEnemies() && !objects[i]->IsInCamera(l_screen - 16, t_screen - 16, r_screen + 16, b_screen + 16))
 			{
 				objects[i]->Delete();
 				DebugOut(L"Delete enemy out screen\n");

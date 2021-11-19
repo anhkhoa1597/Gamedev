@@ -12,8 +12,8 @@
   <setting name="mario-walking-speed" value="0.1"/>
   <setting name="mario-tele-speed" value="0.02"/>
   <setting name="mario-running-speed" value="0.2"/>
-  <setting name="mario-accel-walk-x" value="0.0005"/>
-  <setting name="mario-accel-run-x" value="0.0007"/>
+  <setting name="mario-accel-walk-x" value="0.0003"/>
+  <setting name="mario-accel-run-x" value="0.0006"/>
   <setting name="mario-jump-speed-y" value="0.55"/>
   <setting name="mario-jump-run-speed-y" value="0.6"/> <!--Do not set to high, it will cause false collison-->
   <setting name="mario-gravity" value="0.002"/> <!--must larger or equal 0.002!!! or try set to smaller 0.002 :))-->

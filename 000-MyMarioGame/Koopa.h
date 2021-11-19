@@ -40,6 +40,7 @@ protected:
 	ULONGLONG standing_start;
 	
 	int type_shield;
+	bool isBeingCarried;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -60,6 +61,9 @@ public:
 
 	bool HasWing() { return has_wing; }
 	void LostWing();
+	bool IsBeingCarried() { return isBeingCarried; }
+	void BeingCarried() { isBeingCarried = true; }
+	void BeKicked() { isBeingCarried = false; }
 	virtual void SetState(int state);
 	int GetTypeShield() { return type_shield; }
 	void SetTypeShield(int typeShield) { this->type_shield = typeShield; }
