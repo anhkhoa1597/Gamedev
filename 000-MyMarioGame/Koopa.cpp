@@ -10,7 +10,7 @@ CKoopa::CKoopa(float x, float y, int type) : CGameObject(x, y, type)
 	type_shield = NO_SHIELD;
 	if (this->has_wing) ay = setting->wing_koopa_gravity;
 	else ay = setting->koopa_gravity;
-	isBeingCarried = false;
+	isCarried = false;
 	SetState(KOOPA_STATE_WALKING_LEFT);
 }
 
@@ -34,8 +34,11 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CKoopa::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	if (!isCarried)
+	{
+		x += vx * dt;
+		y += vy * dt;
+	}
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -91,6 +94,13 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				OnCollisionWithGoomba(e);
 			else if (dynamic_cast<CBrick*>(e->obj))
 				OnCollisionWithBrick(e);
+		}
+		else if (vx == 0 && isCarried)
+		{
+			if (dynamic_cast<CKoopa*>(e->obj))
+				OnCollisionWithKoopa(e);
+			else if (dynamic_cast<CGoomba*>(e->obj))
+				OnCollisionWithGoomba(e);
 		}
 	}
 }
@@ -176,46 +186,56 @@ void CKoopa::LostWing()
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!isBeingCarried)
+	if (!isCarried)
 	{
 		vy += ay * dt;
 		vx += ax * dt;
-
-		if ((state == KOOPA_STATE_SHIELD_IDLE) && (GetTickCount64() - shield_start > setting->koopa_shield_timeout))
-		{
-			SetState(KOOPA_STATE_SHIELD_STANDING);
-		}
-		else if ((state == KOOPA_STATE_SHIELD_STANDING) && (GetTickCount64() - standing_start > setting->koopa_shield_standing_timeout))
-		{
-			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-			float x_mario, y_mario;
-			mario->GetPosition(x_mario, y_mario);
-			y -= setting->koopa_height - setting->koopa_shield_height;
-			if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
-			else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
-		}
-		else if ((state == KOOPA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > setting->koopa_bounce_die_timeout))
-		{
-			isDeleted = true;
-			return;
-		}
 	}
 	else
 	{
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float x_mario, y_mario;
-		int state_mario = mario->GetState();
+		int level_mario = mario->GetLevel();
+		int nx = mario->GetDir();
 		mario->GetPosition(x_mario, y_mario);
-		if (state_mario == MARIO_STATE_RUNNING_LEFT)
+		//mario->GetSpeed(vx, vy); // set speed for koopa
+		if (level_mario == MARIO_LEVEL_SMALL)
 		{
-			x = x_mario - 8;
-			y = y_mario - 8;
+			y = y_mario;
+			if (nx > 0) x = x_mario + 10;
+			else if (nx < 0) x = x_mario - 12;
 		}
-		else if (state_mario == MARIO_STATE_RUNNING_RIGHT)
+		else
 		{
-			x = x_mario + 8;
-			y = y_mario - 8;
+			y = y_mario + 11;
+			if (nx > 0) x = x_mario + 10;
+			else if (nx < 0) x = x_mario - 12;
 		}
+
+	}
+
+	if ((state == KOOPA_STATE_SHIELD_IDLE) && (GetTickCount64() - shield_start > setting->koopa_shield_timeout))
+	{
+		SetState(KOOPA_STATE_SHIELD_STANDING);
+	}
+	else if ((state == KOOPA_STATE_SHIELD_STANDING) && (GetTickCount64() - standing_start > setting->koopa_shield_standing_timeout))
+	{
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		if (isCarried) //check only this koopa is carried
+		{
+			mario->NoCarryKoopa();
+			isCarried = false;
+		}
+		float x_mario, y_mario;
+		mario->GetPosition(x_mario, y_mario);
+		y -= setting->koopa_height - setting->koopa_shield_height;
+		if (x < x_mario) SetState(KOOPA_STATE_WALKING_RIGHT);
+		else if (x >= x_mario) SetState(KOOPA_STATE_WALKING_LEFT);
+	}
+	else if ((state == KOOPA_STATE_BOUNCE_DIE) && (GetTickCount64() - die_start > setting->koopa_bounce_die_timeout))
+	{
+		isDeleted = true;
+		return;
 	}
 		
 	CGameObject::Update(dt, coObjects);
@@ -306,9 +326,11 @@ void CKoopa::SetState(int state)
 		vx = 0;
 		break;
 	case KOOPA_STATE_SHIELD_ROLLING_LEFT:
+		if (isCarried) isCarried = false;
 		vx = -setting->koopa_shield_rolling_speed;
 		break;
 	case KOOPA_STATE_SHIELD_ROLLING_RIGHT:
+		if (isCarried) isCarried = false;
 		vx = setting->koopa_shield_rolling_speed;
 		break;
 	case KOOPA_STATE_SHIELD_STANDING:

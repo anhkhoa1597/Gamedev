@@ -69,7 +69,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	bool isBlockedLeftRight;
 	bool isCarryingKoopa;
-
+	LPGAMEOBJECT koopa;
 	int height;
 
 	int current_point = 0;
@@ -99,9 +99,11 @@ public:
 	bool IsGoOutOfPipe();
 	bool IsCarryingKoopa() { return isCarryingKoopa; }
 	bool IsBlockedLeftRight() { return isBlockedLeftRight; }
-	void KickKoopa() { isCarryingKoopa = false; }
+	void NoCarryKoopa() { isCarryingKoopa = false; koopa = NULL; }
+	void KickKoopa();
 	void SetState(int state);
 	void SetLevel(int l);
+	int GetLevel() { return level; }
 	void IncreaseMultiPoint();
 	void Dead();
 	void DeadImmediately();

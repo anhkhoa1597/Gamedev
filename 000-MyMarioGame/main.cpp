@@ -35,6 +35,8 @@
 		0.27: add feature time out, update dead.
 		0.28: add item pause and feature switch normal brick and coin when mario hit item pause
 		0.29: Add feature auto create enemies when mario go neaby, delete enemies when enemies go out screen.
+		0.30: update animation mario, update mario collison with block Object
+		0.31: add feature mario can carry koopa
 ================================================================ */
 
 #include <windows.h>

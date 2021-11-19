@@ -73,6 +73,7 @@ public:
 	void GetInitPosition(float& initX, float& initY) { initX = this->initX; initY = this->initY; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
+	int GetDir() { return nx; }
 	int GetState() { return this->state; }
 	int GetType() { return this->type; }
 	virtual void Delete() { isDeleted = true;  }

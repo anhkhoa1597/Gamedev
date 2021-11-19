@@ -19,6 +19,7 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	isOnPlatform = false;
 	isCarryingKoopa = false;
 	isBlockedLeftRight = false;
+	koopa = NULL;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -205,10 +206,11 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE) //idle shield will roll
 		{
-			if (state == MARIO_STATE_RUNNING_LEFT || state == MARIO_STATE_RUNNING_RIGHT && isCarryingKoopa == false)
+			if (game->IsKeyDown(DIK_A) && isCarryingKoopa == false)
 			{
 				isCarryingKoopa = true;
-				//koopa->BeingCarried();
+				this->koopa = koopa;
+				koopa->Carried();
 			}
 			else
 			{
@@ -324,6 +326,20 @@ bool CMario::IsGoOutOfPipe()
 		return true;
 	}
 	return false;
+}
+
+void CMario::KickKoopa()
+{
+	if (nx < 0)
+	{
+		koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
+	}
+	else
+	{
+		koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
+	}
+	koopa = NULL;
+	isCarryingKoopa = false;
 }
 
 //
