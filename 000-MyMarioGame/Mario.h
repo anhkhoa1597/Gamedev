@@ -9,6 +9,7 @@
 
 #include "Goomba.h"
 #include "Koopa.h"
+#include "PiranhaPlant.h"
 #include "Coin.h"
 #include "Mushroom.h"
 #include "Portal.h"
@@ -81,6 +82,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 	void OnCollisionWithPipe(LPCOLLISIONEVENT e);
 	void OnCollisionWithPause(LPCOLLISIONEVENT e);
@@ -99,12 +101,13 @@ public:
 	bool IsGoOutOfPipe();
 	bool IsCarryingKoopa() { return isCarryingKoopa; }
 	bool IsBlockedLeftRight() { return isBlockedLeftRight; }
-	void NoCarryKoopa() { isCarryingKoopa = false; koopa = NULL; }
+	void NoCarryKoopa();
 	void KickKoopa();
 	void SetState(int state);
 	void SetLevel(int l);
 	int GetLevel() { return level; }
 	void IncreaseMultiPoint();
+	void Hitted();
 	void Dead();
 	void DeadImmediately();
 	bool IsBlockingKeyboard() { return isBlockingKeyboard; }

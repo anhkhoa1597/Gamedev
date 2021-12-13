@@ -85,6 +85,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
+		OnCollisionWithPiranhaPlant(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -151,16 +153,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_BOUNCE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE by GOOMBA >>> \n");
-					Dead();
-				}
+				Hitted();
 			}
 		}
 	}
@@ -204,9 +197,9 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	}
 	else //hit koopa from left, right, bottom
 	{
-		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE) //idle shield will roll
+		if (koopa->GetState() == KOOPA_STATE_SHIELD_IDLE || koopa->GetState() == KOOPA_STATE_SHIELD_STANDING) //idle shield will roll
 		{
-			if (game->IsKeyDown(DIK_A) && isCarryingKoopa == false)
+			if (game->IsKeyDown(DIK_A) && isCarryingKoopa == false && e->ny == 0)
 			{
 				isCarryingKoopa = true;
 				this->koopa = koopa;
@@ -214,8 +207,9 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			}
 			else
 			{
-				SetState(MARIO_STATE_KICK);
-				if (e->nx < 0) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
+				float x_koopa, y_koopa;
+				koopa->GetPosition(x_koopa, y_koopa);
+				if (x < x_koopa) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
 				else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
 			}
 		}
@@ -223,18 +217,18 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		{
 			if (koopa->GetState() != KOOPA_STATE_BOUNCE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE by KOOPA>>> \n");
-					Dead();
-				}
+				Hitted();
 			}
 		}
+	}
+}
+
+void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
+{
+	CPiranhaPlant* piranhaPlant = dynamic_cast<CPiranhaPlant*>(e->obj);
+	if (untouchable == 0)
+	{
+		if (piranhaPlant->GetState() != PIRANHA_PLANT_STATE_IDLE) Hitted();
 	}
 }
 
@@ -308,13 +302,13 @@ void CMario::OnCollisionWithPause(LPCOLLISIONEVENT e)
 
 void CMario::Dead()
 {
-	CGame::GetInstance()->StopPause();
 	SetState(MARIO_STATE_DIE);
 	//DeadImmediately();
 }
 
 void CMario::DeadImmediately()
 {
+	CGame::GetInstance()->StopPause();
 	CGame::GetInstance()->LifeDown();
 	CGame::GetInstance()->ReloadScene();
 }
@@ -340,6 +334,14 @@ void CMario::KickKoopa()
 	}
 	koopa = NULL;
 	isCarryingKoopa = false;
+}
+
+void CMario::NoCarryKoopa()
+{
+	CKoopa* coKoopa = (CKoopa*)koopa;
+	isCarryingKoopa = false; 
+	coKoopa->NoCarried(); 
+	koopa = NULL;
 }
 
 //
@@ -633,6 +635,7 @@ void CMario::SetState(int state)
 		isBlockingKeyboard = false;
 		isSitting = false;
 		CGame::GetInstance()->SetMarioGoThroughPipe(false);
+		if (isCarryingKoopa) NoCarryKoopa();
 		ay = setting->mario_gravity;
 		break;
 	}
@@ -708,5 +711,24 @@ void CMario::IncreaseMultiPoint()
 	if (current_point <= 7) CGame::GetInstance()->IncreasePoint(points_in_level[current_point]);
 	else CGame::GetInstance()->LifeUp(1);
 	current_point++;
+}
+
+void CMario::Hitted()
+{
+	if (level > MARIO_LEVEL_BIG)
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+		StartUntouchable();
+	}
+	else if (level > MARIO_LEVEL_SMALL)
+	{
+		SetLevel(MARIO_LEVEL_SMALL);
+		StartUntouchable();
+	}
+	else
+	{
+		DebugOut(L">>> Mario DIE by KOOPA>>> \n");
+		Dead();
+	}
 }
 

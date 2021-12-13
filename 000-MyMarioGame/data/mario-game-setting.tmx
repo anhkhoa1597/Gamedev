@@ -50,6 +50,11 @@
   <setting name="koopa-height" value="26"/>
   <setting name="koopa-shield-height" value="16"/>
 
+  <setting name="piranha-plant-width" value="16"/>
+  <setting name="piranha-plant-height" value="32"/>
+  <setting name="piranha-plant-delay-timeout" value="1000"/>
+
+
   <setting name="brick-bouncing-speed" value="0.2"/>
   <setting name="brick-bounce-height" value="8"/>
   <setting name="brick-number-bounce-of-multi-coin" value="10"/>

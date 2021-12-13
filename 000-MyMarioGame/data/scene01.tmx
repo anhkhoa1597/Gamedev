@@ -10,6 +10,7 @@
     <asset source="data\hud-font.tmx"/>
     <asset source="data\goomba.tmx"/>
     <asset source="data\koopa.tmx"/>
+    <asset source="data\piranha-plant.tmx"/>
     <asset source="data\item.tmx"/>
     <!-- <asset source="data\cloud.tmx"/> -->
   </assetgroup>

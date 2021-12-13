@@ -227,6 +227,8 @@ void CPlayScene::LoadMap(string mapFile)
 		else if (name == "wing_koopa") obj = new CKoopa(x, y, WKOOPA);
 		else if (name == "red_koopa") obj = new CKoopa(x, y, RKOOPA);
 		else if (name == "red_wing_koopa") obj = new CKoopa(x, y, RWKOOPA);
+		else if (name == "piranha_plant") obj = new CPiranhaPlant(x, y, PIRANHA_PLANT);
+		else if (name == "horizontal_piranha_plant") obj = new CPiranhaPlant(x, y, HORIZONTAL_PIRANHA_PLANT);
 		else if (name == "wall") obj = new CWall(x, y, width, height);
 		else if (name == "ground") obj = new CGround(x, y, width, height);
 		else if (name == "s_platform") obj = new CSpecificPlatform(x, y, width, height);

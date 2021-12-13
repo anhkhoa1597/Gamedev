@@ -146,6 +146,18 @@ public:
 	int id_ani_red_koopa_shield_rolling_up = -1;
 #pragma endregion
 
+#pragma region PIRANHA_PLANT
+	int piranha_plant_width = 0;
+	int piranha_plant_height = 0;
+	int piranha_plant_delay_timeout = 0;
+
+	int id_ani_piranha_plant_left_down = -1;
+	int id_ani_piranha_plant_left_up = -1;
+	int id_ani_piranha_plant_right_down = -1;
+	int id_ani_piranha_plant_right_up = -1;
+	int id_ani_horizontal_piranha_plant = -1;
+#pragma endregion
+
 #pragma region BRICK
 	//constant
 	float brick_bouncing_speed = 0;

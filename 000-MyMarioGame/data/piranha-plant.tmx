@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset>
   <spritegroup>
-    <sprite name="piranha-plant-left-down" id="34010" left="128" top="144" right="143" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-down" id="34020" left="144" top="144" right="159" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-up" id="34030" left="160" top="144" right="175" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-left-up" id="34040" left="176" top="144" right="191" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-down" id="34011" left="1234" top="144" right="1249" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-down" id="34021" left="1218" top="144" right="1233" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-up" id="34031" left="1202" top="144" right="1217" bottom="175" texid="10"/>
-    <sprite name="piranha-plant-right-up" id="34041" left="1186" top="144" right="1191" bottom="175" texid="10"/>
-
+    <sprite name="piranha-plant-left-down" id="34111" left="128" top="144" right="143" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-down" id="34112" left="144" top="144" right="159" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="34211" left="160" top="144" right="175" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-left-up" id="34212" left="176" top="144" right="191" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="34121" left="1234" top="144" right="1249" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-down" id="34122" left="1218" top="144" right="1233" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="34221" left="1202" top="144" right="1217" bottom="175" texid="10"/>
+    <sprite name="piranha-plant-right-up" id="34222" left="1186" top="144" right="1201" bottom="175" texid="10"/>
+    <sprite name="horizontal-piranha-plant" id="35001" left="96" top="144" right="111" bottom="175" texid="10"/>
+    <sprite name="horizontal-piranha-plant" id="35002" left="112" top="144" right="127" bottom="175" texid="10"/>
   </spritegroup>
   <animationgroup>
-    <animation name="goomba-walk" id="7100">
-      <sprite id="31001" time="100"/>
-      <sprite id="31002" time="100"/>
+    <animation name="piranha-plant-left-down" id="7100">
+      <sprite id="34111" time="100"/>
+      <sprite id="34112" time="100"/>
     </animation>
-    <animation name="goomba-die" id="7200">
-      <sprite id="32000" time="100"/>
+    <animation name="piranha-plant-left-up" id="7200">
+      <sprite id="34211" time="100"/>
+      <sprite id="34212" time="100"/>
+    </animation>
+    <animation name="piranha-plant-right-down" id="7300">
+      <sprite id="34121" time="100"/>
+      <sprite id="34122" time="100"/>
+    </animation>
+    <animation name="piranha-plant-right-up" id="7400">
+      <sprite id="34221" time="100"/>
+      <sprite id="34222" time="100"/>
+    </animation>
+    <animation name="horizontal-piranha-plant" id="7500">
+      <sprite id="35001" time="100"/>
+      <sprite id="35002" time="100"/>
     </animation>
   </animationgroup>
 </asset>

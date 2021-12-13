@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="182">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="184">
  <properties>
   <property name="id" value="1010"/>
   <property name="source" type="file" value="data/stage-tileset-transparent.tmx"/>
@@ -237,7 +237,7 @@
     <property name="drop" value="coin"/>
    </properties>
   </object>
-  <object id="115" name="dead_zone" x="0" y="464" width="2816" height="16"/>
+  <object id="115" name="dead_zone" x="-64" y="496" width="2944" height="16"/>
   <object id="122" name="s_brick" x="144" y="352" width="16" height="16">
    <properties>
     <property name="drop" value="multi_coin"/>
@@ -326,6 +326,12 @@
    <properties>
     <property name="drop" value="pause"/>
    </properties>
+  </object>
+  <object id="182" name="piranha_plant" x="360" y="368">
+   <point/>
+  </object>
+  <object id="183" name="horizontal_piranha_plant" x="1864" y="368">
+   <point/>
   </object>
  </objectgroup>
  <layer id="5" name="graphics" width="176" height="27">

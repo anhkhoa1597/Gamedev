@@ -8,6 +8,7 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Koopa.h"
+#include "PiranhaPlant.h"
 #include "Pipe.h"
 #include "Pause.h"
 #include "Mushroom.h"

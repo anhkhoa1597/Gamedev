@@ -100,7 +100,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (dynamic_cast<CKoopa*>(e->obj))
 				OnCollisionWithKoopa(e);
 			else if (dynamic_cast<CGoomba*>(e->obj))
+			{
+				DebugOut(L"Koopa Collison with goomba\n");
 				OnCollisionWithGoomba(e);
+			}
 		}
 	}
 }
@@ -224,7 +227,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (isCarried) //check only this koopa is carried
 		{
 			mario->NoCarryKoopa();
-			isCarried = false;
 		}
 		float x_mario, y_mario;
 		mario->GetPosition(x_mario, y_mario);
@@ -304,6 +306,8 @@ void CKoopa::Render()
 			CAnimations::GetInstance()->Get(aniWingId)->Render(x, y - 3);
 		}
 	}
+	
+	RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)

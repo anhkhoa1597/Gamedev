@@ -42,6 +42,8 @@ enum TypeObject
 	PLATFORM, //not need to use yet:)
 	HUD,
 	PAUSE,
+	PIRANHA_PLANT,
+	HORIZONTAL_PIRANHA_PLANT,
 };
 
 class CGameObject

@@ -64,6 +64,10 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "koopa-height") pSetting->QueryIntAttribute("value", &koopa_height);
 		else if (name == "koopa-shield-height") pSetting->QueryIntAttribute("value", &koopa_shield_height);
 
+		else if (name == "piranha-plant-width") pSetting->QueryIntAttribute("value", &piranha_plant_width);
+		else if (name == "piranha-plant-height") pSetting->QueryIntAttribute("value", &piranha_plant_height);
+		else if (name == "piranha-plant-delay-timeout") pSetting->QueryIntAttribute("value", &piranha_plant_delay_timeout);
+
 		else if (name == "brick-bouncing-speed") pSetting->QueryFloatAttribute("value", &brick_bouncing_speed);
 		else if (name == "brick-bounce-height") pSetting->QueryIntAttribute("value", &brick_bounce_height);
 		else if (name == "brick-number-bounce-of-multi-coin") pSetting->QueryIntAttribute("value", &brick_number_bounce_of_multi_coin);
@@ -189,6 +193,13 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "red-koopa-shield-standing-up") id_ani_red_koopa_shield_standing_up = id;
 	else if (name == "red-koopa-shield-rolling-down") id_ani_red_koopa_shield_rolling_down = id;
 	else if (name == "red-koopa-shield-rolling-up") id_ani_red_koopa_shield_rolling_up = id;
+	//piranha plant
+	else if (name == "piranha-plant-left-down") id_ani_piranha_plant_left_down = id;
+	else if (name == "piranha-plant-left-up") id_ani_piranha_plant_left_up = id;
+	else if (name == "piranha-plant-right-down") id_ani_piranha_plant_right_down = id;
+	else if (name == "piranha-plant-right-up") id_ani_piranha_plant_right_up = id;
+	else if (name == "horizontal-piranha-plant") id_ani_horizontal_piranha_plant = id;
+
 	//brick
 	else if (name == "brick") id_ani_brick = id;
 	else if (name == "question-brick") id_ani_question_brick = id;
