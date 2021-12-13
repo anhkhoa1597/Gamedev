@@ -86,6 +86,12 @@
   <setting name="font-life-y" value="15"/>
   <setting name="font-world-x" value="37"/>
   <setting name="font-world-y" value="7"/>
+  <setting name="font-power-meter-x" value="52"/>
+  <setting name="font-power-meter-y" value="7"/>
+  <setting name="sprite-id-font-power-meter-normal" value="91000"/>
+  <setting name="sprite-id-font-power-meter-running" value="91100"/>
+  <setting name="sprite-id-font-power-meter-p-normal" value="91200"/>
+  <setting name="sprite-id-font-power-meter-p-running" value="91300"/>
 
   <setting name="pause-timeout" value="20000"/>
 

@@ -37,6 +37,7 @@
 		0.29: Add feature auto create enemies when mario go neaby, delete enemies when enemies go out screen.
 		0.30: update animation mario, update mario collison with block Object
 		0.31: add feature mario can carry koopa
+		0.32: add piranha plant
 ================================================================ */
 
 #include <windows.h>

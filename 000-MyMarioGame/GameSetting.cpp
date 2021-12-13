@@ -92,6 +92,9 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "tex-hud-background") pSetting->QueryIntAttribute("value", &id_tex_hud_background);
 		else if (name == "game-time") pSetting->QueryIntAttribute("value", &game_time);
 		else if (name == "sprite-id-hud-and-font") pSetting->QueryIntAttribute("value", &sprite_id_hud_and_font);
+		else if (name == "sprite-id-font-power-meter-normal") pSetting->QueryIntAttribute("value", &sprite_id_font_power_meter_normal);
+		else if (name == "sprite-id-font-power-meter-running") pSetting->QueryIntAttribute("value", &sprite_id_font_power_meter_running);
+		else if (name == "sprite-id-font-power-meter-p-normal") pSetting->QueryIntAttribute("value", &sprite_id_font_power_meter_p_normal);
 		else if (name == "font-width") pSetting->QueryIntAttribute("value", &font_width);
 		else if (name == "font-time-x") pSetting->QueryFloatAttribute("value", &font_time_x);
 		else if (name == "font-time-y") pSetting->QueryFloatAttribute("value", &font_time_y);
@@ -103,6 +106,8 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "font-life-y") pSetting->QueryFloatAttribute("value", &font_life_y);
 		else if (name == "font-world-x") pSetting->QueryFloatAttribute("value", &font_world_x);
 		else if (name == "font-world-y") pSetting->QueryFloatAttribute("value", &font_world_y);
+		else if (name == "font-power-meter-x") pSetting->QueryFloatAttribute("value", &font_power_meter_x);
+		else if (name == "font-power-meter-y") pSetting->QueryFloatAttribute("value", &font_power_meter_y);
 		else if (name == "pause-timeout")  pSetting->QueryIntAttribute("value", &pause_timeout);
 		//unknow setting
 		else
@@ -213,6 +218,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "green-mushroom") id_ani_green_mushroom = id;
 	//hud
 	else if (name == "hud") id_ani_hud = id;
+	else if (name == "power-meter-p-running") id_font_power_meter_p_running = id;
 	//pause
 	else if (name == "pause") id_ani_pause = id;
 	else if (name == "pause-be-hitted") id_ani_pause_be_hitted = id;

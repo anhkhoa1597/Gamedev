@@ -13,6 +13,8 @@ CHud::CHud(float x, float y, int width, int height)
 	point = vector<unsigned int>(7, 0);
 	coin = vector<unsigned int>(2, 0);
 	time = vector<unsigned int>(3, 0);
+	currentPower = 0;
+	maxPower = 7;
 }
 
 void CHud::RenderBackground()
@@ -43,6 +45,7 @@ void CHud::Render()
 	RenderPoint();
 	RenderLife();
 	RenderTime();
+	RenderPowerMeter();
 	CSprites::GetInstance()->Get(setting->sprite_id_hud_and_font + world)->Draw(x + setting->font_world_x, y + setting->font_world_y);
 }
 
@@ -78,11 +81,36 @@ void CHud::RenderLife()
 	}
 }
 
+void CHud::RenderPowerMeter()
+{
+	for (unsigned int i = 0; i < maxPower - 1; i++)
+	{
+		if (i >= currentPower)
+		{
+			CSprites::GetInstance()->Get(setting->sprite_id_font_power_meter_normal)->Draw(x + setting->font_power_meter_x + i * setting->font_width, y + setting->font_power_meter_y);
+		}
+		else
+		{
+			CSprites::GetInstance()->Get(setting->sprite_id_font_power_meter_running)->Draw(x + setting->font_power_meter_x + i * setting->font_width, y + setting->font_power_meter_y);
+		}
+	}
+	if (currentPower != maxPower)
+	{
+		CSprites::GetInstance()->Get(setting->sprite_id_font_power_meter_p_normal)->Draw(x + setting->font_power_meter_x + (maxPower - 1) * setting->font_width, y + setting->font_power_meter_y);
+	}
+	else
+	{
+		CAnimations::GetInstance()->Get(setting->id_font_power_meter_p_running)->Render(x + setting->font_power_meter_x + (maxPower - 1) * setting->font_width, y + setting->font_power_meter_y);
+	}
+}
+
 void CHud::Update()
 {
 	float x_cam, y_cam;
 	int x_adjust = (CGame::GetInstance()->GetBackBufferWidth() - width) / 2;
 	LPGAME game = CGame::GetInstance();
+	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
 	UpdateCoin(game->GetCoin());
 	UpdateTime(game->GetTime());
 	UpdatePoint(game->GetPoint());
@@ -132,5 +160,3 @@ void CHud::UpdateLife(unsigned int life)
 		this->life[i] = (life / m) % 10;
 	}
 }
-
-

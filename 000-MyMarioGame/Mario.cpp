@@ -15,6 +15,7 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	height = setting->mario_small_height;
 	untouchable = 0;
 	untouchable_start = -1;
+	powerTime_start = -1;
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
 	isCarryingKoopa = false;
@@ -27,7 +28,32 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 	LPGAME game = CGame::GetInstance();
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	LPHUD hud = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetHud();
+	if (abs(vx) > abs(maxVx))
+	{
+		vx = maxVx;
+	}
+	if (abs(ax) == setting->mario_accel_run_x)
+	{
+		float averageVx = maxVx / hud->GetMaxPower();
+		powerTime_start = GetTickCount64();
+		if (abs(vx) > abs(maxVx))
+		{
+			hud->UpdatePowerMeter(hud->GetMaxPower());
+		}
+		else
+		{
+			hud->UpdatePowerMeter(hud->GetMaxPower() - (int)((maxVx - vx) / averageVx));
+		}
+	}
+	else
+	{
+		if (hud->GetCurrentPower() > 0 && GetTickCount64() - powerTime_start >= 300)
+		{
+			powerTime_start = GetTickCount64();
+			hud->UpdatePowerMeter(hud->GetCurrentPower() - 1);
+		}
+	}
 
 	 //reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > setting->mario_untouchable_time)

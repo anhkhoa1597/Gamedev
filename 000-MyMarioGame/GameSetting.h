@@ -200,6 +200,10 @@ public:
 	int id_tex_bbox = -1;
 	int id_tex_hud_background = -1;
 	int sprite_id_hud_and_font = -1;
+	int sprite_id_font_power_meter_normal = -1;
+	int sprite_id_font_power_meter_running = -1;
+	int sprite_id_font_power_meter_p_normal = -1;
+	int id_font_power_meter_p_running = -1;
 	int font_width = 0;
 	float font_time_x = 0;
 	float font_time_y = 0;
@@ -211,6 +215,9 @@ public:
 	float font_life_y = 0;
 	float font_world_x = 0;
 	float font_world_y = 0;
+	float font_power_meter_x = 0;
+	float font_power_meter_y = 0;
+
 #pragma endregion
 
 #pragma region PIPE

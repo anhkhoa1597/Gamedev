@@ -42,6 +42,7 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
+	LPHUD GetHud() { return hud; }
 	void AddObject(LPGAMEOBJECT object);
 	void Clear();
 	void PurgeDeletedObjects();

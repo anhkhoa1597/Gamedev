@@ -67,6 +67,7 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable;
 	ULONGLONG untouchable_start;
+	ULONGLONG powerTime_start;
 	BOOLEAN isOnPlatform;
 	bool isBlockedLeftRight;
 	bool isCarryingKoopa;
