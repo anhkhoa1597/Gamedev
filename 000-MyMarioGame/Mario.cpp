@@ -9,6 +9,9 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	isPlayer = true;
 	isSitting = false;
 	maxVx = 0.0f;
+	avgVx = 0.0f;
+	currentPower = 0;
+	maxPower = setting->mario_max_power;
 	ax = 0.0f;
 	ay = setting->mario_gravity;
 	level = MARIO_LEVEL_SMALL;
@@ -27,31 +30,40 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
 	LPGAME game = CGame::GetInstance();
 	LPHUD hud = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetHud();
-	if (abs(vx) > abs(maxVx))
-	{
-		vx = maxVx;
-	}
-	if (abs(ax) == setting->mario_accel_run_x)
-	{
-		float averageVx = maxVx / hud->GetMaxPower();
-		powerTime_start = GetTickCount64();
-		if (abs(vx) > abs(maxVx))
+	hud->UpdatePowerMeter(currentPower);
+	//if (abs(vx) > abs(maxVx))
+	//{
+	//	vx = maxVx;
+	//}
+
+
+	//handle accelerate
+	if (abs(ax) == abs(setting->mario_accel_run_x))
+	{	
+		if (abs(vx) > abs(avgVx * (currentPower + 1)))
 		{
-			hud->UpdatePowerMeter(hud->GetMaxPower());
+			vx = avgVx * (currentPower + 1);
 		}
-		else
+		if (currentPower < maxPower && abs(vx) >= abs(avgVx * (currentPower + 1)) && GetTickCount64() - powerTime_start > 100)
 		{
-			hud->UpdatePowerMeter(hud->GetMaxPower() - (int)((maxVx - vx) / averageVx));
+			powerTime_start = GetTickCount64();
+			currentPower++;
 		}
 	}
 	else
 	{
-		if (hud->GetCurrentPower() > 0 && GetTickCount64() - powerTime_start >= 300)
+		if (abs(vx) > abs(maxVx))
+		{
+			vx = maxVx;
+		}
+
+		if (currentPower > 0 && GetTickCount64() - powerTime_start > 300)
 		{
 			powerTime_start = GetTickCount64();
-			hud->UpdatePowerMeter(hud->GetCurrentPower() - 1);
+			currentPower--;
 		}
 	}
 
@@ -576,12 +588,14 @@ void CMario::SetState(int state)
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
 		maxVx = setting->mario_running_speed;
+		avgVx = setting->mario_average_speed;
 		ax = setting->mario_accel_run_x;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
 		maxVx = -setting->mario_running_speed;
+		avgVx = -setting->mario_average_speed;
 		ax = -setting->mario_accel_run_x;
 		nx = -1;
 		break;

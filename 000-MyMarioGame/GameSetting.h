@@ -23,6 +23,8 @@ public:
 	float mario_tele_speed = 0;
 	float mario_walking_speed = 0;
 	float mario_running_speed = 0;
+	float mario_average_speed = 0;
+	int mario_max_power = 0;
 	float mario_accel_walk_x = 0;
 	float mario_accel_run_x = 0;
 	float mario_jump_speed_y = 0;

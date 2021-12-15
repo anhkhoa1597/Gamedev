@@ -24,6 +24,8 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-small-height") pSetting->QueryIntAttribute("value", &mario_small_height);
 		else if (name == "mario-sitting-height") pSetting->QueryIntAttribute("value", &mario_sitting_height);
 		else if (name == "mario-running-speed") pSetting->QueryFloatAttribute("value", &mario_running_speed);
+		else if (name == "mario-average-speed") pSetting->QueryFloatAttribute("value", &mario_average_speed);
+		else if (name == "mario-max-power") pSetting->QueryIntAttribute("value", &mario_max_power);
 		else if (name == "mario-tele-speed") pSetting->QueryFloatAttribute("value", &mario_tele_speed);
 		else if (name == "mario-accel-walk-x") pSetting->QueryFloatAttribute("value", &mario_accel_walk_x);
 		else if (name == "mario-accel-run-x") pSetting->QueryFloatAttribute("value", &mario_accel_run_x);

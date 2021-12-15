@@ -59,15 +59,20 @@ enum MarioStates
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
+
+	//handle speed of mario
+	ULONGLONG powerTime_start;
+	unsigned int currentPower;
+	unsigned int maxPower;
 	float maxVx;
+	float avgVx; //averageVx base on power
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
-	
+
 	bool isBlockingKeyboard;
 	int level; 
 	int untouchable;
 	ULONGLONG untouchable_start;
-	ULONGLONG powerTime_start;
 	BOOLEAN isOnPlatform;
 	bool isBlockedLeftRight;
 	bool isCarryingKoopa;
