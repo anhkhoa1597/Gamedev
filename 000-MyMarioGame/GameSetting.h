@@ -47,6 +47,10 @@ public:
 	int id_ani_raccoon_jump_run_right = -1;
 	int id_ani_raccoon_jump_walk_left = -1;
 	int id_ani_raccoon_jump_walk_right = -1;
+	int id_ani_raccoon_free_falling_left = -1;
+	int id_ani_raccoon_free_falling_right = -1;
+	int id_ani_raccoon_slow_falling_left = -1;
+	int id_ani_raccoon_slow_falling_right = -1;
 	int id_ani_raccoon_sit_left = -1;
 	int id_ani_raccoon_sit_right = -1;
 	int id_ani_raccoon_brace_left = -1;
@@ -109,6 +113,8 @@ public:
 	int id_ani_mario_small_carry_change_dir = -1;
 	int id_ani_mario_small_tele = -1;
 	int id_ani_mario_die = -1;
+	int id_ani_mario_invisible = -1;
+
 #pragma endregion
 
 #pragma region GOOMBA

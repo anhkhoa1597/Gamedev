@@ -40,7 +40,7 @@ enum MarioStates
 
 	MARIO_STATE_JUMP,
 	MARIO_STATE_RELEASE_JUMP,
-
+	MARIO_STATE_SLOW_FALLING,
 	MARIO_STATE_RUNNING_RIGHT,
 	MARIO_STATE_RUNNING_LEFT,
 
@@ -70,9 +70,13 @@ class CMario : public CGameObject
 	float ay;				// acceleration on y 
 
 	bool isBlockingKeyboard;
+	bool isInvisible;
 	int level; 
 	int untouchable;
 	ULONGLONG untouchable_start;
+	ULONGLONG invisible_start;
+	ULONGLONG kick_start;
+	ULONGLONG slow_falling_start;
 	BOOLEAN isOnPlatform;
 	bool isBlockedLeftRight;
 	bool isCarryingKoopa;
@@ -121,5 +125,5 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartUntouchable();
 };

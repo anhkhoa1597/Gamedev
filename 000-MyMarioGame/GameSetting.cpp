@@ -161,6 +161,10 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "raccoon-jump-walk-right") id_ani_raccoon_jump_walk_right = id;
 	else if (name == "raccoon-jump-run-left") id_ani_raccoon_jump_run_left = id;
 	else if (name == "raccoon-jump-run-right") id_ani_raccoon_jump_run_right = id;
+	else if (name == "raccoon-free-falling-left") id_ani_raccoon_free_falling_left = id;
+	else if (name == "raccoon-free-falling-right") id_ani_raccoon_free_falling_right = id;
+	else if (name == "raccoon-slow-falling-left") id_ani_raccoon_slow_falling_left = id;
+	else if (name == "raccoon-slow-falling-right") id_ani_raccoon_slow_falling_right = id;
 	else if (name == "raccoon-sit-left") id_ani_raccoon_sit_left = id;
 	else if (name == "raccoon-sit-right") id_ani_raccoon_sit_right = id;
 	else if (name == "raccoon-brace-left") id_ani_raccoon_brace_left = id;
@@ -200,6 +204,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "small-carry-change-dir") id_ani_mario_small_carry_change_dir = id;
 	else if (name == "small-tele") id_ani_mario_small_tele = id;
 	else if (name == "mario-die") id_ani_mario_die = id;
+	else if (name == "mario-invisible") id_ani_mario_invisible = id;
 	//goomba
 	else if (name == "goomba-walking") id_ani_goomba_walking = id;
 	else if (name == "goomba-die") id_ani_goomba_die = id;

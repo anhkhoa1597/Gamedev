@@ -98,11 +98,15 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		else if (vx == 0 && isCarried)
 		{
 			if (dynamic_cast<CKoopa*>(e->obj))
+			{
 				OnCollisionWithKoopa(e);
+				SetState(KOOPA_STATE_BOUNCE_DIE);
+			}
 			else if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				DebugOut(L"Koopa Collison with goomba\n");
 				OnCollisionWithGoomba(e);
+				SetState(KOOPA_STATE_BOUNCE_DIE);
 			}
 		}
 	}
@@ -189,6 +193,8 @@ void CKoopa::LostWing()
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
 	if (!isCarried)
 	{
 		vy += ay * dt;
@@ -196,7 +202,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float x_mario, y_mario;
 		int level_mario = mario->GetLevel();
 		int nx = mario->GetDir();
@@ -223,7 +228,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else if ((state == KOOPA_STATE_SHIELD_STANDING) && (GetTickCount64() - standing_start > setting->koopa_shield_standing_timeout))
 	{
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		if (isCarried) //check only this koopa is carried
 		{
 			mario->NoCarryKoopa();
@@ -313,6 +317,7 @@ void CKoopa::Render()
 
 void CKoopa::SetState(int state)
 {
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	switch (state)
 	{
 	case KOOPA_STATE_WALKING_LEFT:
@@ -351,6 +356,10 @@ void CKoopa::SetState(int state)
 		vx = setting->koopa_bouncing_speed;
 		break;
 	case KOOPA_STATE_BOUNCE_DIE:
+		if (isCarried)
+		{
+			mario->NoCarryKoopa();
+		}
 		die_start = GetTickCount64();
 		vy = -setting->koopa_bouncing_up_speed;
 		break;

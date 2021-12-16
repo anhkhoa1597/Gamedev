@@ -18,11 +18,14 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	height = setting->mario_small_height;
 	untouchable = 0;
 	untouchable_start = -1;
+	kick_start = -1;
 	powerTime_start = -1;
+	invisible_start = -1;
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
 	isCarryingKoopa = false;
 	isBlockedLeftRight = false;
+	isInvisible = false;
 	koopa = NULL;
 }
 
@@ -62,10 +65,38 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	 //reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > setting->mario_untouchable_time)
+	if (untouchable == 1 && GetTickCount64() - untouchable_start <= setting->mario_untouchable_time)
 	{
+		if (GetTickCount64() - invisible_start <= 50)
+		{
+			isInvisible = true;
+		}
+		else if (GetTickCount64() - invisible_start <= 100)
+		{
+			isInvisible = false;
+		}
+		else
+		{
+			invisible_start = GetTickCount64();
+		}
+	}
+	else if (untouchable == 1 && GetTickCount64() - untouchable_start > setting->mario_untouchable_time)
+	{
+		isInvisible = false;
 		untouchable_start = 0;
 		untouchable = 0;
+	}
+	if (GetTickCount64() - kick_start <= 300)
+	{
+		state = MARIO_STATE_KICK;
+	}
+	if (GetTickCount64() - slow_falling_start <= 100)
+	{
+		state = MARIO_STATE_SLOW_FALLING;
+	}
+	else if (GetTickCount64() - slow_falling_start > 200)
+	{
+		ay = setting->mario_gravity;
 	}
 	if (IsGoOutOfPipe()) SetState(MARIO_STATE_NORMAL);
 	if (state == MARIO_STATE_DIE)
@@ -94,6 +125,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (e->ny < 0)
 		{
 			isOnPlatform = true;
+			ay = setting->mario_gravity;
 			current_point = 0;
 		}
 	}
@@ -133,6 +165,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPipe(e);
 	else if (dynamic_cast<CPause*>(e->obj))
 		OnCollisionWithPause(e);
+}
+
+void CMario::StartUntouchable()
+{
+	untouchable = 1; 
+	untouchable_start = GetTickCount64();
+	invisible_start = GetTickCount64();
 }
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
@@ -241,6 +280,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			{
 				float x_koopa, y_koopa;
 				koopa->GetPosition(x_koopa, y_koopa);
+				SetState(MARIO_STATE_KICK);
 				if (x < x_koopa) koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_RIGHT);
 				else koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
 			}
@@ -356,6 +396,7 @@ bool CMario::IsGoOutOfPipe()
 
 void CMario::KickKoopa()
 {
+	SetState(MARIO_STATE_KICK);
 	if (nx < 0)
 	{
 		koopa->SetState(KOOPA_STATE_SHIELD_ROLLING_LEFT);
@@ -567,8 +608,16 @@ int CMario::GetAniIdRaccoon()
 			}
 			else
 			{
-				if (nx >= 0) aniId = setting->id_ani_raccoon_jump_walk_right;
-				else aniId = setting->id_ani_raccoon_jump_walk_left;
+				if (vy < 0)
+				{
+					if (nx >= 0) aniId = setting->id_ani_raccoon_jump_walk_right;
+					else aniId = setting->id_ani_raccoon_jump_walk_left;
+				}
+				else if (vy > 0)
+				{
+					if (nx >= 0) aniId = setting->id_ani_raccoon_free_falling_right;
+					else aniId = setting->id_ani_raccoon_free_falling_left;
+				}
 			}
 		}
 		else //carry koopa
@@ -631,6 +680,11 @@ int CMario::GetAniIdRaccoon()
 		else aniId = setting->id_ani_raccoon_kick_right;
 	}
 	else if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP) aniId = setting->id_ani_raccoon_tele;
+	else if (state == MARIO_STATE_SLOW_FALLING)
+	{
+		if (nx > 0) aniId = setting->id_ani_raccoon_slow_falling_right;
+		else aniId = setting->id_ani_raccoon_slow_falling_left;
+	}
 	if (aniId == -1) aniId = setting->id_ani_raccoon_idle_right;;
 
 	return aniId;
@@ -651,15 +705,20 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	if (level == MARIO_LEVEL_RACCOON && nx > 0)
-		animations->Get(aniId)->Render(x - 7, y);
-	else if (untouchable == 0)
-		animations->Get(aniId)->Render(x, y);
+	if (!isInvisible)
+	{
+		if (level == MARIO_LEVEL_RACCOON && nx > 0)
+			animations->Get(aniId)->Render(x - 7, y);
+		else
+		{
+			animations->Get(aniId)->Render(x, y);
+		}
+	}
 	else
-		//need to make mario blinks
-		animations->Get(aniId)->Render(x, y);
-	
-	//RenderBoundingBox();
+	{
+		animations->Get(setting->id_ani_mario_invisible)->Render(x, y);
+	}
+	RenderBoundingBox();
 }
 
 //logic
@@ -705,8 +764,16 @@ void CMario::SetState(int state)
 			else
 				vy = -setting->mario_jump_speed_y;
 		}
+		else if (!isOnPlatform && level == MARIO_LEVEL_RACCOON)
+		{
+			SetState(MARIO_STATE_SLOW_FALLING);
+		}
 		break;
-
+	case MARIO_STATE_SLOW_FALLING:
+		vy = 0.05;
+		ay = 0;
+		slow_falling_start = GetTickCount64();
+		break;
 	case MARIO_STATE_RELEASE_JUMP:
 		if (vy < 0) vy += setting->mario_jump_speed_y / 2;
 		break;
@@ -735,6 +802,7 @@ void CMario::SetState(int state)
 		vx = 0.0f;
 		break;
 	case MARIO_STATE_KICK:
+		kick_start = GetTickCount64();
 		break;
 	case MARIO_STATE_DIE:
 		SetState(MARIO_STATE_NORMAL); //we need to set all is normal before die
