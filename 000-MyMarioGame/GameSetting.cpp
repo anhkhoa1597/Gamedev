@@ -33,7 +33,9 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-jump-run-speed-y") pSetting->QueryFloatAttribute("value", &mario_jump_run_speed_y);
 		else if (name == "mario-gravity") pSetting->QueryFloatAttribute("value", &mario_gravity);
 		else if (name == "mario-jump-deflect-speed") pSetting->QueryFloatAttribute("value", &mario_jump_deflect_speed);
-		else if (name == "mario-untouchabletime") pSetting->QueryFloatAttribute("value", &mario_untouchable_time);
+		else if (name == "mario-untouchabletime") pSetting->QueryIntAttribute("value", &mario_untouchable_time);
+		else if (name == "mario-power-increase-delay-timeout") pSetting->QueryIntAttribute("value", &mario_power_increase_delay_timeout);
+		else if (name == "mario-power-decrease-delay-timeout") pSetting->QueryIntAttribute("value", &mario_power_decrease_delay_timeout);
 		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &mario_life);
 		
 		else if (name == "goomba-width") pSetting->QueryIntAttribute("value", &goomba_width);
@@ -148,6 +150,32 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "big-kick-right") id_ani_mario_kick_right = id;
 	else if (name == "big-carry-change-dir") id_ani_mario_carry_change_dir = id;
 	else if (name == "big-tele") id_ani_mario_tele = id;
+
+	else if (name == "raccoon-idle-left") id_ani_raccoon_idle_left = id;
+	else if (name == "raccoon-idle-right") id_ani_raccoon_idle_right = id;
+	else if (name == "raccoon-walking-left") id_ani_raccoon_walking_left = id;
+	else if (name == "raccoon-walking-right") id_ani_raccoon_walking_right = id;
+	else if (name == "raccoon-running-left") id_ani_raccoon_running_left = id;
+	else if (name == "raccoon-running-right") id_ani_raccoon_running_right = id;
+	else if (name == "raccoon-jump-walk-left") id_ani_raccoon_jump_walk_left = id;
+	else if (name == "raccoon-jump-walk-right") id_ani_raccoon_jump_walk_right = id;
+	else if (name == "raccoon-jump-run-left") id_ani_raccoon_jump_run_left = id;
+	else if (name == "raccoon-jump-run-right") id_ani_raccoon_jump_run_right = id;
+	else if (name == "raccoon-sit-left") id_ani_raccoon_sit_left = id;
+	else if (name == "raccoon-sit-right") id_ani_raccoon_sit_right = id;
+	else if (name == "raccoon-brace-left") id_ani_raccoon_brace_left = id;
+	else if (name == "raccoon-brace-right") id_ani_raccoon_brace_right = id;
+	else if (name == "raccoon-carry-idle-left") id_ani_raccoon_carry_idle_left = id;
+	else if (name == "raccoon-carry-idle-right") id_ani_raccoon_carry_idle_right = id;
+	else if (name == "raccoon-carry-jump-left") id_ani_raccoon_carry_jump_left = id;
+	else if (name == "raccoon-carry-jump-right") id_ani_raccoon_carry_jump_right = id;
+	else if (name == "raccoon-carry-walking-left") id_ani_raccoon_carry_walking_left = id;
+	else if (name == "raccoon-carry-walking-right") id_ani_raccoon_carry_walking_right = id;
+	else if (name == "raccoon-kick-left") id_ani_raccoon_kick_left = id;
+	else if (name == "raccoon-kick-right") id_ani_raccoon_kick_right = id;
+	else if (name == "raccoon-carry-change-dir") id_ani_raccoon_carry_change_dir = id;
+	else if (name == "raccoon-tele") id_ani_raccoon_tele = id;
+
 	else if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "small-idle-left") id_ani_mario_small_idle_left = id;
 	else if (name == "small-idle-right") id_ani_mario_small_idle_right = id;

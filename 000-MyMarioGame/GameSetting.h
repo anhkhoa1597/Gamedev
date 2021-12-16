@@ -31,10 +31,37 @@ public:
 	float mario_jump_run_speed_y = 0;
 	float mario_gravity = 0;
 	float mario_jump_deflect_speed = 0;
-	float mario_untouchable_time = 0;
+	int mario_untouchable_time = 0;
+	int mario_power_increase_delay_timeout = 0;
+	int mario_power_decrease_delay_timeout = 0;
 	int	mario_life = 0;
 
 	//id animation
+	int id_ani_raccoon_idle_left = -1;
+	int id_ani_raccoon_idle_right = -1;
+	int id_ani_raccoon_walking_left = -1;
+	int id_ani_raccoon_walking_right = -1;
+	int id_ani_raccoon_running_left = -1;
+	int id_ani_raccoon_running_right = -1;
+	int id_ani_raccoon_jump_run_left = -1;
+	int id_ani_raccoon_jump_run_right = -1;
+	int id_ani_raccoon_jump_walk_left = -1;
+	int id_ani_raccoon_jump_walk_right = -1;
+	int id_ani_raccoon_sit_left = -1;
+	int id_ani_raccoon_sit_right = -1;
+	int id_ani_raccoon_brace_left = -1;
+	int id_ani_raccoon_brace_right = -1;
+	int id_ani_raccoon_carry_idle_left = -1;
+	int id_ani_raccoon_carry_idle_right = -1;
+	int id_ani_raccoon_carry_jump_left = -1;
+	int id_ani_raccoon_carry_jump_right = -1;
+	int id_ani_raccoon_carry_walking_left = -1;
+	int id_ani_raccoon_carry_walking_right = -1;
+	int id_ani_raccoon_kick_left = -1;
+	int id_ani_raccoon_kick_right = -1;
+	int id_ani_raccoon_carry_change_dir = -1;
+	int id_ani_raccoon_tele = -1;
+
 	int id_ani_mario_idle_left = -1;
 	int id_ani_mario_idle_right = -1;
 	int id_ani_mario_walking_left = -1; 

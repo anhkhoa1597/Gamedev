@@ -23,8 +23,8 @@ enum MarioLevels
 {
 	MARIO_LEVEL_SMALL,
 	MARIO_LEVEL_BIG,
+	MARIO_LEVEL_RACCOON,
 	MARIO_LEVEL_FIRE,
-	MARIO_LEVEL_FOX,
 	MARIO_LEVEL_BEAR,
 	MARIO_LEVEL_FROG,
 	MARIO_LEVEL_TURTLE
@@ -94,6 +94,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPause(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
+	int GetAniIdRaccoon();
 	int GetAniIdSmall();
 
 public:

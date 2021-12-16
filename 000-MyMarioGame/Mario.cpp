@@ -34,20 +34,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	LPGAME game = CGame::GetInstance();
 	LPHUD hud = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetHud();
 	hud->UpdatePowerMeter(currentPower);
-	//if (abs(vx) > abs(maxVx))
-	//{
-	//	vx = maxVx;
-	//}
 
-
-	//handle accelerate
+	//handle speed
 	if (abs(ax) == abs(setting->mario_accel_run_x))
 	{	
 		if (abs(vx) > abs(avgVx * (currentPower + 1)))
 		{
 			vx = avgVx * (currentPower + 1);
 		}
-		if (currentPower < maxPower && abs(vx) >= abs(avgVx * (currentPower + 1)) && GetTickCount64() - powerTime_start > 100)
+		if (currentPower < maxPower && abs(vx) >= abs(avgVx * (currentPower + 1)) && GetTickCount64() - powerTime_start > setting->mario_power_increase_delay_timeout)
 		{
 			powerTime_start = GetTickCount64();
 			currentPower++;
@@ -59,8 +54,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			vx = maxVx;
 		}
-
-		if (currentPower > 0 && GetTickCount64() - powerTime_start > 300)
+		if (currentPower > 0 && GetTickCount64() - powerTime_start > setting->mario_power_decrease_delay_timeout)
 		{
 			powerTime_start = GetTickCount64();
 			currentPower--;
@@ -156,7 +150,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 					brick->SetUpTimesLeftToBounce();
 					brick->SetState(BRICK_STATE_BOUNCE);
 				}
-				else if (level == MARIO_LEVEL_BIG)
+				else if (level >= MARIO_LEVEL_BIG)
 				{
 					brick->SetState(BRICK_STATE_BREAK);
 					//brick->SetState(BRICK_STATE_BOUNCE);
@@ -556,6 +550,93 @@ int CMario::GetAniIdBig()
 	return aniId;
 }
 
+//
+// Get animdation ID for raccoon Mario
+//
+int CMario::GetAniIdRaccoon()
+{
+	int aniId = -1;
+	if (!isOnPlatform)
+	{
+		if (!isCarryingKoopa)
+		{
+			if (abs(ax) == setting->mario_accel_run_x)
+			{
+				if (nx >= 0) aniId = setting->id_ani_raccoon_jump_run_right;
+				else aniId = setting->id_ani_raccoon_jump_run_left;
+			}
+			else
+			{
+				if (nx >= 0) aniId = setting->id_ani_raccoon_jump_walk_right;
+				else aniId = setting->id_ani_raccoon_jump_walk_left;
+			}
+		}
+		else //carry koopa
+		{
+			if (nx >= 0) aniId = setting->id_ani_raccoon_carry_jump_right;
+			else aniId = setting->id_ani_raccoon_carry_jump_left;
+		}
+	}
+	else
+		if (isSitting)
+		{
+			if (nx > 0) aniId = setting->id_ani_raccoon_sit_right;
+			else aniId = setting->id_ani_raccoon_sit_left;
+		}
+		else
+			if (vx == 0)
+			{
+				if (!isCarryingKoopa)
+				{
+					if (nx > 0) aniId = setting->id_ani_raccoon_idle_right;
+					else aniId = setting->id_ani_raccoon_idle_left;
+				}
+				else  //carry koopa
+				{
+					if (nx > 0) aniId = setting->id_ani_raccoon_carry_idle_right;
+					else aniId = setting->id_ani_raccoon_carry_idle_left;
+				}
+			}
+			else if (vx > 0)
+			{
+				if (!isCarryingKoopa)
+				{
+					if (ax < 0) aniId = setting->id_ani_raccoon_brace_right;
+					else if (ax == setting->mario_accel_run_x) aniId = setting->id_ani_raccoon_running_right;
+					else if (ax == setting->mario_accel_walk_x) aniId = setting->id_ani_raccoon_walking_right;
+				}
+				else  //carry koopa
+				{
+					if (ax > 0) aniId = setting->id_ani_raccoon_carry_walking_right;
+					else aniId = setting->id_ani_raccoon_carry_walking_left;
+				}
+			}
+			else // vx < 0
+			{
+				if (!isCarryingKoopa)
+				{
+					if (ax > 0) aniId = setting->id_ani_raccoon_brace_left;
+					else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_raccoon_running_left;
+					else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_raccoon_walking_left;
+				}
+				else  //carry koopa
+				{
+					if (ax < 0) aniId = setting->id_ani_raccoon_carry_walking_left;
+					else aniId = setting->id_ani_raccoon_carry_walking_right;
+				}
+			}
+	if (state == MARIO_STATE_KICK)
+	{
+		if (nx < 0) aniId = setting->id_ani_raccoon_kick_left;
+		else aniId = setting->id_ani_raccoon_kick_right;
+	}
+	else if (state == MARIO_STATE_GO_DOWN || state == MARIO_STATE_GO_UP) aniId = setting->id_ani_raccoon_tele;
+	if (aniId == -1) aniId = setting->id_ani_raccoon_idle_right;;
+
+	return aniId;
+}
+
+
 void CMario::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -565,16 +646,20 @@ void CMario::Render()
 		aniId = setting->id_ani_mario_die;
 	else if (level == MARIO_LEVEL_BIG)
 		aniId = GetAniIdBig();
+	else if (level == MARIO_LEVEL_RACCOON)
+		aniId = GetAniIdRaccoon();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	if (untouchable == 0)
+	if (level == MARIO_LEVEL_RACCOON && nx > 0)
+		animations->Get(aniId)->Render(x - 7, y);
+	else if (untouchable == 0)
 		animations->Get(aniId)->Render(x, y);
 	else
 		//need to make mario blinks
 		animations->Get(aniId)->Render(x, y);
 	
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 //logic
@@ -688,7 +773,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x;
 	top = y;
 	
-	if (level == MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON)
 	{
 		if (isSitting)
 		{
@@ -718,8 +803,9 @@ void CMario::SetLevel(int level)
 		break;
 	case MARIO_LEVEL_BIG:
 		break;
+	case MARIO_LEVEL_RACCOON:
+		break;
 	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
-	case MARIO_LEVEL_FOX: //need create FOX MARIO
 	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
 	case MARIO_LEVEL_FROG: //need create FROG MARIO
 	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
@@ -735,8 +821,10 @@ void CMario::SetLevel(int level)
 	case MARIO_LEVEL_BIG:
 		height = setting->mario_big_height;
 		break;
+	case MARIO_LEVEL_RACCOON:
+		height = setting->mario_big_height;
+		break;
 	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
-	case MARIO_LEVEL_FOX: //need create FOX MARIO
 	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
 	case MARIO_LEVEL_FROG: //need create FROG MARIO
 	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO

@@ -227,6 +227,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (isCarried) //check only this koopa is carried
 		{
 			mario->NoCarryKoopa();
+			mario->Hitted();
 		}
 		float x_mario, y_mario;
 		mario->GetPosition(x_mario, y_mario);

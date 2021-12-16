@@ -14,6 +14,8 @@
   <setting name="mario-running-speed" value="0.2"/>
   <setting name="mario-average-speed" value="0.025"/>
   <setting name="mario-max-power" value="7"/>
+  <setting name="mario-power-increase-delay-timeout" value="100"/>
+  <setting name="mario-power-decrease-delay-timeout" value="300"/>
   <setting name="mario-accel-walk-x" value="0.0003"/>
   <setting name="mario-accel-run-x" value="0.00035"/>
   <setting name="mario-jump-speed-y" value="0.55"/>

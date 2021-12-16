@@ -14,8 +14,8 @@
     <sprite name="big-running-right" id="11322" left="908" top="92" right="927" bottom="119" texid="0"/>
     <sprite name="big-running-right" id="11323" left="882" top="92" right="901" bottom="119" texid="0"/>
     <sprite name="big-jump-walk-left" id="11413" left="73" top="93" right="88" bottom="118" texid="0"/>
-    <sprite name="big-jump-walk-right" id="11417" left="955" top="93" right="970" bottom="118" texid="0"/>
-    <sprite name="big-jump-run-left" id="11423" left="169" top="93" right="188" bottom="118" texid="0"/>
+    <sprite name="big-jump-walk-right" id="11423" left="955" top="93" right="970" bottom="118" texid="0"/>
+    <sprite name="big-jump-run-left" id="11417" left="169" top="93" right="188" bottom="118" texid="0"/>
     <sprite name="big-jump-run-right" id="11427" left="856" top="93" right="875" bottom="118" texid="0"/>
     <sprite name="big-sit-left" id="11511" left="55" top="102" right="68" bottom="119" texid="0"/>
     <sprite name="big-sit-right" id="11521" left="975" top="102" right="988" bottom="119" texid="0"/>
@@ -43,8 +43,8 @@
     <sprite name="small-brace-left" id="12511" left="110" top="16" right="123" bottom="31" texid="0"/>
     <sprite name="small-brace-right" id="12521" left="920" top="16" right="933" bottom="31" texid="0"/>
     <sprite name="small-jump-walk-left" id="12413" left="37" top="16" right="52" bottom="31" texid="0"/>
-    <sprite name="small-jump-walk-right" id="12417" left="991" top="16" right="1006" bottom="31" texid="0"/>
-    <sprite name="small-jump-run-left" id="12423" left="91" top="16" right="106" bottom="31" texid="0"/>
+    <sprite name="small-jump-walk-right" id="12423" left="991" top="16" right="1006" bottom="31" texid="0"/>
+    <sprite name="small-jump-run-left" id="12417" left="91" top="16" right="106" bottom="31" texid="0"/>
     <sprite name="small-jump-run-right" id="12427" left="937" top="16" right="952" bottom="31" texid="0"/>
     <sprite name="small-carry-idle-left" id="12611" left="145" top="16" right="158" bottom="31" texid="0"/>
     <sprite name="small-carry-idle-right" id="12621" left="885" top="16" right="898" bottom="31" texid="0"/>
@@ -54,29 +54,45 @@
     <sprite name="small-kick-right" id="12821" left="847" top="16" right="862" bottom="31" texid="0"/>
     <sprite name="small-tele" id="12911" left="127" top="16" right="142" bottom="31" texid="0"/>
 
-    <sprite name="fox-idle-left" id="13111" left="1" top="350" right="22" bottom="377" texid="0"/>
-    <sprite name="fox-idle-right" id="13121" left="1022" top="350" right="1043" bottom="377" texid="0"/>
-    <sprite name="fox-walking-left" id="13212" left="27" top="350" right="48" bottom="377" texid="0"/>
-    <sprite name="fox-walking-left" id="13213" left="53" top="350" right="76" bottom="377" texid="0"/>
-    <sprite name="fox-walking-right" id="13222" left="995" top="350" right="1016" bottom="377" texid="0"/>
-    <sprite name="fox-walking-right" id="13223" left="968" top="350" right="991" bottom="377" texid="0"/>
-    <sprite name="fox-running-left" id="13311" left="91" top="92" right="110" bottom="119" texid="0"/>
-    <sprite name="fox-running-left" id="13312" left="117" top="92" right="136" bottom="119" texid="0"/>
-    <sprite name="fox-running-left" id="13313" left="143" top="92" right="162" bottom="119" texid="0"/>
-    <sprite name="fox-running-right" id="13321" left="934" top="92" right="953" bottom="119" texid="0"/>
-    <sprite name="fox-running-right" id="13322" left="908" top="92" right="927" bottom="119" texid="0"/>
-    <sprite name="fox-running-right" id="13323" left="882" top="92" right="901" bottom="119" texid="0"/>
-    <sprite name="fox-jump-walk-left" id="13413" left="73" top="93" right="88" bottom="118" texid="0"/>
-    <sprite name="fox-jump-walk-right" id="13417" left="955" top="93" right="970" bottom="118" texid="0"/>
-    <sprite name="fox-jump-run-left" id="13423" left="169" top="93" right="188" bottom="118" texid="0"/>
-    <sprite name="fox-jump-run-right" id="13427" left="856" top="93" right="875" bottom="118" texid="0"/>
-    <sprite name="fox-sit-left" id="13511" left="55" top="102" right="68" bottom="119" texid="0"/>
-    <sprite name="fox-sit-right" id="13521" left="975" top="102" right="988" bottom="119" texid="0"/>
-    <sprite name="fox-brace-left" id="13611" left="195" top="92" right="210" bottom="119" texid="0"/>
-    <sprite name="fox-brace-right" id="13621" left="833" top="92" right="848" bottom="119" texid="0"/>
-    <sprite name="fox-kick-left" id="13711" left="306" top="92" right="327" bottom="119" texid="0"/>
-    <sprite name="fox-kick-right" id="13721" left="716" top="92" right="737" bottom="119" texid="0"/>
-    <sprite name="fox-tele" id="13811" left="213" top="92" right="228" bottom="119" texid="0"/>
+    <sprite name="raccoon-idle-left" id="13111" left="1" top="350" right="22" bottom="377" texid="0"/>
+    <sprite name="raccoon-idle-right" id="13121" left="1022" top="350" right="1043" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-left" id="13212" left="27" top="350" right="48" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-left" id="13213" left="53" top="350" right="76" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-right" id="13222" left="995" top="350" right="1016" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-right" id="13223" left="968" top="350" right="989" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-left" id="13311" left="183" top="350" right="206" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-left" id="13312" left="209" top="350" right="232" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-left" id="13313" left="235" top="350" right="258" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-right" id="13321" left="837" top="350" right="860" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-right" id="13322" left="811" top="350" right="834" bottom="377" texid="0"/>
+    <sprite name="raccoon-running-right" id="13323" left="785" top="350" right="808" bottom="377" texid="0"/>
+    <sprite name="raccoon-jump-walk-left" id="13413" left="105" top="350" right="128" bottom="377" texid="0"/>
+    <sprite name="raccoon-jump-walk-right" id="13423" left="916" top="350" right="939" bottom="377" texid="0"/>
+    <sprite name="raccoon-jump-run-left" id="13417" left="261" top="350" right="284" bottom="377" texid="0"/>
+    <sprite name="raccoon-jump-run-right" id="13427" left="759" top="350" right="782" bottom="377" texid="0"/>
+    <sprite name="raccoon-sit-left" id="13511" left="79" top="360" right="100" bottom="377" texid="0"/>
+    <sprite name="raccoon-sit-right" id="13521" left="943" top="360" right="964" bottom="377" texid="0"/>
+    <sprite name="raccoon-brace-left" id="13611" left="339" top="348" right="354" bottom="377" texid="0"/>
+    <sprite name="raccoon-brace-right" id="13621" left="689" top="348" right="704" bottom="377" texid="0"/>
+    <sprite name="raccoon-carry-idle-left" id="13711" left="1" top="384" right="22" bottom="411" texid="0"/>
+    <sprite name="raccoon-carry-idle-right" id="13721" left="1022" top="384" right="1043" bottom="411" texid="0"/>
+    <sprite name="raccoon-carry-walking-left" id="13811" left="27" top="384" right="48" bottom="411" texid="0"/>
+    <sprite name="raccoon-carry-walking-left" id="13812" left="53" top="384" right="76" bottom="411" texid="0"/>
+    <sprite name="raccoon-carry-walking-right" id="13821" left="995" top="384" right="1016" bottom="411" texid="0"/>
+    <sprite name="raccoon-carry-walking-right" id="13822" left="968" top="384" right="991" bottom="411" texid="0"/>
+    <sprite name="raccoon-kick-left" id="13911" left="81" top="384" right="102" bottom="411" texid="0"/>
+    <sprite name="raccoon-kick-right" id="13921" left="941" top="384" right="962" bottom="411" texid="0"/>
+    <sprite name="raccoon-tele" id="131011" left="357" top="350" right="372" bottom="377" texid="0"/>
+
+    <!-- <sprite name="raccoon-free-falling-left" id="13511" left="131" top="350" right="154" bottom="377" texid="0"/>
+    <sprite name="raccoon-free-falling-right" id="13521" left="890" top="350" right="913" bottom="377" texid="0"/>
+    <sprite name="raccoon-slow-falling-left" id="13611" left="157" top="350" right="178" bottom="377" texid="0"/>
+    <sprite name="raccoon-slow-falling-right" id="13621" left="865" top="350" right="886" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-left" id="13711" left="287" top="350" right="310" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-left" id="13712" left="313" top="350" right="336" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-right" id="13721" left="733" top="350" right="756" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-right" id="13722" left="707" top="350" right="730" bottom="377" texid="0"/> -->
+
     <sprite name="invisible" id="00000" left="500" top="900" right="515" bottom="931" texid="0"/>
   </spritegroup>
   <animationgroup>
@@ -110,10 +126,10 @@
       <sprite id="11413" time="100"/>
     </animation>
     <animation name="big-jump-walk-right" id="701">
-      <sprite id="11417" time="100"/>
+      <sprite id="11423" time="100"/>
     </animation>
     <animation name="big-jump-run-left" id="800">
-      <sprite id="11423" time="100"/>
+      <sprite id="11417" time="100"/>
     </animation>
     <animation name="big-jump-run-right" id="801">
       <sprite id="11427" time="100"/>
@@ -165,10 +181,10 @@
       <sprite id="12413" time="100"/>
     </animation>
     <animation name="small-jump-walk-right" id="1501">
-      <sprite id="12417" time="100"/>
+      <sprite id="12423" time="100"/>
     </animation>
     <animation name="small-jump-run-left" id="1600">
-      <sprite id="12423" time="100"/>
+      <sprite id="12417" time="100"/>
     </animation>
     <animation name="small-jump-run-right" id="1601">
       <sprite id="12427" time="100"/>
@@ -233,6 +249,88 @@
     <animation name="big-tele" id="2600">
       <sprite id="111011" time="300"/>
     </animation>
+    <animation name="raccoon-idle-left" id="2700">
+      <sprite id="13111" time="100"/>
+    </animation>
+    <animation name="raccoon-idle-right" id="2701">
+      <sprite id="13121" time="100"/>
+    </animation>
+    <animation name="raccoon-walking-left" id="2800">
+      <sprite id="13111" time="100"/>
+      <sprite id="13212" time="100"/>
+      <sprite id="13213" time="100"/>
+    </animation>
+    <animation name="raccoon-walking-right" id="2801">
+      <sprite id="13121" time="100"/>
+      <sprite id="13222" time="100"/>
+      <sprite id="13223" time="100"/>
+    </animation>
+    <animation name="raccoon-running-left" id="2900">
+      <sprite id="13311" time="50"/>
+      <sprite id="13312" time="50"/>
+      <sprite id="13313" time="50"/>
+    </animation>
+    <animation name="raccoon-running-right" id="2901">
+      <sprite id="13321" time="50"/>
+      <sprite id="13322" time="50"/>
+      <sprite id="13323" time="50"/>
+    </animation>
+    <animation name="raccoon-jump-walk-left" id="3000">
+      <sprite id="13413" time="100"/>
+    </animation>
+    <animation name="raccoon-jump-walk-right" id="3001">
+      <sprite id="13423" time="100"/>
+    </animation>
+    <animation name="raccoon-jump-run-left" id="3100">
+      <sprite id="13417" time="100"/>
+    </animation>
+    <animation name="raccoon-jump-run-right" id="3101">
+      <sprite id="13427" time="100"/>
+    </animation>
+    <animation name="raccoon-sit-left" id="3200">
+      <sprite id="13511" time="100"/>
+    </animation>
+    <animation name="raccoon-sit-right" id="3201">
+      <sprite id="13521" time="100"/>
+    </animation>
+    <animation name="raccoon-brace-left" id="3300">
+      <sprite id="13611" time="100"/>
+    </animation>
+    <animation name="raccoon-brace-right" id="3301">
+      <sprite id="13621" time="100"/>
+    </animation>
+    <animation name="raccoon-carry-idle-left" id="3400">
+      <sprite id="13711" time="300"/>
+    </animation>
+    <animation name="raccoon-carry-idle-right" id="3401">
+      <sprite id="13721" time="300"/>
+    </animation>
+    <animation name="raccoon-carry-walking-left" id="3500">
+      <sprite id="13711" time="50"/>
+      <sprite id="13811" time="50"/>
+      <sprite id="13812" time="50"/>
+    </animation>
+    <animation name="raccoon-carry-walking-right" id="3501">
+      <sprite id="13721" time="50"/>
+      <sprite id="13821" time="50"/>
+      <sprite id="13822" time="50"/>
+    </animation>
+    <animation name="raccoon-kick-left" id="3600">
+      <sprite id="13911" time="300"/>
+    </animation>
+    <animation name="raccoon-kick-right" id="3601">
+      <sprite id="13921" time="300"/>
+    </animation>
+    <animation name="raccoon-carry-jump-left" id="3700">
+      <sprite id="13812" time="300"/>
+    </animation>
+    <animation name="raccoon-carry-jump-right" id="3701">
+      <sprite id="13822" time="300"/>
+    </animation>
+    <animation name="raccoon-tele" id="3800">
+      <sprite id="131011" time="300"/>
+    </animation>
+
     <animation name="invisible" id="000">
       <sprite id="12621" time="300"/>
     </animation>

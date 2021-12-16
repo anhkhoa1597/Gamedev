@@ -14,7 +14,7 @@ CHud::CHud(float x, float y, int width, int height)
 	coin = vector<unsigned int>(2, 0);
 	time = vector<unsigned int>(3, 0);
 	currentPower = 0;
-	maxPower = 7;
+	maxPower = setting->mario_max_power;
 }
 
 void CHud::RenderBackground()
