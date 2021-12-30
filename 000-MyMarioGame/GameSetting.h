@@ -19,6 +19,15 @@ public:
 	int mario_big_height = 0;
 	int mario_small_height = 0;
 	int mario_sitting_height = 0;
+	int mushroom_point = 0;
+	int point_0 = 0;
+	int point_1 = 0;
+	int point_2 = 0;
+	int point_3 = 0;
+	int point_4 = 0;
+	int point_5 = 0;
+	int point_6 = 0;
+	int point_7 = 0;
 
 	float mario_tele_speed = 0;
 	float mario_walking_speed = 0;
@@ -34,6 +43,14 @@ public:
 	int mario_untouchable_time = 0;
 	int mario_power_increase_delay_timeout = 0;
 	int mario_power_decrease_delay_timeout = 0;
+	int mario_max_power_timeout = 0;
+	int mario_flying_timeout = 0;
+	int mario_slow_falling_timeout = 0;
+	int mario_fly_falling_timeout = 0;
+	int mario_ani_slow_falling_time = 0;
+	int mario_ani_fly_falling_time = 0;
+	int mario_ani_kick_time = 0;
+	int mario_invisible_timeout = 0;
 	int	mario_life = 0;
 
 	//id animation
@@ -51,6 +68,10 @@ public:
 	int id_ani_raccoon_free_falling_right = -1;
 	int id_ani_raccoon_slow_falling_left = -1;
 	int id_ani_raccoon_slow_falling_right = -1;
+	int id_ani_raccoon_fly_falling_left = -1;
+	int id_ani_raccoon_fly_falling_right = -1;
+	int id_ani_raccoon_flying_left = -1;
+	int id_ani_raccoon_flying_right = -1;
 	int id_ani_raccoon_sit_left = -1;
 	int id_ani_raccoon_sit_right = -1;
 	int id_ani_raccoon_brace_left = -1;

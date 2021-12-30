@@ -4,18 +4,25 @@
   <setting name="tex-bbox" value="-100"/>
   <setting name="tex-hud-background" value="-200"/>
   <setting name="sprite-id-hud-and-font" value="90000"/>
+  <setting name="mushroom-point" value="1000"/>
+  <setting name="point-0" value="100"/>
+  <setting name="point-1" value="200"/>
+  <setting name="point-2" value="400"/>
+  <setting name="point-3" value="800"/>
+  <setting name="point-4" value="1000"/>
+  <setting name="point-5" value="2000"/>
+  <setting name="point-6" value="4000"/>
+  <setting name="point-7" value="8000"/>
 
   <setting name="mario-width" value="15"/>
   <setting name="mario-big-height" value="27"/>
   <setting name="mario-small-height" value="16"/>
   <setting name="mario-sitting-height" value="18"/>
-  <setting name="mario-walking-speed" value="0.1"/>
+  <setting name="mario-walking-speed" value="0.06"/>
   <setting name="mario-tele-speed" value="0.02"/>
   <setting name="mario-running-speed" value="0.2"/>
   <setting name="mario-average-speed" value="0.025"/>
   <setting name="mario-max-power" value="7"/>
-  <setting name="mario-power-increase-delay-timeout" value="100"/>
-  <setting name="mario-power-decrease-delay-timeout" value="300"/>
   <setting name="mario-accel-walk-x" value="0.0003"/>
   <setting name="mario-accel-run-x" value="0.00035"/>
   <setting name="mario-jump-speed-y" value="0.55"/>
@@ -23,6 +30,16 @@
   <setting name="mario-gravity" value="0.002"/> <!--must larger or equal 0.002!!! or try set to smaller 0.002 :))-->
   <setting name="mario-jump-deflect-speed" value="0.4"/>
   <setting name="mario-untouchabletime" value="2500"/>
+  <setting name="mario-power-increase-delay-timeout" value="100"/>
+  <setting name="mario-power-decrease-delay-timeout" value="400"/>
+  <setting name="mario-max-power-timeout" value="1000"/>
+  <setting name="mario-flying-timeout" value="5000"/>
+  <setting name="mario-invisible-timeout" value="100"/>
+  <setting name="mario-slow-falling-timeout" value="200"/>
+  <setting name="mario-fly-falling-timeout" value="300"/>
+  <setting name="mario-ani-slow-falling-time" value="100"/>
+  <setting name="mario-ani-fly-falling-time" value="200"/>
+  <setting name="mario-ani-kick-time" value="300"/>
   <setting name="mario-life" value="99"/>
 
   <setting name="goomba-width" value="16"/>
@@ -95,7 +112,6 @@
   <setting name="sprite-id-font-power-meter-normal" value="91000"/>
   <setting name="sprite-id-font-power-meter-running" value="91100"/>
   <setting name="sprite-id-font-power-meter-p-normal" value="91200"/>
-  <setting name="sprite-id-font-power-meter-p-running" value="91300"/>
 
   <setting name="pause-timeout" value="20000"/>
 

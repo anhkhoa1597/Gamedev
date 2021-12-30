@@ -41,8 +41,11 @@ enum MarioStates
 	MARIO_STATE_JUMP,
 	MARIO_STATE_RELEASE_JUMP,
 	MARIO_STATE_SLOW_FALLING,
+	MARIO_STATE_FLYING,
+	MARIO_STATE_FLY_FALLING,
 	MARIO_STATE_RUNNING_RIGHT,
 	MARIO_STATE_RUNNING_LEFT,
+
 
 	MARIO_STATE_SIT,
 	MARIO_STATE_SIT_RELEASE,
@@ -61,30 +64,36 @@ class CMario : public CGameObject
 	BOOLEAN isSitting;
 
 	//handle speed of mario
-	ULONGLONG powerTime_start;
 	unsigned int currentPower;
 	unsigned int maxPower;
 	float maxVx;
 	float avgVx; //averageVx base on power
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
+	int height;
 
 	bool isBlockingKeyboard;
 	bool isInvisible;
 	int level; 
 	int untouchable;
-	ULONGLONG untouchable_start;
-	ULONGLONG invisible_start;
-	ULONGLONG kick_start;
-	ULONGLONG slow_falling_start;
+
 	BOOLEAN isOnPlatform;
 	bool isBlockedLeftRight;
 	bool isCarryingKoopa;
 	LPGAMEOBJECT koopa;
-	int height;
 
 	int current_point = 0;
-	vector<int> points_in_level = { 100, 200, 400, 800, 1000, 2000, 4000, 8000 };
+	vector<int> points_in_level;
+
+	ULONGLONG powerTime_start;
+	ULONGLONG untouchable_start;
+	ULONGLONG invisible_start;
+	ULONGLONG kick_start;
+	ULONGLONG slow_falling_start;
+	ULONGLONG flying_start;
+	ULONGLONG fly_falling_start;
+
+
 
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);

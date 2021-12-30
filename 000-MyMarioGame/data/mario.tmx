@@ -54,11 +54,11 @@
     <sprite name="small-kick-right" id="12821" left="847" top="16" right="862" bottom="31" texid="0"/>
     <sprite name="small-tele" id="12911" left="127" top="16" right="142" bottom="31" texid="0"/>
 
-    <sprite name="raccoon-idle-left" id="13111" left="1" top="350" right="22" bottom="377" texid="0"/>
-    <sprite name="raccoon-idle-right" id="13121" left="1022" top="350" right="1043" bottom="377" texid="0"/>
-    <sprite name="raccoon-walking-left" id="13212" left="27" top="350" right="48" bottom="377" texid="0"/>
+    <sprite name="raccoon-idle-left" id="13111" left="1" top="350" right="24" bottom="377" texid="0"/>
+    <sprite name="raccoon-idle-right" id="13121" left="1020" top="350" right="1043" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-left" id="13212" left="27" top="350" right="50" bottom="377" texid="0"/>
     <sprite name="raccoon-walking-left" id="13213" left="53" top="350" right="76" bottom="377" texid="0"/>
-    <sprite name="raccoon-walking-right" id="13222" left="995" top="350" right="1016" bottom="377" texid="0"/>
+    <sprite name="raccoon-walking-right" id="13222" left="993" top="350" right="1016" bottom="377" texid="0"/>
     <sprite name="raccoon-walking-right" id="13223" left="968" top="350" right="989" bottom="377" texid="0"/>
     <sprite name="raccoon-running-left" id="13311" left="183" top="350" right="206" bottom="377" texid="0"/>
     <sprite name="raccoon-running-left" id="13312" left="209" top="350" right="232" bottom="377" texid="0"/>
@@ -86,12 +86,11 @@
     <sprite name="raccoon-free-falling-right" id="131021" left="890" top="350" right="913" bottom="377" texid="0"/>
     <sprite name="raccoon-slow-falling-left" id="131111" left="157" top="350" right="178" bottom="377" texid="0"/>
     <sprite name="raccoon-slow-falling-right" id="131121" left="864" top="350" right="887" bottom="377" texid="0"/>
-    <!-- <sprite name="raccoon-flying-left" id="13711" left="287" top="350" right="310" bottom="377" texid="0"/>
-    <sprite name="raccoon-flying-left" id="13712" left="313" top="350" right="336" bottom="377" texid="0"/>
-    <sprite name="raccoon-flying-right" id="13721" left="733" top="350" right="756" bottom="377" texid="0"/>
-    <sprite name="raccoon-flying-right" id="13722" left="707" top="350" right="730" bottom="377" texid="0"/> -->
+    <sprite name="raccoon-flying-left" id="131211" left="287" top="350" right="310" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-left" id="131212" left="313" top="350" right="336" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-right" id="131221" left="733" top="350" right="756" bottom="377" texid="0"/>
+    <sprite name="raccoon-flying-right" id="131222" left="707" top="350" right="730" bottom="377" texid="0"/>
     <sprite name="raccoon-tele" id="131411" left="357" top="350" right="372" bottom="377" texid="0"/>
-
     <sprite name="mario-invisible" id="00000" left="500" top="900" right="515" bottom="931" texid="0"/>
   </spritegroup>
   <animationgroup>
@@ -258,11 +257,13 @@
       <sprite id="13111" time="100"/>
       <sprite id="13212" time="100"/>
       <sprite id="13213" time="100"/>
+      <sprite id="13212" time="100"/>
     </animation>
     <animation name="raccoon-walking-right" id="2801">
       <sprite id="13121" time="100"/>
       <sprite id="13222" time="100"/>
       <sprite id="13223" time="100"/>
+      <sprite id="13222" time="100"/>
     </animation>
     <animation name="raccoon-running-left" id="2900">
       <sprite id="13311" time="50"/>
@@ -338,7 +339,21 @@
     <animation name="raccoon-slow-falling-right" id="3901">
       <sprite id="131121" time="300"/>
     </animation>
-    <animation name="raccoon-tele" id="4000">
+    <animation name="raccoon-fly-falling-left" id="4000">
+      <sprite id="131212" time="300"/>
+    </animation>
+    <animation name="raccoon-fly-falling-right" id="4001">
+      <sprite id="131222" time="300"/>
+    </animation>
+    <animation name="raccoon-flying-left" id="4100">
+      <sprite id="131211" time="100"/>
+      <sprite id="13417" time="100"/>
+    </animation>
+    <animation name="raccoon-flying-right" id="4101">
+      <sprite id="131221" time="100"/>
+      <sprite id="13427" time="100"/>
+    </animation>
+    <animation name="raccoon-tele" id="4200">
       <sprite id="131411" time="300"/>
     </animation>
     <animation name="mario-invisible" id="000">

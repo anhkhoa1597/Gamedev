@@ -6,8 +6,7 @@
 
 CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 {
-	isPlayer = true;
-	isSitting = false;
+	koopa = NULL;
 	maxVx = 0.0f;
 	avgVx = 0.0f;
 	currentPower = 0;
@@ -17,16 +16,23 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	level = MARIO_LEVEL_SMALL;
 	height = setting->mario_small_height;
 	untouchable = 0;
+	points_in_level = { setting->point_0, setting->point_1, setting->point_2, setting->point_3, setting->point_4, setting->point_5, setting->point_6, setting->point_7 };
+
 	untouchable_start = -1;
 	kick_start = -1;
 	powerTime_start = -1;
 	invisible_start = -1;
+	slow_falling_start = -1;
+	flying_start = -1;
+	fly_falling_start = -1;
+
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
 	isCarryingKoopa = false;
 	isBlockedLeftRight = false;
 	isInvisible = false;
-	koopa = NULL;
+	isPlayer = true;
+	isSitting = false;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -39,16 +45,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	hud->UpdatePowerMeter(currentPower);
 
 	//handle speed
-	if (abs(ax) == abs(setting->mario_accel_run_x))
+	if (abs(ax) == abs(setting->mario_accel_run_x) && isOnPlatform)
 	{	
 		if (abs(vx) > abs(avgVx * (currentPower + 1)))
 		{
 			vx = avgVx * (currentPower + 1);
 		}
-		if (currentPower < maxPower && abs(vx) >= abs(avgVx * (currentPower + 1)) && GetTickCount64() - powerTime_start > setting->mario_power_increase_delay_timeout)
+		if (abs(vx) >= abs(avgVx * (currentPower + 1)) && GetTickCount64() - powerTime_start > setting->mario_power_increase_delay_timeout)
 		{
+			if (currentPower < maxPower)
+			{
+				currentPower++;
+			}
 			powerTime_start = GetTickCount64();
-			currentPower++;
 		}
 	}
 	else
@@ -57,21 +66,67 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			vx = maxVx;
 		}
-		if (currentPower > 0 && GetTickCount64() - powerTime_start > setting->mario_power_decrease_delay_timeout)
+		if (currentPower >= maxPower)
 		{
-			powerTime_start = GetTickCount64();
-			currentPower--;
+			if (level != MARIO_LEVEL_RACCOON)
+			{
+				if (GetTickCount64() - powerTime_start > setting->mario_max_power_timeout)
+				{
+					powerTime_start = GetTickCount64();
+					currentPower--;
+				}
+			}
+			else
+			{
+				if (isOnPlatform)
+				{
+					if (GetTickCount64() - powerTime_start > setting->mario_max_power_timeout)
+					{
+						powerTime_start = GetTickCount64();
+						currentPower--;
+					}
+				}
+				else
+				{
+					if (GetTickCount64() - flying_start > setting->mario_flying_timeout)
+					{
+						currentPower = 0;
+						ay = setting->mario_gravity;
+					}
+				}
+			}
 		}
+		else
+		{
+			if (currentPower > 0 && GetTickCount64() - powerTime_start > setting->mario_power_decrease_delay_timeout)
+			{
+				powerTime_start = GetTickCount64();
+				currentPower--;
+			}
+		}
+	}
+
+	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - slow_falling_start <= setting->mario_ani_slow_falling_time)
+	{
+		state = MARIO_STATE_SLOW_FALLING;
+	}
+	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - fly_falling_start <= setting->mario_ani_fly_falling_time)
+	{
+		state = MARIO_STATE_FLYING;
+	}
+	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - slow_falling_start > setting->mario_slow_falling_timeout && GetTickCount64() - fly_falling_start > setting->mario_fly_falling_timeout)
+	{
+		ay = setting->mario_gravity;
 	}
 
 	 //reset untouchable timer if untouchable time has passed
 	if (untouchable == 1 && GetTickCount64() - untouchable_start <= setting->mario_untouchable_time)
 	{
-		if (GetTickCount64() - invisible_start <= 50)
+		if (GetTickCount64() - invisible_start <= setting->mario_invisible_timeout / 2)
 		{
 			isInvisible = true;
 		}
-		else if (GetTickCount64() - invisible_start <= 100)
+		else if (GetTickCount64() - invisible_start <= setting->mario_invisible_timeout)
 		{
 			isInvisible = false;
 		}
@@ -86,18 +141,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	if (GetTickCount64() - kick_start <= 300)
+	
+	if (GetTickCount64() - kick_start <= setting->mario_ani_kick_time)
 	{
 		state = MARIO_STATE_KICK;
 	}
-	if (GetTickCount64() - slow_falling_start <= 100)
-	{
-		state = MARIO_STATE_SLOW_FALLING;
-	}
-	else if (GetTickCount64() - slow_falling_start > 200)
-	{
-		ay = setting->mario_gravity;
-	}
+	
 	if (IsGoOutOfPipe()) SetState(MARIO_STATE_NORMAL);
 	if (state == MARIO_STATE_DIE)
 	{
@@ -318,7 +367,7 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	if (mushroom->GetType() == RMUSHROOM)
 	{
 		SetLevel(MARIO_LEVEL_BIG);
-		CGame::GetInstance()->IncreasePoint(1000);
+		CGame::GetInstance()->IncreasePoint(setting->mushroom_point);
 	}
 	else if (mushroom->GetType() == GMUSHROOM) 
 	{
@@ -427,7 +476,7 @@ int CMario::GetAniIdSmall()
 	{
 		if (!isCarryingKoopa)
 		{
-			if (abs(ax) == setting->mario_accel_run_x)
+			if (abs(ax) == setting->mario_accel_run_x && currentPower == maxPower)
 			{
 				if (nx >= 0) aniId = setting->id_ani_mario_small_jump_run_right;
 				else aniId = setting->id_ani_mario_small_jump_run_left;
@@ -469,8 +518,8 @@ int CMario::GetAniIdSmall()
 				if (!isCarryingKoopa)
 				{
 					if (ax < 0) aniId = setting->id_ani_mario_small_brace_right;
-					else if (ax == setting->mario_accel_run_x) aniId = setting->id_ani_mario_small_running_right;
-					else if (ax == setting->mario_accel_walk_x) aniId = setting->id_ani_mario_small_walking_right;
+					else if (ax == setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_mario_small_running_right;
+					else aniId = setting->id_ani_mario_small_walking_right;
 				}
 				else
 				{
@@ -483,8 +532,8 @@ int CMario::GetAniIdSmall()
 				if (!isCarryingKoopa)
 				{
 					if (ax > 0) aniId = setting->id_ani_mario_small_brace_left;
-					else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_mario_small_running_left;
-					else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_mario_small_walking_left;
+					else if (ax == -setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_mario_small_running_left;
+					else aniId = setting->id_ani_mario_small_walking_left;
 				}
 				else
 				{
@@ -515,7 +564,7 @@ int CMario::GetAniIdBig()
 	{
 		if (!isCarryingKoopa)
 		{
-			if (abs(ax) == setting->mario_accel_run_x)
+			if (abs(ax) == setting->mario_accel_run_x && currentPower == maxPower)
 			{
 				if (nx >= 0) aniId = setting->id_ani_mario_jump_run_right;
 				else aniId = setting->id_ani_mario_jump_run_left;
@@ -557,8 +606,8 @@ int CMario::GetAniIdBig()
 				if (!isCarryingKoopa)
 				{
 					if (ax < 0) aniId = setting->id_ani_mario_brace_right;
-					else if (ax == setting->mario_accel_run_x) aniId = setting->id_ani_mario_running_right;
-					else if (ax == setting->mario_accel_walk_x) aniId = setting->id_ani_mario_walking_right;
+					else if (ax == setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_mario_running_right;
+					else aniId = setting->id_ani_mario_walking_right;
 				}
 				else  //carry koopa
 				{
@@ -571,8 +620,8 @@ int CMario::GetAniIdBig()
 				if (!isCarryingKoopa)
 				{
 					if (ax > 0) aniId = setting->id_ani_mario_brace_left;
-					else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_mario_running_left;
-					else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_mario_walking_left;
+					else if (ax == -setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_mario_running_left;
+					else aniId = setting->id_ani_mario_walking_left;
 				}
 				else  //carry koopa
 				{
@@ -601,19 +650,27 @@ int CMario::GetAniIdRaccoon()
 	{
 		if (!isCarryingKoopa)
 		{
-			if (abs(ax) == setting->mario_accel_run_x)
+			if (abs(ax) == setting->mario_accel_run_x && currentPower == maxPower)
 			{
-				if (nx >= 0) aniId = setting->id_ani_raccoon_jump_run_right;
-				else aniId = setting->id_ani_raccoon_jump_run_left;
+				if (vy <= 0)
+				{
+					if (nx >= 0) aniId = setting->id_ani_raccoon_jump_run_right;
+					else aniId = setting->id_ani_raccoon_jump_run_left;
+				}
+				else
+				{
+					if (nx >= 0) aniId = setting->id_ani_raccoon_fly_falling_right;
+					else aniId = setting->id_ani_raccoon_fly_falling_left;
+				}
 			}
 			else
 			{
-				if (vy < 0)
+				if (vy <= 0)
 				{
 					if (nx >= 0) aniId = setting->id_ani_raccoon_jump_walk_right;
 					else aniId = setting->id_ani_raccoon_jump_walk_left;
 				}
-				else if (vy > 0)
+				else
 				{
 					if (nx >= 0) aniId = setting->id_ani_raccoon_free_falling_right;
 					else aniId = setting->id_ani_raccoon_free_falling_left;
@@ -651,8 +708,8 @@ int CMario::GetAniIdRaccoon()
 				if (!isCarryingKoopa)
 				{
 					if (ax < 0) aniId = setting->id_ani_raccoon_brace_right;
-					else if (ax == setting->mario_accel_run_x) aniId = setting->id_ani_raccoon_running_right;
-					else if (ax == setting->mario_accel_walk_x) aniId = setting->id_ani_raccoon_walking_right;
+					else if (ax == setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_raccoon_running_right;
+					else aniId = setting->id_ani_raccoon_walking_right;
 				}
 				else  //carry koopa
 				{
@@ -665,8 +722,8 @@ int CMario::GetAniIdRaccoon()
 				if (!isCarryingKoopa)
 				{
 					if (ax > 0) aniId = setting->id_ani_raccoon_brace_left;
-					else if (ax == -setting->mario_accel_run_x) aniId = setting->id_ani_raccoon_running_left;
-					else if (ax == -setting->mario_accel_walk_x) aniId = setting->id_ani_raccoon_walking_left;
+					else if (ax == -setting->mario_accel_run_x && currentPower == maxPower) aniId = setting->id_ani_raccoon_running_left;
+					else aniId = setting->id_ani_raccoon_walking_left;
 				}
 				else  //carry koopa
 				{
@@ -684,6 +741,11 @@ int CMario::GetAniIdRaccoon()
 	{
 		if (nx > 0) aniId = setting->id_ani_raccoon_slow_falling_right;
 		else aniId = setting->id_ani_raccoon_slow_falling_left;
+	}
+	else if (state == MARIO_STATE_FLYING)
+	{
+		if (nx > 0) aniId = setting->id_ani_raccoon_flying_right;
+		else aniId = setting->id_ani_raccoon_flying_left;
 	}
 	if (aniId == -1) aniId = setting->id_ani_raccoon_idle_right;;
 
@@ -708,17 +770,28 @@ void CMario::Render()
 	if (!isInvisible)
 	{
 		if (level == MARIO_LEVEL_RACCOON && nx > 0)
-			animations->Get(aniId)->Render(x - 7, y);
+			if (aniId == setting->id_ani_raccoon_brace_left)
+			{
+				animations->Get(aniId)->Render(x - 7, y - 2);
+			}
+			else
+			{
+				animations->Get(aniId)->Render(x - 7, y);
+			}
 		else
 		{
-			animations->Get(aniId)->Render(x, y);
+			if (aniId == setting->id_ani_raccoon_brace_right)
+			{
+				animations->Get(aniId)->Render(x, y - 2);
+			}
+			else animations->Get(aniId)->Render(x, y);
 		}
 	}
 	else
 	{
 		animations->Get(setting->id_ani_mario_invisible)->Render(x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 //logic
@@ -759,25 +832,42 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		if (isOnPlatform)
 		{
-			if (abs(this->vx) == setting->mario_running_speed)
+			if (currentPower >= maxPower)
+			{
+				if (level == MARIO_LEVEL_RACCOON)
+				{
+					flying_start = GetTickCount64();
+				}
 				vy = -setting->mario_jump_run_speed_y;
+			}
 			else
 				vy = -setting->mario_jump_speed_y;
 		}
 		else if (!isOnPlatform && level == MARIO_LEVEL_RACCOON)
 		{
-			SetState(MARIO_STATE_SLOW_FALLING);
+			if (currentPower < maxPower)
+			{
+				SetState(MARIO_STATE_SLOW_FALLING);
+			}
+			else
+			{
+				SetState(MARIO_STATE_FLYING);
+			}
 		}
 		break;
 	case MARIO_STATE_SLOW_FALLING:
-		vy = 0.05;
+		vy = 0.05f;
 		ay = 0;
 		slow_falling_start = GetTickCount64();
 		break;
-	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += setting->mario_jump_speed_y / 2;
+	case MARIO_STATE_FLYING:
+		ay = 0;
+		vy = -0.075f;
+		fly_falling_start = GetTickCount64();
 		break;
-
+	case MARIO_STATE_RELEASE_JUMP:
+		if (level != MARIO_LEVEL_RACCOON && vy < 0) vy += setting->mario_jump_speed_y / 2;
+		break;
 	case MARIO_STATE_SIT:
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
 		{

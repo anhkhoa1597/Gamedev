@@ -36,7 +36,24 @@ void CGameSetting::Load(string settingFile)
 		else if (name == "mario-untouchabletime") pSetting->QueryIntAttribute("value", &mario_untouchable_time);
 		else if (name == "mario-power-increase-delay-timeout") pSetting->QueryIntAttribute("value", &mario_power_increase_delay_timeout);
 		else if (name == "mario-power-decrease-delay-timeout") pSetting->QueryIntAttribute("value", &mario_power_decrease_delay_timeout);
+		else if (name == "mario-max-power-timeout") pSetting->QueryIntAttribute("value", &mario_max_power_timeout);
+		else if (name == "mario-flying-timeout") pSetting->QueryIntAttribute("value", &mario_flying_timeout);
+		else if (name == "mario-slow-falling-timeout") pSetting->QueryIntAttribute("value", &mario_slow_falling_timeout);
+		else if (name == "mario-fly-falling-timeout") pSetting->QueryIntAttribute("value", &mario_fly_falling_timeout);
+		else if (name == "mario-ani-slow-falling-time") pSetting->QueryIntAttribute("value", &mario_ani_slow_falling_time);
+		else if (name == "mario-ani-fly-falling-time") pSetting->QueryIntAttribute("value", &mario_ani_fly_falling_time);
+		else if (name == "mario-ani-kick-time") pSetting->QueryIntAttribute("value", &mario_ani_kick_time);
+		else if (name == "mario-invisible-timeout") pSetting->QueryIntAttribute("value", &mario_invisible_timeout);
 		else if (name == "mario-life") pSetting->QueryIntAttribute("value", &mario_life);
+		else if (name == "mushroom-point") pSetting->QueryIntAttribute("value", &mushroom_point);
+		else if (name == "point-0") pSetting->QueryIntAttribute("value", &point_0);
+		else if (name == "point-1") pSetting->QueryIntAttribute("value", &point_1);
+		else if (name == "point-2") pSetting->QueryIntAttribute("value", &point_2);
+		else if (name == "point-3") pSetting->QueryIntAttribute("value", &point_3);
+		else if (name == "point-4") pSetting->QueryIntAttribute("value", &point_4);
+		else if (name == "point-5") pSetting->QueryIntAttribute("value", &point_5);
+		else if (name == "point-6") pSetting->QueryIntAttribute("value", &point_6);
+		else if (name == "point-7") pSetting->QueryIntAttribute("value", &point_7);
 		
 		else if (name == "goomba-width") pSetting->QueryIntAttribute("value", &goomba_width);
 		else if (name == "goomba-height") pSetting->QueryIntAttribute("value", &goomba_height);
@@ -151,7 +168,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "big-carry-change-dir") id_ani_mario_carry_change_dir = id;
 	else if (name == "big-tele") id_ani_mario_tele = id;
 
-	else if (name == "raccoon-idle-left") id_ani_raccoon_idle_left = id;
+	if (name == "raccoon-idle-left") id_ani_raccoon_idle_left = id;
 	else if (name == "raccoon-idle-right") id_ani_raccoon_idle_right = id;
 	else if (name == "raccoon-walking-left") id_ani_raccoon_walking_left = id;
 	else if (name == "raccoon-walking-right") id_ani_raccoon_walking_right = id;
@@ -165,6 +182,10 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "raccoon-free-falling-right") id_ani_raccoon_free_falling_right = id;
 	else if (name == "raccoon-slow-falling-left") id_ani_raccoon_slow_falling_left = id;
 	else if (name == "raccoon-slow-falling-right") id_ani_raccoon_slow_falling_right = id;
+	else if (name == "raccoon-fly-falling-left") id_ani_raccoon_fly_falling_left = id;
+	else if (name == "raccoon-fly-falling-right") id_ani_raccoon_fly_falling_right = id;
+	else if (name == "raccoon-flying-left") id_ani_raccoon_flying_left = id;
+	else if (name == "raccoon-flying-right") id_ani_raccoon_flying_right = id;
 	else if (name == "raccoon-sit-left") id_ani_raccoon_sit_left = id;
 	else if (name == "raccoon-sit-right") id_ani_raccoon_sit_right = id;
 	else if (name == "raccoon-brace-left") id_ani_raccoon_brace_left = id;
@@ -180,7 +201,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "raccoon-carry-change-dir") id_ani_raccoon_carry_change_dir = id;
 	else if (name == "raccoon-tele") id_ani_raccoon_tele = id;
 
-	else if (name == "mario-die") id_ani_mario_die = id;
+	if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "small-idle-left") id_ani_mario_small_idle_left = id;
 	else if (name == "small-idle-right") id_ani_mario_small_idle_right = id;
 	else if (name == "small-walking-left") id_ani_mario_small_walking_left = id;
@@ -206,7 +227,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "mario-die") id_ani_mario_die = id;
 	else if (name == "mario-invisible") id_ani_mario_invisible = id;
 	//goomba
-	else if (name == "goomba-walking") id_ani_goomba_walking = id;
+	if (name == "goomba-walking") id_ani_goomba_walking = id;
 	else if (name == "goomba-die") id_ani_goomba_die = id;
 	else if (name == "goomba-bounce-die") id_ani_goomba_bounce_die = id;
 	else if (name == "red-goomba-walking") id_ani_red_goomba_walking = id;
@@ -215,7 +236,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "wing-jump") id_ani_wing_jump = id;
 	else if (name == "wing-walk") id_ani_wing_walk = id;
 	//koopa
-	else if (name == "koopa-walking-left") id_ani_koopa_walking_left = id;
+	if (name == "koopa-walking-left") id_ani_koopa_walking_left = id;
 	else if (name == "koopa-walking-right") id_ani_koopa_walking_right = id;
 	else if (name == "red-koopa-walking-left") id_ani_red_koopa_walking_left = id;
 	else if (name == "red-koopa-walking-right") id_ani_red_koopa_walking_right = id;
@@ -234,7 +255,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "red-koopa-shield-rolling-down") id_ani_red_koopa_shield_rolling_down = id;
 	else if (name == "red-koopa-shield-rolling-up") id_ani_red_koopa_shield_rolling_up = id;
 	//piranha plant
-	else if (name == "piranha-plant-left-down") id_ani_piranha_plant_left_down = id;
+	if (name == "piranha-plant-left-down") id_ani_piranha_plant_left_down = id;
 	else if (name == "piranha-plant-left-up") id_ani_piranha_plant_left_up = id;
 	else if (name == "piranha-plant-right-down") id_ani_piranha_plant_right_down = id;
 	else if (name == "piranha-plant-right-up") id_ani_piranha_plant_right_up = id;
@@ -256,6 +277,7 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "power-meter-p-running") id_font_power_meter_p_running = id;
 	//pause
 	else if (name == "pause") id_ani_pause = id;
+
 	else if (name == "pause-be-hitted") id_ani_pause_be_hitted = id;
 }
 
