@@ -15,6 +15,7 @@
 #include "Portal.h"
 #include "Deadzone.h"
 #include "Pipe.h"
+#include "Tail.h"
 
 #include "Collision.h"
 #include "debug.h"
