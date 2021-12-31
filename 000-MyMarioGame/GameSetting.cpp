@@ -198,6 +198,8 @@ void CGameSetting::LoadIdAnimations(string name, int id)
 	else if (name == "raccoon-carry-walking-right") id_ani_raccoon_carry_walking_right = id;
 	else if (name == "raccoon-kick-left") id_ani_raccoon_kick_left = id;
 	else if (name == "raccoon-kick-right") id_ani_raccoon_kick_right = id;
+	else if (name == "raccoon-attack-left") id_ani_raccoon_attack_left = id;
+	else if (name == "raccoon-attack-right") id_ani_raccoon_attack_right = id;
 	else if (name == "raccoon-carry-change-dir") id_ani_raccoon_carry_change_dir = id;
 	else if (name == "raccoon-tele") id_ani_raccoon_tele = id;
 

@@ -39,7 +39,7 @@ void CHud::RenderBackground()
 
 void CHud::Render()
 {
-	RenderBackground();
+	RenderBackground(); //black
 	CAnimations::GetInstance()->Get(setting->id_ani_hud)->Render(x, y);
 	RenderCoin();
 	RenderPoint();

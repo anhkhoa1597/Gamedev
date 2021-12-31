@@ -3,6 +3,7 @@
 #include "Mushroom.h"
 #include "Goomba.h"
 #include "Brick.h"
+#include "PiranhaPlant.h"
 
 enum KoopaStates
 {
@@ -53,6 +54,7 @@ protected:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeadzone(LPCOLLISIONEVENT e);
 

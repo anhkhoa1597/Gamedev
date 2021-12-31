@@ -92,6 +92,8 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				OnCollisionWithKoopa(e);
 			else if (dynamic_cast<CGoomba*>(e->obj))
 				OnCollisionWithGoomba(e);
+			else if (dynamic_cast<CPiranhaPlant*>(e->obj))
+				OnCollisionWithPiranhaPlant(e);
 			else if (dynamic_cast<CBrick*>(e->obj))
 				OnCollisionWithBrick(e);
 		}
@@ -159,6 +161,12 @@ void CKoopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		else goomba->SetSpeed(-setting->goomba_bouncing_speed, 0);
 		goomba->SetState(GOOMBA_STATE_BOUNCE_DIE);
 	}
+}
+
+void CKoopa::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
+{
+	CPiranhaPlant* piranhaPlant = dynamic_cast<CPiranhaPlant*>(e->obj);
+	e->obj->Delete();
 }
 
 void CKoopa::OnCollisionWithBrick(LPCOLLISIONEVENT e)

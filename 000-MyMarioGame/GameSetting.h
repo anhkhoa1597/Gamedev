@@ -84,6 +84,8 @@ public:
 	int id_ani_raccoon_carry_walking_right = -1;
 	int id_ani_raccoon_kick_left = -1;
 	int id_ani_raccoon_kick_right = -1;
+	int id_ani_raccoon_attack_left = -1;
+	int id_ani_raccoon_attack_right = -1;
 	int id_ani_raccoon_carry_change_dir = -1;
 	int id_ani_raccoon_tele = -1;
 

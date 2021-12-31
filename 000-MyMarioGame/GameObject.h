@@ -44,6 +44,7 @@ enum TypeObject
 	PAUSE,
 	PIRANHA_PLANT,
 	HORIZONTAL_PIRANHA_PLANT,
+	TAIL,
 };
 
 class CGameObject

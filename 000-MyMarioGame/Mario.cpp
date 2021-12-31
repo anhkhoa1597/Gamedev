@@ -25,6 +25,9 @@ CMario::CMario(float x, float y) : CGameObject(x, y, MARIO)
 	slow_falling_start = -1;
 	flying_start = -1;
 	fly_falling_start = -1;
+	attack_start = -1;
+	attack_left_start = -1;
+	attack_right_start = -1;
 
 	isBlockingKeyboard = false;
 	isOnPlatform = false;
@@ -106,14 +109,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 
-	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - slow_falling_start <= setting->mario_ani_slow_falling_time)
-	{
-		state = MARIO_STATE_SLOW_FALLING;
-	}
-	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - fly_falling_start <= setting->mario_ani_fly_falling_time)
-	{
-		state = MARIO_STATE_FLYING;
-	}
 	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP && GetTickCount64() - slow_falling_start > setting->mario_slow_falling_timeout && GetTickCount64() - fly_falling_start > setting->mario_fly_falling_timeout)
 	{
 		ay = setting->mario_gravity;
@@ -142,10 +137,42 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 	
-	if (GetTickCount64() - kick_start <= setting->mario_ani_kick_time)
+	//time animate
+	if (state != MARIO_STATE_GO_DOWN && state != MARIO_STATE_GO_UP)
 	{
-		state = MARIO_STATE_KICK;
+		if (GetTickCount64() - kick_start <= setting->mario_ani_kick_time)
+		{
+			state = MARIO_STATE_KICK;
+		}
+		else if (GetTickCount64() - attack_start <= 300)
+		{
+			if (GetTickCount64() - attack_left_start <= 200)
+			{
+				state = MARIO_STATE_ATTACK_LEFT;
+			}
+			else if (GetTickCount64() - attack_right_start <= 100)
+			{
+				state = MARIO_STATE_ATTACK_RIGHT;
+			}
+			if (GetTickCount64() - attack_left_start > 200 && GetTickCount64() - attack_left_start <= 300)
+			{
+				SetState(MARIO_STATE_ATTACK_RIGHT);
+			}
+			else
+			{
+				SetState(MARIO_STATE_ATTACK_LEFT);
+			}
+		}
+		else if (GetTickCount64() - slow_falling_start <= setting->mario_ani_slow_falling_time)
+		{
+			state = MARIO_STATE_SLOW_FALLING;
+		}
+		else if (GetTickCount64() - fly_falling_start <= setting->mario_ani_fly_falling_time)
+		{
+			state = MARIO_STATE_FLYING;
+		}
 	}
+	
 	
 	if (IsGoOutOfPipe()) SetState(MARIO_STATE_NORMAL);
 	if (state == MARIO_STATE_DIE)
@@ -650,7 +677,7 @@ int CMario::GetAniIdRaccoon()
 	{
 		if (!isCarryingKoopa)
 		{
-			if (abs(ax) == setting->mario_accel_run_x && currentPower == maxPower)
+			if (currentPower == maxPower)
 			{
 				if (vy <= 0)
 				{
@@ -747,6 +774,8 @@ int CMario::GetAniIdRaccoon()
 		if (nx > 0) aniId = setting->id_ani_raccoon_flying_right;
 		else aniId = setting->id_ani_raccoon_flying_left;
 	}
+	else if (state == MARIO_STATE_ATTACK_LEFT) aniId = setting->id_ani_raccoon_attack_left;
+	else if (state == MARIO_STATE_ATTACK_RIGHT) aniId = setting->id_ani_raccoon_attack_right;
 	if (aniId == -1) aniId = setting->id_ani_raccoon_idle_right;;
 
 	return aniId;
@@ -759,7 +788,10 @@ void CMario::Render()
 	int aniId = -1;
 
 	if (state == MARIO_STATE_DIE)
+	{
 		aniId = setting->id_ani_mario_die;
+		DebugOut(L"die!!!\n");
+	}
 	else if (level == MARIO_LEVEL_BIG)
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_RACCOON)
@@ -769,22 +801,43 @@ void CMario::Render()
 
 	if (!isInvisible)
 	{
-		if (level == MARIO_LEVEL_RACCOON && nx > 0)
-			if (aniId == setting->id_ani_raccoon_brace_left)
+		if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (nx > 0)
 			{
-				animations->Get(aniId)->Render(x - 7, y - 2);
+				if (aniId == setting->id_ani_raccoon_brace_left)
+				{
+					animations->Get(aniId)->Render(x - 7, y - 2);
+				}
+				else if (aniId == setting->id_ani_raccoon_attack_right)
+				{
+					animations->Get(aniId)->Render(x - 7, y );
+				}
+				else
+				{
+					if (aniId == setting->id_ani_raccoon_attack_left) animations->Get(aniId)->Render(x, y);
+					else animations->Get(aniId)->Render(x - 7, y);
+				}
 			}
 			else
 			{
-				animations->Get(aniId)->Render(x - 7, y);
+				if (aniId == setting->id_ani_raccoon_brace_right)
+				{
+					animations->Get(aniId)->Render(x, y - 2);
+				}
+				else if (aniId == setting->id_ani_raccoon_attack_right)
+				{
+					animations->Get(aniId)->Render(x - 7, y);
+				}
+				else
+				{
+					animations->Get(aniId)->Render(x, y);
+				}
 			}
+		}
 		else
 		{
-			if (aniId == setting->id_ani_raccoon_brace_right)
-			{
-				animations->Get(aniId)->Render(x, y - 2);
-			}
-			else animations->Get(aniId)->Render(x, y);
+			animations->Get(aniId)->Render(x, y);
 		}
 	}
 	else
@@ -797,8 +850,8 @@ void CMario::Render()
 //logic
 void CMario::SetState(int state)
 {
-	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	// DIE is the end state, cannot be changed! //Go up, go down -> change scene
+	if (this->state == MARIO_STATE_DIE || this->state == MARIO_STATE_GO_UP || this->state == MARIO_STATE_GO_DOWN) return; 
 
 	switch (state)
 	{
@@ -865,8 +918,26 @@ void CMario::SetState(int state)
 		vy = -0.075f;
 		fly_falling_start = GetTickCount64();
 		break;
+	case MARIO_STATE_ATTACK:
+		if (nx < 0) SetState(MARIO_STATE_ATTACK_LEFT);
+		else SetState(MARIO_STATE_ATTACK_RIGHT);
+		attack_start = GetTickCount64();
+		return;
+	case MARIO_STATE_ATTACK_LEFT: 
+		attack_left_start = GetTickCount64();
+		break;
+	case MARIO_STATE_ATTACK_RIGHT:
+		DebugOut(L"attack right\n");
+		attack_right_start = GetTickCount64();
+		break;
 	case MARIO_STATE_RELEASE_JUMP:
-		if (level != MARIO_LEVEL_RACCOON && vy < 0) vy += setting->mario_jump_speed_y / 2;
+		if (vy < 0)
+		{
+			if (level != MARIO_LEVEL_RACCOON || (level == MARIO_LEVEL_RACCOON && currentPower != maxPower))
+			{
+				vy += setting->mario_jump_speed_y / 2;
+			}
+		}
 		break;
 	case MARIO_STATE_SIT:
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
@@ -920,9 +991,9 @@ void CMario::SetState(int state)
 		CGame::GetInstance()->SetMarioGoThroughPipe(false);
 		if (isCarryingKoopa) NoCarryKoopa();
 		ay = setting->mario_gravity;
-		break;
+		return;
 	}
-	
+	//if (state == MARIO_STATE_DIE) DebugOut(L"die here!!!\n");
 	CGameObject::SetState(state);
 }
 
@@ -963,11 +1034,6 @@ void CMario::SetLevel(int level)
 		break;
 	case MARIO_LEVEL_RACCOON:
 		break;
-	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
-	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
-	case MARIO_LEVEL_FROG: //need create FROG MARIO
-	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
-		break;
 	}
 
 	//next level
@@ -981,11 +1047,6 @@ void CMario::SetLevel(int level)
 		break;
 	case MARIO_LEVEL_RACCOON:
 		height = setting->mario_big_height;
-		break;
-	case MARIO_LEVEL_FIRE: //need create FIRE MARIO
-	case MARIO_LEVEL_BEAR: //need create BEAR MARIO
-	case MARIO_LEVEL_FROG: //need create FROG MARIO
-	case MARIO_LEVEL_TURTLE: //need create TURTLE MARIO
 		break;
 	}
 	this->level = level;
@@ -1013,7 +1074,7 @@ void CMario::Hitted()
 	}
 	else
 	{
-		DebugOut(L">>> Mario DIE by KOOPA>>> \n");
+		DebugOut(L">>> Mario DIE >>> \n");
 		Dead();
 	}
 }

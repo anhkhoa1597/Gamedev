@@ -24,10 +24,6 @@ enum MarioLevels
 	MARIO_LEVEL_SMALL,
 	MARIO_LEVEL_BIG,
 	MARIO_LEVEL_RACCOON,
-	MARIO_LEVEL_FIRE,
-	MARIO_LEVEL_BEAR,
-	MARIO_LEVEL_FROG,
-	MARIO_LEVEL_TURTLE
 };
 
 enum MarioStates
@@ -53,6 +49,9 @@ enum MarioStates
 	MARIO_STATE_GO_DOWN,
 	MARIO_STATE_GO_UP,
 	MARIO_STATE_KICK,
+	MARIO_STATE_ATTACK,
+	MARIO_STATE_ATTACK_LEFT,
+	MARIO_STATE_ATTACK_RIGHT,
 
 	MARIO_STATE_BRING_IDLE,
 	MARIO_STATE_BRING_WALKING_LEFT,
@@ -92,6 +91,9 @@ class CMario : public CGameObject
 	ULONGLONG slow_falling_start;
 	ULONGLONG flying_start;
 	ULONGLONG fly_falling_start;
+	ULONGLONG attack_start;
+	ULONGLONG attack_left_start;
+	ULONGLONG attack_right_start;
 
 
 
@@ -116,7 +118,7 @@ public:
 	void Render();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	int IsCollidable() { return (state != MARIO_STATE_DIE); }
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable == 0); }
 
 	bool IsGoOutOfPipe();
 	bool IsCarryingKoopa() { return isCarryingKoopa; }
